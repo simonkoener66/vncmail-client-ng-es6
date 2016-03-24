@@ -1,0 +1,183 @@
+@import '../../../common/common';
+
+
+@media (max-width: 800px) {
+    #taskDetailPage {
+        position: fixed;
+        width: 100%;
+        left: 100%;
+        z-index: 9999;
+    }
+    #taskDetailPage.show {
+        left: 0;
+    }
+}
+
+.tasks-tasks{
+    .completed_task{
+	text-decoration : line-through;
+    }
+
+    .priority_low{
+	    color : blue;
+    }
+
+    .priority_high{
+	    color : red;
+     }
+
+    .priority_normal{
+	    color : grey;
+    }
+    .progress{
+        margin-bottom:6px !important;
+    }
+    .sort-separator {
+        height: 42px;
+    }
+    .md-menu .md-icon-button {
+        width: auto!important;
+    }
+    overflow: hidden;
+    .summary-pane{
+        border-right: 1px solid #cdcdcd;
+        border-top: 1px solid #cdcdcd;
+        .list-item{
+            background: #ffffff;
+            padding: 0;
+            padding-left: 15px;
+            padding-bottom: 10px;
+            min-height: 70px;
+        }
+        .btn-bar {
+            background: #fafafa;
+            .inline-vert{
+                padding: 0;
+                margin: 0;
+            }
+            .mark-all{
+                margin-left: 9px;
+                margin-top: 14px;
+            }
+            .bg-blue {
+                background: #022a43;
+                border: none;
+                padding: 2px;
+                margin-right: 5px;
+                @include border-radius(3px);
+                &.disabled-class{
+                    background: buttonface;
+                    cursor: default;
+                    i{
+                        cursor: default;
+                    }
+                }
+            }
+        }
+        //.btn-bar{
+        //    padding: 15px 0;
+        //    background: #fafafa  !important;
+        //    border-bottom: 1px solid #c8c8c8;
+        //    button{
+        //        color: #fff;
+        //        background: #022a43;
+        //        border: none;
+        //        padding: 5px 12px;
+        //        margin-right: 3px;
+        //        @include border-radius(3px);
+        //    }
+        //}
+        .sort-heading{
+            background: #e0e0e0;
+            text-transform: capitalize;
+            width: 100%;
+            padding: 10px 15px;
+            color: #868686;
+        }
+        h5{
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+        .divider{
+            border-bottom: 1px solid #c2c2c2;
+        }
+        .task-list-row {
+            padding-top:0;
+            .task-check{
+                margin-top: 29px;
+                margin-right: 15px
+            }
+            .taskname, .dueDate-padding {
+                p {
+                    font-weight: 500;
+                    font-size: 16px;
+                    color: #6f6f6f;
+                    padding-top: 10px;
+                }
+            }
+        }
+    }
+    .window-list-height{
+       overflow-x: hidden;
+    }
+    .avatar-padding{
+        padding-bottom: 10px;
+    }
+}
+
+.selectedTaskColor{
+    color: white !important;
+    border-left: 8px solid #ffa500;
+    background: #607d8b !important;
+}
+
+
+.dueDate-padding{
+    padding-right: 25px;
+}
+
+.paperClipPadding{
+    padding-right: 25px;
+}
+
+.selectedFilter{
+    background: $brand-blue-main !important;
+    color : white !important;
+    cursor: pointer;
+}
+
+.taskListMdContent{
+    display: none;
+    position: none;
+}
+.taskListBorder{
+    border-bottom: none;
+}
+.pagination{
+    cursor: pointer;
+}
+.noResult{
+    text-align: center;
+    color: #3c3c3c;
+    cursor: default;
+}
+.sortorder:after {
+  content: '\25b2';
+}
+.sortorder.reverse:after {
+  content: '\25bc';
+}
+.sort-position {
+  position: fixed;
+  display: inline-flex;
+  width: 34%;
+  z-index: 40;
+}
+//Mobile  and Tablet Screen
+@media screen and (max-width:955px) {
+  .sort-position {
+    position: fixed;
+    display: inline-flex;
+    width: 100% !important;
+  }
+}

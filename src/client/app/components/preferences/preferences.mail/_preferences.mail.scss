@@ -1,0 +1,32 @@
+/*************************************
+ *
+ *
+ * Modal Main File
+ *
+ *
+ **************************************/
+@import '../../../common/common';
+.mar-bottom-0{
+    margin-bottom: 0 !important;
+}
+.mar-top-20{
+    margin-top: 20px !important;
+}
+.mar-right-5{
+    margin-right: 5px !important;
+}
+.mar-top-5{
+    margin-top: 5px !important;
+}
+.preferences-mail {
+    .scrolling-div{
+        height: 212px;
+        overflow-y: scroll;
+    }
+    .child-fields{
+        margin-left: 56px;
+    }
+    .td-value {
+        background-color: #cecece;
+    }
+}

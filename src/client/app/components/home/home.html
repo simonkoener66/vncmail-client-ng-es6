@@ -1,0 +1,20 @@
+<div class="container" ng-if="vm.AuthService.authenticated">
+    <h1>Hi <user-display-name></user-display-name>!</h1>
+    <p>You're logged in!!</p>
+    <p><strong>priority</strong> <user-prefs key="priority"></user-prefs></p>
+    <p><strong>presence</strong> <user-prefs key="presence"></user-prefs></p>
+    <p><strong>initial_presence</strong> <user-prefs key="initial_presence"></user-prefs></p>
+    <p><strong>initial_available_priority</strong> <user-prefs key="initial_available_priority"></user-prefs></p>
+    <p><strong>available_priority</strong> <user-prefs key="available_priority"></user-prefs></p>
+    <p><strong>default_initial_presence</strong> <user-prefs key="default_initial_presence"></user-prefs></p>
+    <p><strong>default_initial_available_priority</strong> <user-prefs key="default_initial_available_priority"></user-prefs></p>
+
+    <vnc-contact></vnc-contact>
+    <br>
+    Icons
+    <vnc-icon icon-name="done" icon-size="sm"></vnc-icon>
+    <vnc-icon icon-name="done" icon-size=""></vnc-icon>
+    <vnc-icon icon-name="done" icon-size="md"></vnc-icon>
+    <vnc-icon icon-name="done" icon-size="lg"></vnc-icon>
+</div>
+

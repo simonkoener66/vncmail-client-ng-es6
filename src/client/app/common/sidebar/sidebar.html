@@ -1,0 +1,106 @@
+<perfect-scrollbar class="sidebar scroll-bar"
+                   ng-class="{toggled: !vm.sidebar}"
+                   wheel-propagation="true"
+                   wheel-speed="50"
+                   on-scroll="onScroll(scrollTop, scrollHeight)"
+                   ng-if="vm.auth.authenticated"
+                   vnc-resize-header
+                   height-space="50" layout="column" flex>
+    <!-- Drop-down button -->
+    <!-- <vnc-sidebar-dropdown-button></vnc-sidebar-dropdown-button> -->
+    <!--<md-divider></md-divider>-->
+
+    <!-- Sidebar Menu -->
+
+
+    <!-- End Sidebar Menu -->
+     <!--Folder Header-->
+    <!-- <div class="header-title">
+        <span class="pull-left">
+            <vnc-menu items="vm.folderMenu.items" size="vm.folderMenu.size">
+                <md-icon md-font-set="material-icons">
+                    more_vert
+                </md-icon>
+            </vnc-menu>
+        </span>
+    </div> -->
+    <!-- Folder Header -->
+
+    <!-- Folder Menu -->
+
+    <div layout="column" layout-align="center center">
+        <md-button class="md-raised md-accent sidebar-new-button" flex ng-if="vm.currentParentState == 'mail'" ng-click="vm.composeModal()">COMPOSE</md-button>
+        <md-button class="md-raised md-accent sidebar-new-button" flex ng-if="vm.currentParentState == 'contacts'" ng-click="vm.composeModal()">ADD CONTACT</md-button>
+        <md-button class="md-raised md-accent sidebar-new-button" flex ng-if="vm.currentParentState == 'tasks'" ng-click="vm.composeModal()">NEW TASK</md-button>
+        <md-button class="md-raised md-accent sidebar-new-button" flex ng-if="vm.currentParentState == 'calendar'">NEW APPOINTMENT</md-button>
+
+     <!--    <div layout"row" ng-if="vm.currentParentState == 'preferences'">
+            <md-button class="md-raised md-accent sidebar-new-button" flex  ng-click="vm.savePreferences()">SAVE</md-button>
+            <md-button class="md-raised md-primary" flex ng-click="vm.cancelPreferences()">CANCEL</md-button>
+        </div> -->
+
+    </div>
+
+    <md-divider></md-divider>
+       <ul ng-show="vm.currentParentState == 'preferences'" class="sidebar-nav" when-done-animating="vm.sidebarReady()">
+        <li ng-class="vm.isSelectingRoute(r)"
+            ng-repeat="r in vm.navRoutes track by $index">
+            <div>
+                <a ui-sref="{{r.name}}" uib-tooltip="{{r.settings.tooltip}}" tooltip-placement="bottom" layout="row">
+                    <md-icon  md-svg-src="{{r.settings.icon}}" md-font-set="material-icons" ng-style="{'font-size': '24px'}" flex="35">
+
+                    </md-icon>
+                    <span ng-bind-html="r.settings.content" flex="65"></span>
+                </a>
+            </div>
+        </li>
+    </ul>
+
+    <md-divider></md-divider>
+
+    <vnc-mail-folder-view ng-if="vm.currentParentState == 'mail'"></vnc-mail-folder-view>
+    <vnc-preperence-view ng-if="vm.currentParentState == 'preperences'"></vnc-preperence-view>
+    <vnc-contact-folder-view ng-if="vm.currentParentState == 'contacts'"></vnc-contact-folder-view>
+    <vnc-task-folder-view ng-if="vm.currentParentState == 'tasks'"></vnc-task-folder-view>
+    <vnc-sidebar-calendar-folder ng-if="vm.currentParentState == 'calendar'"></vnc-sidebar-calendar-folder>
+    <!-- Folder Menu -->
+
+
+    <!-- Menu Divider -->
+    <md-divider></md-divider>
+    <!-- Menu Divider -->
+
+    <!-- Tags Header -->
+    <div class="header-title">
+        <span>Tags</span>
+        <md-menu style="margin-left:70px;">
+            <md-button class="md-icon-button md-primary" ng-click="vm.selectSingleContact(contact.id);$mdOpenMenu($event)">
+                <md-icon md-font-set="material-icons" class="md-18">more_vert</md-icon>
+            </md-button>
+            <md-menu-content width="3">
+                <md-menu-item>
+                    <md-button>
+                        <vnc-modal template="{{vm.createNewTagTemplate}}" use_ctrl="CreateNewTagController" size="lg" backdrop="static">
+                            <md-icon md-font-set="material-icons">local_offer</md-icon>
+                            Create a New Tag
+                        </vnc-modal>
+                    </md-button>
+                </md-menu-item>
+
+            </md-menu-content>
+        </md-menu>
+    </div>
+    <!-- Tags Header -->
+
+    <!-- Tags Menu -->
+    <div class="sidebar-tag" id="sidebar-tag" context-menu context-menu-type="tagItem">
+        <div class="loading" ng-if="!vm.tagService.getTags().length">
+            loading Tags <i class="fa fa-circle-o-notch fa-spin"></i>
+        </div>
+        <vnc-tag ng-repeat="tag in vm.tagService.getTags() track by $index" tag-name="{{tag.$.name}}" tag-color="{{tag.$.color}}"
+                 tag-rgb="{{tag.$.rgb}}" tag-id="{{tag.$.id}}">
+        </vnc-tag>
+    </div>
+
+    <!-- Tags Menu -->
+    </perfect-scrollbar>

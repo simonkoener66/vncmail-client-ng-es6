@@ -1,0 +1,28 @@
+<md-dialog aria-label="User About" flex="65">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h4>About</h4>
+            <span flex></span>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <div layout="column" layout-padding class="md-dialog-content">
+            <div layout="column">VNC develops powerful Commercial Open Source software solutions enabling organizations and businesses to fully leverage their existing potential. Our solutions are not only significantly more affordable than comparable commercial offerings. They are also much more secure - on several levels.</div>
+            <div layout="column">Browser-based architectures and flexible interfaces enable users to access data and applications no matter where they are, or what device they are using. All information can easily be shared for collaboration with team members, partners, clients or suppliers, making sure that information only gets where it is intended to go.</div>
+            <div layout="column">Our products cover all major business areas - from secure communication and contact management, marketing and production to ERP and project management.</div>
+        </div>
+        <md-divider></md-divider>
+        <div layout="column" layout-padding class="md-dialog-content">
+            <div layout="column" translate="USER_ABOUT.FIRST"></div>
+            <div layout="column" translate="USER_ABOUT.SECOND"></div>
+            <div layout="column" translate="USER_ABOUT.THIRD"></div>
+        </div>
+        <md-divider></md-divider>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" id="toastBounds" class="layout-row">
+        <span flex></span>
+      <md-button class="md-button md-ink-ripple" ng-click="vm.closeModel()">OK</md-button>
+    </md-dialog-actions>
+</md-dialog>
+
+

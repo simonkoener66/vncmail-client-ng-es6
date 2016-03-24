@@ -1,0 +1,120 @@
+<div flex layout="column"
+     layout-fill
+     class="calendar-hour-detail">
+    <div id="allDay-Calendar"
+         flex
+         layout="column"
+         ng-if="vm.dayInWeekAllDayEvent && vm.dayInWeekAllDayEvent.length > 0"
+         ng-init="vm.disabledMode = false"
+         ng-show="!vm.disabledMode"
+         class="calendar-all-day">
+        <div flex layout="row"
+             class="cal-all-day-row">
+            <div flex layout layout-padding
+                 class="cal-all-day-cell-label">
+                <strong>All day</strong>
+            </div>
+            <div ng-if="!vm.isShowWorkWeek || (vm.isShowWorkWeek && !day.isWeekend)"
+                 flex layout="column"
+                 layout-padding
+                 class="cal-all-day-cell cell-in-week-view"
+                 ng-repeat="day in vm.dayInWeekAllDayEvent track by $index"
+                 ng-click="vm.calendarTimeCellOnClick($event, day.date, true)"
+                 context-menu
+                 context-menu-type="calendarItem"
+                 context-menu-calendar-view-type="day"
+                 context-menu-calendar-date="{{day.date}}"
+                 ng-include="'eventItem.tpl.html'">
+            </div>
+        </div>
+    </div>
+
+    <div id="calendar-resizer"
+         layout="row"
+         class="resize-horizontal"
+         calendar-resizer="horizontal"
+         resizer-top="#allDay-Calendar">
+        <span ng-click="vm.disabledMode = !vm.disabledMode">
+            <i class="fa"
+               ng-class="{'fa-caret-up': !vm.disabledMode,
+                          'fa-caret-down': vm.disabledMode}"></i>
+            <i class="fa"
+               ng-class="{'fa-caret-up': !vm.disabledMode,
+                          'fa-caret-down': vm.disabledMode}"></i>
+            <i class="fa"
+               ng-class="{'fa-caret-up': !vm.disabledMode,
+                          'fa-caret-down': vm.disabledMode}"></i>
+        </span>
+    </div>
+    <div flex layout="column" layout-fill
+         class="calendar-hour-detail-list">
+        <div flex layout="row"
+             class="calendar-day-row"
+             ng-class="{'work-hours': hour.isInWorkingTime}"
+             ng-repeat="hour in vm.hoursList track by $index">
+            <div flex layout
+                 layout-padding
+                 class="cal-cell-time">
+                <strong ng-bind="hour.label"></strong>
+            </div>
+
+            <div ng-if="hour.dayInWeekList.length > 0"
+                 flex layout
+                 layout-padding
+                 class="calendar-row-cell-events cell-in-week-view"
+                 ng-repeat="day in hour.dayInWeekList track by $index"
+                 ng-click="vm.calendarTimeCellOnClick($event, day.date, false)"
+                 context-menu
+                 context-menu-type="calendarItem"
+                 context-menu-calendar-view-type="day"
+                 context-menu-calendar-date="{{day.date}}"
+                 ng-include="'eventItem.tpl.html'">
+            </div>
+
+        </div>
+    </div>
+
+    <script type="text/ng-template" id="eventItem.tpl.html">
+        <div class="cal-events cal-cel-event-background"
+             ng-class="{'cal-cel-event': event.allDay !== '1',
+                       'cal-cel-event-all-day': event.allDay === '1'}"
+             ng-style="{'height': event.allDay === '1' ? '25px' : event.height + 'px',
+                       'top': event.allDay !== '1' ? event.top : 'auto',
+                       'left': event.allDay !== '1' ? $index === 0 ?
+                       '0px': event.ratioOfLength * $index + '%' : 'auto',
+                       'width': 100 - (event.ratioOfLength * (day.events.length -1)) + '%',
+                       'z-index': $index + 1}"
+             ng-if="day.events.length > 0"
+             ng-repeat="event in day.events track by $index"
+             context-menu
+             context-menu-type="appointmentItem"
+             context-menu-appointment-detail="event">
+            <strong ng-if="event.allDay !== '1'"
+                    class="start-time"
+                    ng-bind="(event.tempStartsAt || event.startsAt) | calendarDate:'time':true"></strong>
+
+            <strong ng-if="event.allDay !== '1' && event.isShowEndTime"
+                    class="end-time"
+                    ng-bind="(event.endsAt) | calendarDate:'time':true"></strong>
+
+            <br ng-if="event.allDay !== '1' && (event.tags.length > 0 || event.attendees.length > 0)"/>
+
+            <a
+                href="javascript:;"
+                ng-click="vm.onEventClick({calendarEvent: event})"
+                class="event-item"
+                ng-bind-html="vm.$sce.trustAsHtml(event.title)"
+                uib-tooltip-html="event.title | calendarTrustAsHtml"
+                tooltip-placement="left"
+                tooltip-append-to-body="true">
+            </a>
+            <span ng-if="event.allDay !== '1'" class="cal-stuff">
+                <md-icon ng-if="(event.attendees.length > 0 && event.isOrganizer === '0') || (event.attendees.length > 1 && event.isOrganizer === '1')"
+                         md-svg-icon="mdi:account-multiple"></md-icon>
+                <md-icon ng-if="event.tags.length > 1" md-svg-icon="mdi:tag-multiple"></md-icon>
+                <md-icon ng-if="event.tags.length === 1" md-svg-icon="mdi:tag"
+                         ng-style="{color: event.tags[0].$.rgb}"></md-icon>
+            </span>
+        </div>
+    </script>
+</div>

@@ -1,0 +1,81 @@
+@import '../../../../common/common';
+.distribution-list-detail-pane{
+    overflow: hidden;
+    overflow-y: auto;
+    .detail-header{
+        h3{
+            margin: 0px;
+            font-weight: 400;
+            color: #4a4a4a;
+        }
+        p{
+            color: #acacac;
+            margin:0px;
+        }
+    }
+    .detail-info{
+        padding: 20px 0;
+        border: 1px solid #d4d4d4;
+        background: #fafafa;
+        box-shadow: 2px 2px 3px #888888;
+        margin: 0px -5px;
+        padding: 10px;
+        .contact-info{
+            padding-left: 25px;
+            h4{
+                margin: 0;
+            }
+            p{
+                margin: 0;
+                font-weight: 100;
+            }
+            span{
+                color: #c8c8c8;
+                font-size: 12px;
+                i{
+                    cursor: pointer;
+                }
+            }
+        }
+        .contact-detail-icons{
+            span{
+                color: #c8c8c8;
+                font-size: 20px;
+                i{
+                    margin-left: 15px;
+                    cursor: pointer;
+                }
+            }
+        }
+        .detail-content{
+            margin-left: 0px;
+            margin-right: 0px;
+            border-top: 1px solid #d4d4d4;
+            padding-top: 15px;
+        }
+        .detail-margin{
+            margin-left: 5px;
+            h3{
+                margin: 0px;
+            }
+            p{
+                margin:0px;
+            }
+        }
+        .avatar-margin{
+            margin-right: 15px;
+            margin-bottom: 10px;
+        }
+        .detail-row-margin{
+            margin-left: 10px;
+            margin-right: 0px;
+            margin-bottom: 10px;
+        }
+        .address-padding{
+            padding-left: 0px;
+        }
+        .detailType{
+            color: #c8c8c8;
+        }
+    }
+}

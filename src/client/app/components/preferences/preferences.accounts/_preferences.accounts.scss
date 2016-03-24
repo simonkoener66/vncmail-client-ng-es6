@@ -1,0 +1,87 @@
+/*************************************
+ *
+ *
+ * Modal Main File
+ *
+ *
+ **************************************/
+@import '../../../common/common';
+
+.preferences-content{
+    .selected{
+        background: gray !important;
+    }
+}
+
+.setting{
+    margin-top: 0;
+    padding: 0 25px;
+    font-weight: bold;
+}
+.mar-top-10{
+    margin-top: 10px;
+}
+.mar-top-0{
+    margin-top: 0 !important;
+}
+.flo-left-and-mar-top-25{
+    float: left;
+    margin-top: 25px;
+}
+.disable{
+    cursor: not-allowed !important;
+    background: #ddd;;
+}
+.delegate-popup{
+    .tittle{
+        color: white;
+        background: #4E6A7B;
+        font-size: 19px;
+        padding: 4px 4px;
+    }
+    form{
+        padding: 8px 5px;
+        button[type='submit']{
+            margin-right: 10px;
+        }
+    }
+    .mar-btm-10{
+        margin: 0 0 10px 0;
+    }
+}
+p{
+    label{
+        font-weight: normal;
+    }
+}
+.padding-btm-15{
+    padding-bottom: 15px;
+}
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    margin: -7px 0 0px 0px;
+    margin-top: 10px;
+    height: 40px;
+}
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+.preferences-delegate-permission {
+    span.m-text {
+        margin: 22px 20px;
+        display: block;
+    }
+    .mr2 {
+        margin: 20px;
+    }
+}

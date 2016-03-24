@@ -1,0 +1,21 @@
+<md-dialog aria-label="Warning" flex="40">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h4>Rename Tag "{{vm.oldName}}"</h4>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <div layout="column" layout-padding class="md-dialog-content">
+            <div layout-gt-xs="row">
+                <md-input-container class="md-block" flex-gt-xs>
+                    <label>New Tag Name</label>
+                    <input ng-model="vm.newName" ng-disabled="vm.reqPending">
+                </md-input-container>
+            </div>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" id="toastBounds">
+        <md-button ng-click="vm.cancel()" ng-disabled="vm.reqPending">Cancel</md-button>
+        <md-button class="md-primary md-raised md-hue-2" ng-click="vm.ok()" ng-disabled="vm.reqPending || !vm.newName.length">OK</md-button>
+    </md-dialog-actions>
+</md-dialog>

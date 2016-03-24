@@ -1,0 +1,56 @@
+<div layout="column">
+    <!-- Date range filter -->
+    <div layout="row" layout-align="space-between center">
+        <div layout="row" layout-align="space-around center">
+            <h4>Show appointments from</h4>
+            <md-datepicker ng-model="vm.fromDate"
+                           ng-change="vm.dateRangeFilterChanged()"
+                           md-placeholder="Enter date"></md-datepicker>
+            <h4>through</h4>
+            <md-datepicker ng-model="vm.toDate"
+                           ng-change="vm.dateRangeFilterChanged()"
+                           md-placeholder="Enter date"></md-datepicker>
+        </div>
+
+        <h2>{{vm.fromDate | date:"MMM d"}} - {{vm.toDate | date:"MMM d"}}</h2>
+    </div>
+
+    <div id="table-scroll">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th><md-icon md-font-set="material-icons">local_offer</md-icon></th>
+                    <th><md-icon md-font-set="material-icons">attachment</md-icon></th>
+                    <th translate="Subject"></th>
+                    <th translate="Location"></th>
+                    <th translate="Status"></th>
+                    <th translate="Calendar"></th>
+                    <th><md-icon md-font-set="material-icons">cached</md-icon></th>
+                    <th translate="Start Date"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="appointment in vm.appointmentList track by $index"
+                    context-menu
+                    context-menu-type="appointmentItem"
+                    context-menu-appointment-detail="appointment">
+                    <td>
+                        <md-icon md-font-set="material-icons"
+                                 ng-if="appointment.tags.length > 0">local_offer</md-icon>
+                    </td>
+                    <td>
+                        <md-icon md-font-set="material-icons"
+                                 ng-if="appointment.attachments.length > 0">attachment</md-icon>
+                    </td>
+                    <td>{{appointment.$.name}}</td>
+                    <td>{{appointment.$.loc}}</td>
+                    <td>{{appointment.$.ptst}}</td>
+                    <td>{{appointment.$.l}}</td>
+                    <td><md-icon md-font-set="material-icons"
+                                 ng-if="appointment.$.recur">cached</md-icon></td>
+                    <td>{{appointment.inst.$.s | date:"MM/dd/yyyy h:mma"}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

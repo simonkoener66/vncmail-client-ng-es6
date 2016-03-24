@@ -1,0 +1,212 @@
+<div class="preferences-accounts">
+    <div layout="column" layout-margin>
+        <div class="block">
+            <md-toolbar class="demo-toolbar md-primary">
+                <div class="md-toolbar-tools">
+                    <h2><span translate="PREFERENCES.ACCOUNT"></span></h2>
+                </div>
+            </md-toolbar>
+            <div class="block-content">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th translate="PREFERENCES.ACCOUNT_NAME"></th>
+                                <th translate="PREFERENCES.STATUS"></th>
+                                <th translate="PREFERENCES.EMAIL_ADDRESS"></th>
+                                <th translate="PREFERENCES.TYPE"></th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="account in vm.accounts track by $index" ng-click="vm.getAccountObj(account, $index)" ng-class="{'selected': $index === vm.accountObjIndex}">
+                            <td>{{account.accountName}}</td>
+                            <td>{{account.status}}</td>
+                            <td>{{account.emailAddress}}</td>
+                            <td>{{account.accountType}}</td>
+                        </tr>
+                    </table>
+                    <md-divider></md-divider>
+                    <div class="button-action" layout="row" layout-align="end center">
+                        <md-button class="md-raised md-primary" ng-click="vm.addExternalAccount()" translate="PREFERENCES.ADD_EXTERNAL_ACCOUNT"></md-button>
+                        <md-button class="md-raised md-primary" ng-click="vm.addPersonaAccount()" translate="PREFERENCES.ADD_PERSONAL"></md-button>
+                        <md-button class="md-warn md-raised md-hue-2" ng-click="vm.deleteAccount()" ng-disabled="vm.isDisabled" translate="COMMON.DELETE"></md-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block">
+            <md-toolbar class="demo-toolbar md-primary">
+                <div class="md-toolbar-tools">
+                    <h2><span translate="PREFERENCES.PRIMARY_ACCOUNT_SETTING"></span></h2>
+                </div>
+            </md-toolbar>
+            <div class="block-content">
+                <div class="block-item" layout="row">
+                    <div flex="25" layout="" layout-align="start center">
+                        <span translate="PREFERENCES.ACCOUNT_SETTING"></span>
+                    </div>
+                    <div flex="75" flex-xs="75">
+                        <md-input-container  class="md-block" flex-gt-sm>
+                            <input type="text">
+                        </md-input-container>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+                <div class="block-item" layout="column">
+                    <md-subheader class="md-no-sticky" flex="100">{{ 'PREFERENCES.SETTING_FOR_SENT_MESSAGES' | translate }}</md-subheader>
+                    <div layout="row">
+                        <div flex="25" layout="" layout-align="start center">
+                            <span translate="PREFERENCES.REPLY_TO"></span>
+                        </div>
+                        <div flex="75" flex-xs="75">
+                            <md-checkbox  ng-model="setReply" aria-label="{{ 'PREFERENCES.REPLY_TO' | translate }}">
+                                {{ 'PREFERENCES.SET_REPLY_TO' | translate }}
+                            </md-checkbox>
+                            <div layout-gt-xs="row">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <input type="text"  placeholder="e.g. Bob Smith" ng-disabled="!setReply" ng-class="{'disable': !setReply}">
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm flex-offset="15" flex-offset-xs="0">
+                                    <md-select ng-model="replyEmail">
+                                        <md-option>umair@gmail.com</md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+                <div class="block-item" layout="row">
+                    <div flex="25" layout="" layout-align="start center">
+                        <span translate="PREFERENCES.DELEGATES"></span>
+                    </div>
+                    <div flex="75" flex-xs="75">
+                        <span translate="PREFERENCES.FOLLOWING_USERS"></span>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th translate="PREFERENCES.NAME"></th>
+                                <th translate="PREFERENCES.TYPE"></th>
+                            </tr>
+                            </thead>
+                            <tr ng-if="!vm.delegateList.length">
+                                <td translate="PREFERENCES.NO_RESULT_FOUND"></td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr ng-repeat="delegateItem in vm.delegateList" ng-click="vm.getDelegateObj(delegateItem, $index)" ng-class="{'selected': $index === vm.delegateObjIndex}">
+                                <td>{{delegateItem.emailAddress}}</td>
+                                <td>{{delegateItem.sendAs + delegateItem.sendOnBehalf}}</td>
+                            </tr>
+                        </table>
+                        <div class="button-action pull-right">
+                            <vnc-modal template="{{vm.delegateTemplate}}" use_ctrl="DelegatePopupController" backdrop="static">
+                                <md-button class="md-raised md-primary" translate="PREFERENCES.ADD_DELEGATE"></md-button>
+                            </vnc-modal>
+                            <vnc-modal template="{{vm.delegateTemplate}}" use_ctrl="DelegatePopupController" backdrop="static" resolve="{{vm.delegateObj}}">
+                                <md-button class="md-raised md-primary" ng-disabled="vm.enableButton" translate="PREFERENCES.EDIT_PERMISSION"></md-button>
+                            </vnc-modal>
+                             <md-button class="md-warn md-raised md-hue-2" ng-disabled="vm.enableButton" ng-click="vm.deleteDelegate()" translate="COMMON.REMOVE"></md-button>
+                        </div>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+                <div class="block-item" layout="row">
+                    <div flex="25" layout="" layout-align="start center">
+                        <span translate="PREFERENCES.DELEGATE_SEND_SETTINGS"></span>
+                    </div>
+                    <div flex="75" flex-xs="75">
+                        <md-radio-group ng-model="send_setting">
+                            <md-radio-button name="send_setting" value="1"> {{ 'PREFERENCES.SAVE_SENT_FOLDER' | translate }}</md-radio-button>
+                            <md-radio-button name="send_setting" value="2"> {{ 'PREFERENCES.SAVE_DELEGATE_SENT_FOLDER' | translate }}</md-radio-button>
+                            <md-radio-button name="send_setting" value="3"> {{ 'PREFERENCES.SAVE_DELEGATE_MY_SENT_FOLDER' | translate }}</md-radio-button>
+                            <md-radio-button name="send_setting" value="4"> {{ 'PREFERENCES.DONT_SAVE_SENT_FOLDER' | translate }}</md-radio-button>
+                        </md-radio-group>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block">
+            <md-toolbar class="demo-toolbar md-primary" ng-show="vm.selectedObj.accountType === 'Persona'" >
+                <div class="md-toolbar-tools">
+                    <h2><span translate="PREFERENCES.PERSONA_SETTINGS"></span></h2>
+                </div>
+            </md-toolbar>
+            <div class="block-content">
+                <div class="block-item" layout="row">
+                    <div flex="25" layout="" layout-align="start center">
+                        <span translate="PREFERENCES.ACCOUNT_NAME"></span>
+                    </div>
+                    <div flex="75" flex-xs="75">
+                        <md-input-container  class="md-block" flex-gt-sm>
+                            <label translate="PREFERENCES.INTRO"></label>
+                            <input type="text">
+                        </md-input-container>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+                <div class="block-item">
+                    <md-subheader class="md-no-sticky" translate="PREFERENCES.FOR_SENT_MESSAGES"></md-subheader>
+                    <div layout="row">
+                        <div flex="25" layout="" layout-align="start center">
+                            <span translate="PREFERENCES.FROM"></span>
+                        </div>
+                        <div flex="75" flex-xs="75">
+                            <span translate="PREFERENCES.CHOOSE_WHAT_APPEARS"></span>
+                            <md-input-container  class="md-block" flex-gt-sm>
+                                <input type="text" placeholder="Email">
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div layout="row">
+                        <div flex="25" layout="" layout-align="start center">
+                            <span class="m-text">Reply-to</span>
+                        </div>
+                        <div flex="75" flex-xs="75">
+                            <md-checkbox  ng-model="setReply" aria-label="Reply To">
+                                Set the "Reply-to" field of email messages to
+                            </md-checkbox>
+                            <div layout-gt-xs="row">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <input type="text"  placeholder="e.g. Bob Smith" ng-disabled="!setReply" ng-class="{'disable': !setReply}">
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm flex-offset="15">
+                                    <md-select ng-model="replyEmail">
+                                        <md-option>umair@gmail.com</md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+                <div class="block-item" layout="row">
+                    <div flex="25" layout="" layout-align="start center">
+                        <span class="m-text">Use this persona</span>
+                    </div>
+                    <div flex="75" flex-xs="75" layout="column">
+                        <md-checkbox ng-model="setReply" aria-label="Reply To">
+                            {{ 'PREFERENCES.WHEN_REPLYING' | translate }}
+                        </md-checkbox>
+                        <md-input-container>
+                            <input type="text" placeholder="e.g. BobSmith@vnc.biz" ng-disabled="!setReply" ng-class="{'disable': !setReply}">
+                        </md-input-container>
+                        <span style="display: block" translate="PREFERENCES.ENTER_EMAIL"></span>
+                        <md-divider style="margin:20px 0;"></md-divider>
+                        <md-checkbox ng-model="setReply" aria-label="Reply To">
+                             {{ 'PREFERENCES.WHEN_COMPOSING' | translate }}
+                        </md-checkbox>
+                        <div layout="row">
+                            <md-input-container flex="70">
+                                <input type="text" placeholder="e.g. folder name(s)" ng-disabled="!setReply" ng-class="{'disable': !setReply}">
+                            </md-input-container>
+                            <md-input-container  class="btn btn-primary fileUpload" flex="10">
+                                <img src="../images/ic_folder_white_24px.svg">
+                                <input type="file" class="upload" webkitdirectory directory>
+                            </md-input-container>
+                        </div>
+                        <span translate="PREFERENCES.ENTER_FOLDER"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

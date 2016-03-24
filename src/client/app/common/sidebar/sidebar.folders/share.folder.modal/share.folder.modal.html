@@ -1,0 +1,131 @@
+<md-dialog aria-label="Share Folder" flex="40">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h4>Share Folder</h4>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="vm.cancel($event)">
+                <md-icon md-font-set="materials-icons" class="material-icons md-18" aria-label="Close dialog"> clear </md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content class="share-folder">
+        <div layout="column" layout-padding class="md-dialog-content">
+            <form flex name="first-step" class="form1" ng-show="vm.form1">
+                <div layout-gt-xs="row">
+                    <div>
+                        <p class="md-body-2 sub-text">Folder Name</p>
+                        <h4 class="md-subhead" ng-bind="vm.folderName"></h4>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+                <div layout-gt-xs="row" class="layout-padding">
+                </div>
+                <div layout-gt-xs="row">
+                    <div layout="column">
+                        <p flex class="md-body-1 sub-text">Share with</p>
+                        <md-radio-group ng-model="vm.sharewith">
+                            <md-radio-button flex value="usr">
+                                <p class="md-subhead">User or Group</p>
+                                <span class="md-body-1 sub-text">(Internal contact)</span>
+                            </md-radio-button>
+                            <md-radio-button flex value="guest">
+                                <p class="md-subhead">Guests</p>
+                                <span class="md-body-1 sub-text">(External contact, View only)</span>
+                            </md-radio-button>
+                            <md-radio-button flex value="public" disabled>
+                                <p class="md-subhead">Public</p>
+                                <span class="md-body-1 sub-text">(View only, No Password required)</span>
+                            </md-radio-button>
+                        </md-radio-group>
+                    </div>
+                </div>
+            </form>
+            <form flex name="second-step" class="form2" ng-show="vm.form2">
+                <div layout-gt-xs="row">
+                    <vnc-auto-complete-mail flex mail-array="vm.toEmails" placeholder="Enter Contact(s)"></vnc-auto-complete-mail>
+                </div>
+                <div layout-gt-xs="row">
+                    <div layout="column">
+                        <p flex class="md-body-1 sub-text">Select Role</p>
+                        <md-radio-group ng-model="vm.shareRole">
+                            <md-radio-button flex value="r">
+                                <p class="md-subhead">Viewer</p>
+                                <span class="md-body-1 sub-text">(View only)</span>
+                            </md-radio-button>
+                            <md-radio-button flex value="rwidx" ng-disabled="vm.external">
+                                <p class="md-subhead">Manager</p>
+                                <span class="md-body-1 sub-text">(View, Edit, Add, Remove)</span>
+                            </md-radio-button>
+                            <md-radio-button flex value="rwidxa" disabled>
+                                <p class="md-subhead">Admin</p>
+                                <span class="md-body-1 sub-text">(View, Edit, Add, Remove, Administer)</span>
+                            </md-radio-button>
+                            <md-radio-button flex value="n">
+                                <p class="md-subhead">None</p>
+                                <span class="md-body-1 sub-text">(None)</span>
+                            </md-radio-button>
+                        </md-radio-group>
+                    </div>
+                </div>
+            </form>
+            <form flex name="third-step" class="form3" ng-show="vm.form3">
+                <div layout-gt-xs="row">
+                    <md-input-container flex class="md-block">
+                        <label>Add note to message</label>
+                        <textarea placeholder="Message here..." name="html" ng-model="vm.notes" columns="1" ng-model-options="{ debounce: 500 }" ng-disabled="vm.reqPending || !vm.shareType || vm.shareType == 'no'"></textarea>
+                    </md-input-container>
+                </div>
+                <div layout-gt-xs="row">
+                    <div layout="column">
+                        <md-radio-group ng-model="vm.shareType">
+                            <md-radio-button flex ng-disabled="vm.reqPending" value="yes">
+                                <p class="md-subhead">Send standard message</p>
+                                <span class="md-body-1 sub-text">Note: The standard message display your name, the name of the shared item,
+                                        permission granted to the recipients, and sign in information, if necessary</span>
+                            </md-radio-button>
+                            <md-radio-button flex ng-disabled="vm.reqPending" value="no">
+                                <p class="md-subhead">Do not send mail</p>
+                            </md-radio-button>
+                        </md-radio-group>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" id="toastBounds">
+        <md-button ng-show="vm.form1" ng-click="vm.cancel()">CANCEL</md-button>
+        <md-button ng-show="vm.form1" class="md-raised md-primary" ng-click="vm.next()" ng-disabled="!vm.sharewith">NEXT</md-button>
+
+        <md-button ng-show="vm.form2" class="md-raised" ng-click="vm.form2 = false; vm.form1 = true">BACK</md-button>
+        <md-button ng-show="vm.form2" class="md-raised md-primary" ng-click="vm.form2 = false; vm.form3 = true" ng-disabled="!vm.shareRole || vm.toEmails.length<1">NEXT</md-button>
+
+        <md-button ng-show="vm.form3" class="md-raised" ng-click="vm.form3 = false; vm.form2 = true" ng-disabled="vm.reqPending">BACK</md-button>
+        <md-button ng-show="vm.form3" class="md-raised md-primary" ng-click="vm.share()" ng-disabled="vm.reqPending || !vm.shareType">SHARE</md-button>
+    </md-dialog-actions>
+</md-dialog>
+
+
+<script type="text/ng-template" id="ShareError.html">
+    <md-dialog aria-label="Warning" flex="40" ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h4>Critical</h4>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div layout="column" layout-padding class="md-dialog-content">
+                <div layout-gt-xs="row">
+                    <p>
+                        <md-icon md-font-set="material-icons" style="font-size: 20px; color: red;" class="material-icons"> warning </md-icon>
+                        <span ng-bind="vm.message"></span>
+                    </p>
+                </div>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <md-button ng-if="vm.duplicateEmail" ng-click="vm.ok()">Cancel</md-button>
+            <md-button ng-if="!vm.duplicateEmail" class="md-primary md-raised md-hue-2" ng-click="vm.ok()">Ok</md-button>
+            <md-button ng-if="vm.duplicateEmail" class="md-primary md-raised md-hue-2" ng-click="vm.resend()">Resend</md-button>
+        </md-dialog-actions>
+    </md-dialog>
+</script>

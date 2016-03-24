@@ -1,0 +1,22 @@
+<md-dialog aria-label="Warning" flex="40" hotkey="{'esc': vm.cancel}">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h4>Warning</h4>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <div layout="column" layout-padding class="md-dialog-content">
+            <div layout-gt-xs="row">
+                <p>
+                    <md-icon md-font-set="material-icons" style="font-size: 20px; color: red;" class="material-icons"> warning </md-icon>
+                    <span ng-if="vm.isTrash">This action will delete all items in Email, Contacts, Calendar, Tasks and Briefcase trash folders. Are you sure that you want to permanently delete everything in these trash folders?</span>
+                    <span ng-if="!vm.isTrash">Are you sure you want to permanently delete everything within the "<strong ng-bind="vm.folderName | uppercase"></strong>" folder?</span>
+                </p>
+            </div>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+        <md-button ng-click="vm.cancel()">Cancel</md-button>
+        <md-button class="md-primary md-raised md-hue-2" ng-click="vm.emptyTrash()" hotkey="{'enter': vm.emptyTrash}">Ok</md-button>
+    </md-dialog-actions>
+</md-dialog>

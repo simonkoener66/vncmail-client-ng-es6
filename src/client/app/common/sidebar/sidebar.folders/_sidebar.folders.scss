@@ -1,0 +1,149 @@
+/*************************************
+ *
+ *
+ * Sidebar Folders Main File
+ *
+ *
+ **************************************/
+@import '../../common';
+
+.sidebar-folders{
+    margin-left: 10px;
+    .s18{
+        width: 18px;
+        height: 18px;
+    }
+    .loading{
+        padding: 10px;
+        text-align: center;
+        font-weight: bold;
+    }
+    .hidden {
+        display: none!important;
+        visibility: hidden!important;
+    }
+    .current {
+        color: #009688;
+        background-color: #E0E0E0;
+    }
+    .angular-ui-tree-handle {
+        line-height: 25px;
+        font-weight: 400;
+    }
+    .angular-ui-tree-nodes .angular-ui-tree-nodes {
+        padding-left: 25px;
+    }
+    .title{
+        color: $nav-gray;
+        margin-left: 20px;
+    }
+    .child {
+        .folder-selectable{
+            cursor: pointer !important;
+            &:hover {
+                color: #eee !important;
+            }
+        }
+        .folder-selected{
+            background-color: #eee !important;
+        }
+        .title {
+            margin-left: 12px;
+        }
+        .green {
+            @include set-svg($accent-green);
+        }
+        .yellow {
+            @include set-svg($accent-orange);
+        }
+        .purple {
+            @include set-svg($accent-purple);
+        }
+        .blue {
+            @include set-svg($accent-blue);
+        }
+        .cyan {
+            @include set-svg($accent-cyan);
+        }
+        .pink {
+            @include set-svg($accent-pink);
+        }
+        .gray {
+            @include set-svg($light-gray);
+        }
+        .red {
+            @include set-svg($accent-red);
+        }
+        .orange {
+            @include set-svg($accent-orange);
+        }
+        &.dark-grey{
+            @include set-svg($nav-gray);
+        }
+        li {
+            &:hover {
+                .arrow_drop_down {
+                    display: inline-block;
+                }
+            }
+        }
+    }
+    .parent > li > .angular-ui-tree-handle{
+        cursor: auto;
+        svg{
+            cursor: pointer;
+        }
+    }
+    .parent {
+        #ui-tree-handle{
+            &.folder-selectable{
+                cursor: pointer;
+                &:hover {
+                    color: #eee;
+                }
+            }
+            &.folder-selected{
+                background-color: #eee;
+            }
+            &.green {
+                @include set-svg($accent-green);
+            }
+            &.yellow {
+                @include set-svg($accent-orange);
+            }
+            &.purple {
+                @include set-svg($accent-purple);
+            }
+            &.blue {
+                @include set-svg($accent-blue);
+            }
+            &.cyan {
+                @include set-svg($accent-cyan);
+            }
+            &.pink {
+                @include set-svg($accent-pink);
+            }
+            &.gray {
+                @include set-svg($light-gray);
+            }
+            &.red {
+                @include set-svg($accent-red);
+            }
+            &.dark-grey{
+                @include set-svg($nav-gray);
+            }
+        }
+    }
+    .sidebar-nav-folder {
+        li {
+            &:hover {
+                .arrow_drop_down {
+                    display: inline-block;
+                }
+            }
+        }
+    }
+    .arrow_drop_down {
+        display: none;
+    }
+}

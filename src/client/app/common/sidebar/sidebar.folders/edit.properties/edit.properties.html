@@ -1,0 +1,69 @@
+<md-dialog aria-label="Folder Properties" flex="60" hotkey="{'esc': vm.cancel}">
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h3>Folder Properties</h3>
+            </div>
+        </md-toolbar>
+        <md-dialog-content style="max-width:800px;max-height:810px;">
+            <md-tabs md-dynamic-height md-border-bottom>
+                <md-tab label="Properties">
+                    <md-content class="md-margin">
+                        <div layout="column" layout-padding>
+                            <div layout-gt-xs="row">
+                                <p ng-if="vm.editFolderName">Name: <strong> {{vm.folderName}}</strong></p>
+                                <md-input-container class="md-block" flex-gt-xs ng-if="!vm.editFolderName">
+                                    <label>Folder Name</label>
+                                    <input ng-model="vm.folderNewName" ng-disabled="vm.reqPending">
+                                </md-input-container>
+                            </div>
+                            <div layout-gt-xs="row">
+                                <md-input-container class="md-block" flex="25" flex-gt-xs>
+                                    <label>Select Color</label>
+                                    <md-select ng-model="vm.selectColor" ng-disabled="vm.reqPending">
+                                        <md-option ng-repeat="color in vm.availableColors" value="{{color}}">
+                                            {{color}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div layout-gt-xs="row">
+                                <p>Type: <strong> Mail Folder</strong></p>
+                            </div>
+                            <md-divider></md-divider>
+                            <fieldset class="standard" ng-if="vm.shareDetials">
+                                <legend>Sharing for this folder</legend>
+                                <div layout="column" layout-gt-xs="row" ng-repeat="sharers in vm.shareDetials track by $index" >
+                                    <div flex="60">{{sharers.$.zid}}</div>
+                                    <div flex>{{sharers.$.perm | permission}}</div>
+                                    <div flex><md-button style="margin: 0;line-height: 0;min-height: 25px;" md-no-ink class="md-primary" ng-click="vm.editShareFolder($index)">Edit</md-button></div>
+                                    <div flex><md-button style="margin: 0;line-height: 0;min-height: 25px;" md-no-ink class="md-primary" ng-click="vm.revokeShareFolder($index)">Revoke</md-button></div>
+                                    <div flex><md-button style="margin: 0;line-height: 0;min-height: 25px;" md-no-ink class="md-primary" ng-click="vm.resendShareMessage($index)">Resend</md-button></div>
+                                </div>
+                            </fieldset>
+                            </div>
+                    </md-content>
+                </md-tab>
+                <md-tab label="Retention">
+                    <md-content class="md-margin">
+                        <div layout="column" layout-padding>
+                            <div layout-gt-xs="row">
+                                <md-checkbox ng-model="vm.showRssField" ng-disabled="vm.reqPending">
+                                    Enable Message Retention
+                                </md-checkbox>
+                            </div>
+                            <p layout-gt-xs="row">Messages in this folder which fall within the retention range will require explicit
+                                confirmation before being deleted.</p>
+                        </div>
+                    </md-content>
+                </md-tab>
+            </md-tabs>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <md-button class="md-primary" ng-click="vm.addShareFolder()" ng-show="vm.propertiesTab">Add Share</md-button>
+            <span flex></span>
+            <md-button ng-click="vm.cancel()">Cancel</md-button>
+            <md-button class="md-primary md-raised md-hue-2" ng-click="vm.editFolder()" hotkey="{'enter': vm.editFolder}"ng-disabled="!vm.folderNewName">Ok</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

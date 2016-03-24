@@ -1,0 +1,18 @@
+<div id="contactDetail" ng-mouseleave="vm.mouseLeave($event)" ng-if="vm.menuContentPosition" ng-style="vm.menuContentPosition" class="contact-details">
+    <div class="detail" layout="row">
+        <div flex="25">
+            <vnc-avatar person-email="vm.mail.email" person-name="{{vm.mail.displayName}}" person-size="sm"></vnc-avatar>
+        </div>
+        <div flex="75">
+            <p class="name-"><a href="#">{{vm.mail.displayName}}</a></p>
+            <p><a href="#">{{vm.mail.email}} </a></p>
+        </div>
+    </div>
+    <div layout="row" layout-align="center center" ng-style="{'margin-top': '10px'}">
+        <div flex="30">
+            <md-icon md-font-set="material-icons" style="color: black"> email </md-icon>
+            <md-icon md-font-set="material-icons" style="color: black">event_note</md-icon>
+            <md-icon md-font-set="material-icons" style="color: black">videocam</md-icon>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,173 @@
+@import '../../../../common/common';
+
+.contactDetailPage{
+    overflow-y: auto;
+    background-color: #EEEEEE;
+    .contact-detail-icons {
+        padding-top: 50px;
+    }
+}
+
+.subjectWrap{
+    word-wrap: break-word !important;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block!important;
+
+}
+div[layout=column]:not(.notes) label{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: inline-block;
+}
+    .detail-header{
+        h3{
+            margin: 0px;
+            font-weight: 400;
+            color: #4a4a4a;
+        }
+        p{
+            color: #acacac;
+            margin:0px;
+        }
+    }
+
+    .detail-info {
+        border-top: 2px solid #d4d4d4;
+        border-bottom: 2px solid #d4d4d4;
+        background: #fafafa;
+        .contact-info{
+            padding-left: 25px;
+            span{
+                color: #c8c8c8;
+                font-size: 12px;
+                i{
+                    cursor: pointer;
+                }
+            }
+        }
+        .contact-location {
+            margin-top: 12px;
+        }
+        .contact-detail-icons{
+            span{
+                color: #c8c8c8;
+                font-size: 20px;
+                i{
+                    margin-left: 15px;
+                    cursor: pointer;
+                }
+            }
+        }
+        .detail-content{
+            margin-left: 0px;
+            margin-right: 0px;
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+        .detail-margin{
+            margin-left: 5px;
+            margin-top:20px;
+            h3{
+                margin: 0px !important;
+            }
+            p{
+                margin: 0 0 0px !important;
+            }
+        }
+        .detail-row-margin{
+            margin-left: 25px;
+            margin-right: 0px;
+            margin-bottom: 20px;
+        }
+        .address-padding{
+            padding-left: 0px;
+        }
+
+        .detailTypePosition{
+            text-align: right;
+
+        }
+        .detailType{
+            color: #9B9B9B;
+            font-size: 12px !important;
+        }
+
+    }
+
+    h4{
+        margin: 0 !important;
+    }
+    p{
+        margin: 0 0 0px !important;
+        font-weight: 100;
+    }
+
+    .tag-info{
+        padding: 5px 0;
+        margin: 0px -5px;
+    }
+
+    .linethrough{
+       text-decoration: line-through;
+    }
+
+    .detailKeyColor{
+        color: #022A43 !important;
+        padding-bottom: 15px;
+    }
+
+    .detailValueColor{
+        color: #727272 !important;
+    }
+
+    .detailKeyFontWeight{
+        font-weight: 400 !important;
+    }
+.avatar-margin{
+    position: relative;
+    margin-left: 15px;
+    margin-bottom: 10px;
+    text-align: center;
+    padding-top: 40px;
+ }
+
+.nameDetailsPadding{
+    padding-top: 40px !important;
+}
+
+.job-contactNo-InfoColor{
+    color: #BFBDBD !important;
+}
+
+.noOfContactPadding{
+    padding-top: 69px;
+    text-align: right;
+}
+
+svg{
+    fill: #BFBDBD;
+}
+
+.contactNamePosition{
+    position: relative;
+}
+
+.kebabPadding{
+    padding-top: 98px;
+}
+.email-text-style {
+    a{
+        color: #727272 !important;
+        &:hover {
+            color: #23527c !important;
+            text-decoration: none !important;
+        }
+        &:focus {
+            outline: none !important;
+        }
+        text-decoration: none;
+    }
+}

@@ -1,0 +1,38 @@
+/*************************************
+*
+*
+* Main SASS file
+*
+*
+**************************************/
+
+//Imports from project
+@import 'variables';
+
+//Loading bar from angular-loading-bar
+@import 'loading-bar';
+
+//Typography along with overrides for base bootstrap
+@import 'typography/typography';
+
+//Color picker from angular-color-picker
+@import 'color-picker';
+
+md-input-container
+{
+    .md-input, .md-placeholder, label {
+        text-shadow: none!important;
+        // border-color: transparent!important;
+        // color: inherit!important;
+    }
+}
+.md-dialog.md-default-theme, .md-dialog{
+  max-width: 100% !important;
+}
+.short-buttons{
+    cursor: text;
+    min-width: 32px;
+    margin: 3px;
+    font-weight: bold;
+    font-size: 11px;
+}

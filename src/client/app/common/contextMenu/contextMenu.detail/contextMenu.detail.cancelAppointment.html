@@ -1,0 +1,14 @@
+<div class="modal-header">
+    <h4 class="modal-title">Confirm Delete</h4>
+</div>
+<div class="modal-body">
+    <i class="fa fa-exclamation-triangle delete-appt-icon"></i>
+    <p>Are you sure you want to delete this appointment and send a cancellation message to the attendees?</p>
+</div>
+
+<!-- Footer buttons -->
+<div class="modal-footer">
+    <button class="btn btn-info" type="button" ng-click="vm.editMessage()">Edit Message</button>
+    <button class="btn btn-primary" type="button" ng-click="vm.sendCancellation()">Send Cancellation</button>
+    <button class="btn btn-default" type="button" ng-click="vm.cancel()">Cancel</button>
+</div>

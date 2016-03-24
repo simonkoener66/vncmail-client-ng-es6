@@ -1,0 +1,51 @@
+/*************************************
+ *
+ *
+ * Tags Main File
+ *
+ *
+ **************************************/
+@import '../common';
+
+#tag {
+    background-color: $dark-gray;
+    margin-right: 2px;
+    margin-bottom: 2px;
+    color: white;
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 5px;
+    span{
+        color: white !important;
+        font-size: 10px !important;
+    }
+    @include border-radius(4px);
+    text-transform: capitalize;
+    &.green {
+        background-color: $accent-green;
+    }
+    &.yellow {
+        background-color: $accent-orange;
+    }
+    &.purple {
+        background-color: $accent-purple;
+    }
+    &.blue {
+        background-color: $accent-blue;
+    }
+    &.cyan {
+        background-color: $accent-cyan;
+    }
+    &.pink {
+        background-color: $accent-pink;
+    }
+    &.gray {
+        background-color: $light-gray;
+    }
+    &.red {
+        background-color: $accent-red;
+    }
+    &.orange {
+        background-color: $accent-orange;
+    }
+}

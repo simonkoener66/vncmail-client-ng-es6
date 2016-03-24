@@ -1,0 +1,49 @@
+<div class="preferences-trusted-addresses">
+    <div layout="column" layout-margin>
+        <md-content>
+            <div class="block">
+                <md-toolbar class="demo-toolbar md-primary">
+                    <div class="md-toolbar-tools">
+                        <h2><span translate="PREFERENCES.TRUSTED_ADDRESSES"></span></h2>
+                    </div>
+                </md-toolbar>
+                <div class="block-content">
+                    <div class="block-item" layout="column">
+                        <span layout="row" translate="PREFERENCES.MAIL_FROM_THESE_ADDRESSES">
+                        </span>
+                        <div>
+                            <div layout="row" style="margin-left: 10px;" layout-xs="column" layout-sm="column">
+                                <md-input-container flex="75" class="md-block" flex-xs="100" flex-sm="100" flex="nogrow">
+                                    <input type="text" placeholder="enter email address or domain" ng-model="vm.newDomain" maxlength="29">
+                                </md-input-container>
+                                <div flex="25" flex-xs="100" flex-sm="100" flex="nogrow">
+                                    <md-button class="md-raised md-primary md-button md-button-margin" ng-click="vm.addDomain()">{{ 'COMMON.ADD' | translate }}</md-button>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div layout="row" layout-padding>
+                                <div class="data-div" flex="75" flex-gt-sm>
+
+                                        <md-list>
+                                          <md-list-item ng-repeat="domain in vm.domains track by $index" ng-class="{'td-value':($index == vm.index)}" ng-click="vm.setIndex($index)">
+                                            <div class="md-list-item-text" layout="column" >
+                                              <span >{{domain}}</span>
+                                            </div>
+                                          </md-list-item>
+                                        </md-list>
+
+                                    <span ng-show="vm.domains.length == '0'" translate="PREFERENCES.NO_RESULTS_FOUND"></span>
+                                    <small class="text-muted">{{vm.domains.length}} of 500 used.</small>
+                                </div>
+                                <div flex="25">
+                                    <md-button class="md-warn md-raised md-hue-2" ng-click="vm.removeDomain()">{{ 'COMMON.REMOVE' | translate }}</md-button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </md-content>
+    </div>
+</div>

@@ -1,0 +1,58 @@
+/*************************************
+ *
+ *
+ * Sidebar Main File
+ *
+ *
+ **************************************/
+@import '../common';
+
+.avatar{
+    background-color: $avatar-img;
+    height: 50px;
+    width: 50px;
+    display: inline-block;
+    border-radius: 50px;
+    color: white;
+    font-size: 20px;
+    text-transform: uppercase;
+    text-align: center;
+}
+.avatar-img{
+    height: 50px;
+    width: 50px;
+    display: inline-block;
+    border-radius: 50px;
+    color: white;
+    font-size: 20px;
+    padding: 0 !important;
+}
+.avatar-xs{
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    &.avatar{
+        font-size: 15px;
+    }
+}
+.avatar-sm{
+    width: 42px;
+    height: 42px;
+    line-height: 42px;
+}
+.avatar-md{
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+}
+.avatar-lg{
+    width: 58px;
+    height: 58px;
+    line-height: 58px;
+}
+.avatar-xs{
+    width: 27px;
+    height: 26px;
+    font-size: 12px;
+    line-height: 26px;
+}

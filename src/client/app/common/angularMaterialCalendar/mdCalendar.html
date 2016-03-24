@@ -1,0 +1,145 @@
+<md-content
+    class="vncMdCalendar"
+    layout='column'
+    layout-fill
+    md-swipe-left='next()'
+    md-swipe-right='prev()'
+    ng-switch="vm.view">
+    <md-toolbar>
+        <div class='md-toolbar-tools' layout='row'>
+            <div flex></div>
+            <md-button class="md-icon-button"
+                       aria-label="Previous month"
+                       mwl-date-modifier
+                       date="vm.currentDay"
+                       decrement="vm.view">
+                <md-tooltip md-direction="left">Previous</md-tooltip>
+                &laquo;
+            </md-button>
+            <h2 class='calendar-md-title'><span>{{ vm.viewTitle }}</span></h2>
+            <md-button class="md-icon-button"
+                       aria-label="Next month"
+                       mwl-date-modifier
+                       date="vm.currentDay"
+                       increment="vm.view">
+                <md-tooltip md-direction="right">Next</md-tooltip>
+                &raquo;
+            </md-button>
+            <div flex layout="row" layout-align="center center">
+                <md-button class="md-icon-button"
+                           date="vm.currentDay"
+                           mwl-date-modifier set-to-today>
+                    <md-tooltip md-direction="top">Today</md-tooltip>
+                    <md-icon md-font-set="material-icons">today</md-icon>
+                </md-button>
+                <div class="md-fab-speed-position">
+                    <md-fab-speed-dial
+                        class="md-speed-dial-controls"
+                        md-direction="down">
+                        <md-fab-trigger>
+                            <md-button aria-label="{{vm.selectingViewControl.name}}"
+                                       class="md-fab md-secondary">
+                                <md-icon md-svg-icon="{{vm.selectingViewControl.icon}}">
+                                </md-icon>
+                            </md-button>
+                        </md-fab-trigger>
+                        <md-fab-actions>
+                            <md-button
+                                aria-label="{{button.name}}"
+                                class="md-fab md-raised md-mini"
+                                ng-class="{'md-warn': control.isSelected}"
+                                ng-repeat="control in vm.calendarViewControls track by $index"
+                                ng-disabled="control.isDisabled"
+                                ng-click="vm.calendarViewControlOnClick(control)"
+                                ng-model="vm.viewControlsModel">
+                                <md-tooltip md-direction="{{control.tooltipDirection}}">
+                                    {{control.name}}
+                                </md-tooltip>
+                                <md-icon md-svg-icon="{{control.icon}}"></md-icon>
+                            </md-button>
+                        </md-fab-actions>
+                    </md-fab-speed-dial>
+                </div>
+            </div>
+        </div>
+    </md-toolbar>
+
+    <md-content flex layout='column' class="calendar">
+        <vnc-md-calendar-year
+            events="vm.events"
+            current-day="vm.currentDay"
+            on-event-click="vm.onEventClick"
+            on-event-times-changed="vm.onEventTimesChanged"
+            on-edit-event-click="vm.onEditEventClick"
+            on-delete-event-click="vm.onDeleteEventClick"
+            on-timespan-click="vm.onTimespanClick"
+            edit-event-html="vm.editEventHtml"
+            delete-event-html="vm.deleteEventHtml"
+            cell-is-open="vm.cellIsOpen"
+            cell-modifier="vm.cellModifier"
+            ng-switch-when="year">
+        </vnc-md-calendar-year>
+
+        <vnc-md-calendar-month
+            events="vm.events"
+            current-day="vm.currentDay"
+            on-event-click="vm.onEventClick"
+            on-event-times-changed="vm.onEventTimesChanged"
+            on-edit-event-click="vm.onEditEventClick"
+            on-delete-event-click="vm.onDeleteEventClick"
+            on-timespan-click="vm.onTimespanClick"
+            edit-event-html="vm.editEventHtml"
+            delete-event-html="vm.deleteEventHtml"
+            cell-is-open="vm.cellIsOpen"
+            cell-modifier="vm.cellModifier"
+            cell-template-url="{{ vm.monthCellTemplateUrl }}"
+            cell-events-template-url="{{ vm.monthCellEventsTemplateUrl }}"
+            is-show-week-number="vm.isShowWeekNumber"
+            ng-switch-when="month">
+        </vnc-md-calendar-month>
+
+        <vnc-md-calendar-week
+            events="vm.events"
+            current-day="vm.currentDay"
+            on-event-click="vm.onEventClick"
+            on-event-times-changed="vm.onEventTimesChanged"
+            day-view-start="vm.dayViewStart"
+            day-view-end="vm.dayViewEnd"
+            day-view-split="vm.dayViewSplit"
+            on-timespan-click="vm.onTimespanClick"
+            on-time-slot-click="vm.onTimeSlotClick"
+            calendar-folder-list="vm.calendarFolderList"
+            is-show-work-week="false"
+            ng-switch-when="week">
+        </vnc-md-calendar-week>
+
+        <vnc-md-calendar-week
+            events="vm.events"
+            current-day="vm.currentDay"
+            on-event-click="vm.onEventClick"
+            on-event-times-changed="vm.onEventTimesChanged"
+            day-view-start="vm.dayViewStart"
+            day-view-end="vm.dayViewEnd"
+            day-view-split="vm.dayViewSplit"
+            on-timespan-click="vm.onTimespanClick"
+            on-time-slot-click="vm.onTimeSlotClick"
+            calendar-folder-list="vm.calendarFolderList"
+            is-show-work-week="true"
+            ng-switch-when="workWeek">
+        </vnc-md-calendar-week>
+
+        <vnc-md-calendar-day
+            events="vm.events"
+            current-day="vm.currentDay"
+            on-event-click="vm.onEventClick"
+            on-event-times-changed="vm.onEventTimesChanged"
+            on-timespan-click="vm.onTimespanClick"
+            on-time-slot-click="vm.onTimeSlotClick"
+            day-view-start="vm.dayViewStart"
+            day-view-end="vm.dayViewEnd"
+            day-view-split="vm.dayViewSplit"
+            calendar-folder-list="vm.calendarFolderList"
+            ng-switch-when="day">
+        </vnc-md-calendar-day>
+    </md-content>
+</md-content>

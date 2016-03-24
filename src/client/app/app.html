@@ -1,0 +1,48 @@
+<!-- Place All UI elements intended to be present across all routes -->
+<div class="app main-wrapper">
+    <vnc-header class="clearfix" navline="vm.navline"></vnc-header>
+    <section class="main-content" ng-click="vm.sideMenuToggle()">
+      <!-- ng-style="vm.auth.authenticated && {'padding-top':'5rem'}" -->
+        <!-- TODO if approved remove sidemenu and the the sidemenu component from the project -->
+        <!-- <vnc-sidemenu></vnc-sidemenu> -->
+
+        <div class="cloud-bg" ng-if="vm.auth.authenticated">
+            <div class="cloud">
+            <span class='cloud'></span>
+                <div class="name">
+                    <span translate="APP_HELLO"></span>
+                    <span class="bold text-capitalize" data-ng-bind="vm.auth.user.name | user"></span>
+                    <p>VNCuxf <span class="bold">Mail</span></p>
+                </div>
+            </div>
+            <!-- <div class="top-cloud"></div>
+            <div class="top-cloud-circle"></div> -->
+            <vnc-sidebar flex="15"></vnc-sidebar>
+            <div ui-view class="shuffle-animation content"></div>
+        </div>
+        <div class="lock-size" ng-if="vm.auth.authenticated" layout="column" layout-align="center center" ng-cloak>
+          <md-fab-speed-dial class="md-scale" md-open="vm.speedDialOpen" md-direction="up" ng-mouseenter="vm.speedDialOpen=true" ng-mouseleave="vm.speedDialOpen=false">
+            <md-fab-trigger>
+              <md-button aria-label="menu" class="md-fab md-accent">
+                <md-icon md-font-set="material-icons">menu</md-icon>
+              </md-button>
+            </md-fab-trigger>
+            <md-fab-actions>
+             <div ng-repeat="r in vm.navRoutes track by $index" ng-if="r.name != 'calendar'">
+                 <md-button ng-if="r.action" aria-label="{{r.name}}" class="md-fab md-raised md-mini md-primary" ng-click="vm.compose()">
+                     <md-tooltip md-direction="left">{{r.name}}</md-tooltip>
+                     <md-icon md-font-set="material-icons">{{r.name}}</md-icon>
+                 </md-button>
+                 <md-button ng-if="!r.action" ng-class="vm.isCurrent(r)" ui-sref="{{r.name}}" aria-label="Go to {{r.name}}" class="md-fab md-raised md-mini md-hue-1">
+                     <md-tooltip md-direction="left">{{r.name}}</md-tooltip>
+                   <md-icon md-font-set="material-icons">{{r.settings.icon}}</md-icon>
+                 </md-button>
+             </div>
+            </md-fab-actions>
+          </md-fab-speed-dial>
+        </div>
+        <div ui-view class="shuffle-animation content" ng-if="!vm.auth.authenticated"></div>
+
+        <div ng-class="{overlay: vm.sidemenu}" class="toggle"></div>
+    </section>
+</div>

@@ -1,0 +1,9 @@
+<div class="selected-files" ng-repeat="f in vm.files">
+	<div layout="row" layout-align="start center">
+		<i class="material-icons" flex="10">insert_drive_file</i> 
+	    <span flex="80">{{f.name}}</span>
+	    <div flex="10">
+	    	<i class="material-icons pull-right" ng-click="vm.removeFile($index, f)">close</i>	
+	    </div>
+	</div>
+</div>

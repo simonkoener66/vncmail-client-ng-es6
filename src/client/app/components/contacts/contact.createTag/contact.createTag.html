@@ -1,0 +1,24 @@
+<div class="contact-create-tag">
+    <div class="modal-header" translate="CONTACTS.CREATE_NEW_TAG">
+
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <label translate="CONTACTS.NAME">
+
+            </label>
+            <input type="text">
+        </div>
+        <div class="col-md-4">
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                    {{ 'CONTACTS.SELECT_COLOR'}}
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li ng-repeat="tagColor in vm.defaultTagColors"><a href="#">tagColor.name</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

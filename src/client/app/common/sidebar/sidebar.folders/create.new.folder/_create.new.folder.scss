@@ -1,0 +1,23 @@
+/*************************************
+ *
+ *
+ * Sidebar Folders Main File
+ *
+ *
+ **************************************/
+@import '../../../common';
+
+.create-new-folder{
+    md-input-container.md-block{
+        margin-bottom: 0;
+    }
+    .folder-bordered {
+        height: 223px;
+        width: 100%;
+        min-width: 100%;
+        padding: 12px;
+        border: 2px solid black;
+        overflow-y: scroll;
+        margin: 0 auto;
+    }
+}

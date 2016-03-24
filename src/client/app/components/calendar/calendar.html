@@ -1,0 +1,8 @@
+<div layout="row">
+    <div layout="column" flex style="border: 1px solid green;">
+        <vnc-calendar-toolbar-header></vnc-calendar-toolbar-header>
+        <div ui-view=""></div>
+        <md-divider ng-if="vm.showTrashPanel"></md-divider>
+        <vnc-calendar-trash flex="nogrow" ng-if="vm.showTrashPanel"></vnc-calendar-trash>
+    </div>
+</div>

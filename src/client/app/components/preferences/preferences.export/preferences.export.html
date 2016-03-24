@@ -1,0 +1,58 @@
+<div class="preferences-export">
+    <div layout="column" layout-margin>
+        <div class="block">
+            <md-toolbar class="demo-toolbar md-primary">
+                <div class="md-toolbar-tools">
+                    <h2><span translate="PREFERENCES.EXPORT"></span></h2>
+                </div>
+            </md-toolbar>
+            <div class="block-content">
+                <div class="block-item" layout="row">
+                    <div class="m-text" flex="25">
+                        <span class="m-text" translate="PREFERENCES.TYPE"></span>
+                    </div>
+                    <div flex="50">
+                        <md-radio-group ng-model="vm.exportType">
+                          {{ 'PREFERENCES.ACCOUNT' | translate }}
+                          <md-radio-button value="Calender"> {{ 'PREFERENCES.CALENDER' | translate }} </md-radio-button>
+                          <md-radio-button value="Contact"> {{ 'PREFERENCES.CONTACT' | translate }}</md-radio-button>
+                        </md-radio-group>
+                    </div>
+                </div>
+                <div layout="column" layout-padding>
+                    <small translate="PREFERENCES.ALL_ACCOUNT_DATA"></small>
+                        <small ng-show="vm.exportType == 'Calender'" translate="PREFERENCES.CALENDAR_INFO"></small>
+                            <small ng-show="vm.exportType == 'Contact'" translate="PREFERENCES.CONTACT_INFO"></small>
+                </div>
+                <md-divider></md-divider>
+                <div class="block-item" layout="row" ng-show="false">
+                    <div class="m-text" flex="25">
+                        <span class="m-text" translate="PREFERENCES.RESOLVE_DUPLICATES"></span>
+                    </div>
+                    <div flex="50">
+                        <md-radio-group ng-model="data.group2">
+                          <md-radio-button value="Ignore">{{ 'PREFERENCES.IGNORE' | translate }}</md-radio-button>
+                          <md-radio-button value="Modify">{{ 'PREFERENCES.MODIFY' | translate }}</md-radio-button>
+                          <md-radio-button value="Replace">{{ 'PREFERENCES.REPLACE' | translate }}</md-radio-button>
+                          <md-radio-button value="Reset">{{ 'PREFERENCES.RESET' | translate }}</md-radio-button>
+                        </md-radio-group>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+                <div layout="row" class="block-item">
+                    <div flex="30">
+                        <span translate="PREFERENCES.SOURCE"></span>
+                    </div>
+                    <div flex="50" layout-align="center center">
+                        <p translate="PREFERENCES.ALL_FOLDERS"></p>
+                    </div>
+                </div>
+                <div layout="row">
+                    <div flex>
+                        <md-button class="md-raised md-primary pull-right" ng-click="vm.startExport()">{{ 'PREFERENCES.EXPORT' | translate }}</md-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

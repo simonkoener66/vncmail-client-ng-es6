@@ -1,0 +1,157 @@
+<md-dialog aria-label="Compose mail" class="compose-modal" flex="70">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h4 translate="TASKS.NEW_TASK"></h4>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="vm.cancel()">
+                <md-icon md-font-set="materials-icons" class="material-icons md-18" aria-label="Close dialog"> clear </md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <form name="taskCompose" novalidate>
+    <md-dialog-content class="no-horizantal">
+        <div layout="column" layout-padding>
+            <!-- DETAILS DIV -->
+            <div layout-gt-xs="row">
+                <md-input-container class="md-block" flex>
+                    <label>* {{ 'TASKS.SUBJECT' | translate }}</label>
+                    <input type="text" id="saveTaskDetail.subject" ng-model="vm.saveTaskDetail.subject" ng-class="{keyPressClass : vm.keyPress == true, beforeKeyPressClass : vm.keyPress == false}"
+                           ng-keypress="vm.keypressbackground($event)" required />
+                </md-input-container>
+            </div>
+
+            <div layout-gt-xs="row">
+                <md-input-container class="md-block" flex>
+                    <label>{{ 'TASKS.LOCATION' | translate }}</label>
+                    <input type="text" id="task-location" ng-model="vm.saveTaskDetail.location" class="textbox-height"/>
+                </md-input-container>
+            </div>
+
+            <div layout-gt-xs="row" class="margin-bottom-32">
+                <div flex="15">
+                    <md-input-container class="md-block" flex="35" flex-gt-xs>
+                        <label translate="TASKS.PRIORITY"></label>
+                        <md-select name="selectedPriority2" ng-model="vm.selectedPriority" ng-model-options="{trackBy: '$value.type'}">
+                            <md-option ng-value="prior" ng-repeat="prior in vm.saveTaskDetail.priority">
+                                <i class="material-icons small">{{prior.icon}}</i> {{ prior.type }}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div flex="25">
+                    <md-input-container class="md-block" flex-gt-xs="70" flex-gt-xs>
+                        <label translate="TASKS.STATUS"></label>
+                        <md-select name="selectedStatus" ng-model="vm.selectedStatus" ng-model-options="{trackBy: '$value.type'}">
+                            <md-option ng-click="vm.OnStatusClick($index)" ng-if="stats.type!='All'" ng-value="stats" ng-repeat="stats in vm.saveTaskDetail.status">
+                                {{ stats.type }}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div flex="10">
+                    <md-input-container class="md-block" flex-gt-xs="10" flex-gt-xs>
+                        <label>Progress</label>
+                        <md-select name="selectedProgress" ng-model="vm.selectedProgress" ng-model-options="{trackBy: '$value.type'}">
+                            <md-option ng-click="vm.OnProgressClick($index)" ng-value="progress" ng-repeat="progress in vm.saveTaskDetail.progresses">
+                                {{ progress.type }}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div flex="25">
+                    <div layout="column" class="inline-label">
+                        <label class="custom-label" translate="TASKS.START_DATE"></label>
+                    </div>
+                    <div layout="column">
+                        <md-datepicker ng-model="vm.saveTaskDetail.startDate" md-placeholder="Start Date"></md-datepicker>
+                    </div>
+                </div>
+                <div flex="25">
+                    <div layout="column" class="inline-label">
+                        <label class="custom-label" translate="TASKS.DUE_DATE"></label>
+                    </div>
+                    <div layout="column">
+                        <md-datepicker ng-model="vm.saveTaskDetail.dueDate" md-placeholder="Due date"></md-datepicker>
+                    </div>
+                </div>
+            </div>
+            <md-divider></md-divider>
+            <!-- REMINDER -->
+            <div layout="row">
+                <div flex="20" class="mar-top-10">
+                    <md-checkbox ng-model="vm.task_checkbox" ng-click="vm.setReminderOn()">
+                        <label class="md-primary" translate="TASKS.REMINDER"></label>
+                    </md-checkbox>
+                </div>
+                <div flex="40">
+                    <div layout="column">
+                        <label class="custom-label" translate="TASKS.START_DATE"></label>
+                    </div>
+                    <div layout="column" layout-align="center center">
+                        <md-datepicker ng-model="vm.saveTaskDetail.reminderStartDate" md-placeholder="Start Date" ng-disabled="!vm.task_checkbox"></md-datepicker>
+                    </div>
+                </div>
+                <div flex="40">
+                    <div layout="column">
+                        <label class="custom-label" translate="TASKS.DUE_DATE"></label>
+                    </div>
+                    <div layout="column" layout-align="center center">
+                        <md-datepicker ng-model="vm.saveTaskDetail.reminderTime" md-placeholder="Due date" ng-disabled="!vm.task_checkbox"></md-datepicker>
+                    </div>
+                </div>
+            </div>
+            <md-divider></md-divider>
+        </div>
+        <!-- CONFIGURE -->
+        <!--<div layout="row" flex>-->
+        <!--<a class="configurePadding" href="#" id="config" translate="TASKS.CONFIGURE" ng-disabled="!vm.task_checkbox"></a>-->
+        <!--</div>-->
+
+
+        <div flex="100" layout-padding ng-if="vm.newAttachments.length">
+            <fieldset class="standard">
+                <legend>Attachment</legend>
+                <vnc-file-repeat ng-model="vm.newAttachments"></vnc-file-repeat>
+            </fieldset>
+        </div>
+
+        <div flex="100" layout-padding>
+            <vnc-editor flex layout="column" ng-model="vm.saveTaskDetail.description" placeholder="Message..."></vnc-editor>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" layout-padding id="toastBounds">
+        <vnc-file-upload ng-model="vm.newAttachments" multiple="true" err-file="error_in_file"></vnc-file-upload>
+        <span flex></span>
+        <md-button ng-click="vm.cancel()" translate="COMMON.CANCEL"></md-button>
+        <md-button class="md-primary md-raised md-hue-8" type="button" ng-if="vm.operation.operation !='editTask'" ng-click="vm.createNewTask($event)" translate="COMMON.SAVE">  </md-button>
+        <md-button class="md-primary md-raised md-hue-8" type="button" ng-if="vm.operation.operation =='editTask'" ng-click="vm.modifyTask()" translate="COMMON.SAVE">  </md-button>
+
+    </md-dialog-actions>
+    </form>
+</md-dialog>
+
+<script type="text/ng-template" id="savingTaskModal.html">
+    <md-dialog aria-label="Warning" flex="40">
+
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h4 translate="COMMON.WARNING"></h4>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div layout="column" layout-padding class="md-dialog-content">
+                <div layout-gt-xs="row">
+                    <p>
+                        <md-icon md-font-set="material-icons" style="font-size: 20px; color: gold;" class="material-icons"> warning </md-icon>
+                        {{ 'TASKS.DO_YOU_WANT_TO_SAVE_CHANGES' | translate }}
+                    </p>
+                </div>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <md-button ng-click="vm.cancel()" hotkey="{'c': vm.cancel}" translate="COMMON.CANCEL">Cancel</md-button>
+            <md-button class="md-primary md-raised md-hue-2" ng-click="no()" hotkey="{'n': no}" translate="COMMON.NO">No</md-button>
+            <md-button class="md-primary md-raised md-hue-2" ng-click="yes()" translate="COMMON.YES" hotkey="{'y': yes}">Yes</md-button>
+        </md-dialog-actions>
+    </md-dialog>
+</script>

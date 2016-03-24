@@ -1,0 +1,24 @@
+.read-unread-circle{
+    color: #022a43;
+}
+.mail-content{
+    overflow: hidden;
+}
+
+
+@media (max-width: 600px) {
+	tags-input {
+		.autocomplete {
+			width: 283px;
+			.suggestion-item {
+				padding-right: 0px;
+			}
+		}
+	}
+	.modal-footer {
+		button {
+			min-width: 60px;
+			font-size: 13px;
+		}
+	}
+}

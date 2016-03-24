@@ -1,0 +1,42 @@
+<div layout="row">
+    <div id="table-scroll">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th><md-icon md-font-set="material-icons">local_offer</md-icon></th>
+                    <th><md-icon md-font-set="material-icons">attachment</md-icon></th>
+                    <th translate="Subject"></th>
+                    <th translate="Location"></th>
+                    <th translate="Status"></th>
+                    <th translate="Calendar"></th>
+                    <th><md-icon md-font-set="material-icons">cached</md-icon></th>
+                    <th translate="Start Date"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="appointment in vm.appointmentList track by $index"
+                    context-menu
+                    context-menu-type="appointmentItem"
+                    context-menu-appointment-detail="appointment">
+                    <td>
+                        <md-icon md-font-set="material-icons"
+                                 ng-if="appointment.tags.length === 1">local_offer</md-icon>
+                        <md-icon md-font-set="material-icons"
+                                 ng-if="appointment.tags.length > 1">more</md-icon>
+                    </td>
+                    <td>
+                        <md-icon md-font-set="material-icons"
+                                 ng-if="appointment.attachments.length > 0">attachment</md-icon>
+                    </td>
+                    <td>{{appointment.$.name}}</td>
+                    <td>{{appointment.$.loc}}</td>
+                    <td>{{appointment.$.ptst}}</td>
+                    <td>{{appointment.$.l}}</td>
+                    <td><md-icon md-font-set="material-icons"
+                                 ng-if="appointment.$.recur">cached</md-icon></td>
+                    <td>{{appointment.inst.$.s | date:"MM/dd/yyyy h:mma"}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

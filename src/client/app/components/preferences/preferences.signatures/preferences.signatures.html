@@ -1,0 +1,106 @@
+<div class="preferencesSignature">
+    <div layout="column" layout-margin>
+        <div class="block">
+            <md-toolbar class="demo-toolbar md-primary">
+                <div class="md-toolbar-tools">
+                    <h2><span translate="PREFERENCES.SIGNATURES"></span></h2>
+                </div>
+            </md-toolbar>
+            <div>
+                <div class="block-item" layout="row">
+                    <div flex="60" layout="" layout-align="end start" class="mar-top-10">
+                        <span class="md-body-2 mar-top-10 mar-right-5" translate="PREFERENCES.NAME  "></span>
+                        <md-input-container class="mar-top-0">
+                            <input type="text" placeholder="Signature name" ng-model="vm.newSignature">
+                        </md-input-container>
+                    </div>
+                    <div flex="50" layout="" flex-xs="50" layout-align="end start">
+                        <md-select ng-model="signatureView">
+                            <md-option selected>{{ 'PREFERENCES.FORMAT_TEXT' | translate }}</md-option>
+                            <md-option selected selected>{{ 'PREFERENCES.FORMAT_HTML' | translate }}</md-option>
+                        </md-select>
+                    </div>
+                </div>
+                <div layout="row" class="rich-element">
+                    <div flex="30">
+                        <div class="block-item scrolling-div" layout="column" flex="100">
+                            <div class="data-div" flex="100" flex-gt-sm>
+                                <md-list>
+                                    <md-list-item ng-repeat="signature in vm.signatures track by $index" ng-class="{'td-value':($index == vm.index)}" ng-click="vm.setIndex($index)">
+                                        <div class="md-list-item-text" layout="column" >
+                                            <span>{{signature}}</span>
+                                        </div>
+                                    </md-list-item>
+                                </md-list>
+                            </div>
+                        </div>
+                    </div>
+                    <div flex="70">
+                        <div class="block-item scrolling-div" layout="column" flex="100">
+                            <vnc-rich-textbox textarea-required="true" textarea-options="{}" ng-model="vm.content">
+                            </vnc-rich-textbox>
+                        </div>
+                    </div>
+                </div>
+                <div layout="row" class="block-item">
+                    <div flex="25" layout="" layout-align="start start">
+                        <md-button class="md-raised md-primary md-button" ng-click="vm.addSignature()" ng-disabled="!vm.newSignature" translate="PREFERENCES.NEW_SIGNATURE"></md-button>
+                        <md-button class="md-warn md-raised md-hue-2" ng-click="vm.removeSignature()" ng-disabled="!vm.signatures.length" translate="PREFERENCES.DELETE"></md-button>
+                    </div>
+                    <div flex="60" layout="" layout-align="end start" class="mar-top-10">
+                        <span class="md-body-2 mar-top-10 mar-right-5" translate="PREFERENCES.ATTACHED_CONTACT"></span>
+                        <md-input-container class="mar-top-0">
+                            <input type="text">
+                        </md-input-container>
+                    </div>
+                    <div flex="20" layout="" layout-align="end start">
+                        <md-button class="md-raised md-primary md-button" translate="PREFERENCES.BROWSE"></md-button>
+                        <md-button class="md-warn md-raised md-hue-2" translate="PREFERENCES.CLEAR"></md-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block">
+            <md-toolbar class="demo-toolbar md-primary">
+                <div class="md-toolbar-tools">
+                    <h2><span translate="PREFERENCES.USING_SIGNATURE"></span></h2>
+                </div>
+            </md-toolbar>
+            <div class="block-content">
+                <div layout="row" class="block-item">
+                    <div layout="" layout-align="start center" flex="25">
+                        <span class="md-body-2" translate="PREFERENCES.PRIMARY_ACCOUNT"></span>
+                    </div>
+                    <div layout="" layout-align="center center" flex="15">
+                        <span class="md-body-2" translate="PREFERENCES.NEW_MESSAGES"></span>
+                    </div>
+                    <div flex="25" layout="" layout-align="start start" flex-xs="75">
+                        <md-select ng-model="newMessages">
+                            <md-option ng-repeat="signature in vm.availableSignatures">{{signature}}</md-option>
+                        </md-select>
+                    </div>
+                    <div layout="" layout-align="center center" flex="15">
+                        <span class="md-body-2" translate="PREFERENCES.REPLY_AND_FORWARD"></span>
+                    </div>
+                    <div flex="25" layout="" layout-align="start start" flex-xs="75">
+                        <md-select ng-model="MessagesReply">
+                            <md-option ng-repeat="signature in vm.availableSignatures">{{signature}}</md-option>
+                        </md-select>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+                <div layout="row" class="block-item">
+                    <div flex="25" layout="" layout-align="start center">
+                        <span class="md-body-2" translate="PREFERENCES.SIGNATURE_PLACEMENT"></span>
+                    </div>
+                    <div flex="75" flex-xs="75">
+                        <md-radio-group>
+                            <md-radio-button value="1"> {{ 'PREFERENCES.ABOVE_INCLUDED_MESSAGES' | translate }}</md-radio-button>
+                            <md-radio-button value="2"> {{ 'PREFERENCES.BELOW_INCLUDED_MESSAGES' | translate }}</md-radio-button>
+                        </md-radio-group>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

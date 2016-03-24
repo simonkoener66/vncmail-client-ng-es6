@@ -1,0 +1,64 @@
+/*************************************
+ *
+ * Side Menu
+ *
+ * File for Side Menu
+ *
+ **************************************/
+@import '../common';
+
+/* Toggle Styles */
+
+#side-menu {
+    padding-left: 0;
+    @include transition(all 0.5s ease);
+    &.toggled{
+        .side-menu-wrapper {
+            left: 220px;
+        }
+    }
+    .side-menu-wrapper {
+        z-index: 1000;
+        position: fixed;
+        left: 0px;
+        width: 220px;
+        height: 100%;
+        margin-left: -220px;
+        overflow-y: auto;
+        border-right: 1px solid #eeeeee;
+        background-color: $white;
+        @include transition(all 0.5s ease);
+        .side-menu-nav{
+            position: absolute;
+            top: 6px;
+            width: 220px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            li {
+                line-height: 40px;
+                text-indent: 25px;
+                padding: 0;
+                a {
+                    display: block;
+                    text-decoration: none;
+                    color: $nav-gray;
+                    @include set-svg($nav-gray);
+                    .icon{
+                        margin-right: 25px;
+                        width: 15px;
+                        height: 15px;
+                    }
+                }
+                &:hover,
+                &.active {
+                    a {
+                        @include set-svg($sidebar-active-items);
+                        background: $light-gray;
+                        color: $sidebar-active-items;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,51 @@
+@import '../../../common/common';
+
+.choose-folder{
+    background-color: #fafafa;
+    padding: 0px 24px 24px 24px;
+    .modal-header{
+        background-color: #022A43 !important;
+        padding: 15px 15px;
+        margin: 0px -24px 0px -24px;
+        color: #fff;
+        border: 0;
+        font-size: 18px;
+        h3 {
+            font-size: 18px;
+            margin: 0;
+            width: 95%;
+            float: left;
+            line-height: inherit;
+        }
+        i {
+            float: right;
+            line-height: inherit;
+        }
+    }
+    .modal-body {
+        padding-top: 24px !important;
+    }
+
+    .modal-footer {
+        border:none;
+        margin:15px 0 0;
+        padding:0;
+        &.green-btns {
+            .btn-ok {
+                background: #6da31a;
+                color: #fff;
+                &:disabled {
+                    background:#f1f1f1;
+                    color:#b4b4b4;
+                }
+            }
+            .btn-cancel {
+                color: #6da31a;
+                &:disabled {
+                    color:#b4b4b4;
+                }
+            }
+        }
+    }
+
+}

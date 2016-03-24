@@ -1,0 +1,158 @@
+/*************************************
+ *
+ *
+ * Modal Main File
+ *
+ *
+ **************************************/
+
+@import '../../../common/common';
+@import '../../../common/variables';
+
+.row-no-padding {
+    [class*="col-"] {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+}
+
+.no-padding-left {
+    padding-left: 0 !important;
+}
+
+.no-padding-right {
+    padding-right: 0 !important;
+    color: #bebebe;
+}
+.focus-border{
+    border-color: #022a43 !important;
+}
+.distance-elements {
+    font-size: 18px;
+    color: #bebebe;
+    .bcc {
+        position: absolute !important;
+        top: 75px !important;
+        right: 15px !important;
+    }
+    .icon-close {
+        position: absolute !important;
+        top: 120px !important;
+        right: 15px !important;
+        font-size: 12px;
+        font-weight: 600;
+    }
+}
+.margin-5{
+    margin-left: 5px !important;
+}
+.compose-mail {
+    background-color: #fafafa;
+    .modal-header {
+        background-color: #022A43 !important;
+        padding: 15px 15px;
+        color: #fff;
+        border: 0;
+        font-size: 18px;
+        .icon-close {
+           color: #fff;
+        }
+    }
+    .modal-body {
+        img {
+            border-radius: 20px;
+            margin-bottom: -27px;
+        }
+        .selection-text{
+            color: rgba(0, 0, 0, 0.26);
+            font-size: 14px;
+            border-radius: 0;
+            font-weight: bold;
+        }
+        padding:15px;
+        .modal-text {
+            @include input-am;
+            .mail-body {
+                width: 100%;
+                min-height: 186px;
+                height: auto;
+                background-color: inherit;
+                @include borders(none, none, 1px solid black, none)
+            }
+            label {
+                font-weight: 500;
+                color: rgba(0,0,0,0.26);
+                margin: 15px 0 2px 0px;
+                font-weight: bold;
+            }
+        }
+        .modal-select {
+            label  {
+                color: rgba(0,0,0,0.26);
+                padding: 10px 0px 0px 0px;
+                margin-bottom: 0px;
+            }
+            .dropdown {
+                .btn-default {
+                    background: none;
+                    border: none;
+                    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+                    width: 100%;
+                    color: #bebebe;
+                    font-size: 18px;
+                    border-radius: 0;
+                    &:focus {
+                        outline: none;
+                        color: #444;
+                        border-color: #022a43;
+                    }
+                    &:active {
+                        box-shadow:none;
+                        -webkit-box-shadow:none;
+                    }
+                }
+            }
+            ul.dropdown-menu {
+                border-radius:5px;
+                -webkit-border-radius:5px;
+                background:#fff;
+                margin:0;
+                padding:0;
+                width:100%;
+                li {
+                    padding: 10px 15px;
+                    font-size: 16px;
+                    color: #575757;
+                    cursor: pointer;
+                    &.divider {
+                        padding: 0;
+                    }
+                    &:hover {
+                        background:#eee;
+                    }
+                }
+            }
+        }
+        ul.dropdown-menu {
+            border-radius:5px;
+            -webkit-border-radius:5px;
+            background:#fff;
+            margin:0;
+            padding:0;
+            min-width: 99px;
+            li {
+                padding: 10px 15px;
+                font-size: 16px;
+                color: #575757;
+                cursor: pointer;
+                &.divider {
+                    padding: 0;
+                }
+                &:hover {
+                    background:#eee;
+                }
+            }
+        }
+    }
+}
+

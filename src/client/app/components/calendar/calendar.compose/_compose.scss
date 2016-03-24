@@ -1,0 +1,318 @@
+/*************************************
+ *
+ *
+ * Modal Main File
+ *
+ *
+ **************************************/
+@import '../../../common/common';
+
+.row-no-padding {
+    [class*="col-"] {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+}
+
+.no-padding-left {
+    padding-left: 0 !important;
+}
+
+.no-padding-right {
+    padding-right: 0 !important;
+    color: #bebebe;
+}
+
+.focus-border {
+    border-color: #022a43 !important;
+}
+
+.distance-elements {
+    font-size: 14px;
+    color: #bebebe;
+
+    &:hover {
+        color: #000 !important;
+    }
+}
+
+.dock-on-parent {
+    position: absolute;
+    right: 15px;
+    bottom: 10px;
+}
+
+.unstyled::-webkit-inner-spin-button,
+.unstyled::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
+
+.margin-top-15 {
+    margin-top: 15px;
+}
+
+.compose-calendar {
+    background-color: #fafafa;
+    .modal-header {
+        background-color: #022A43 !important;
+        padding: 15px 15px;
+        color: #fff;
+        border: 0;
+        font-size: 18px;
+        h3 {
+            font-size: 18px;
+            margin: 0;
+            width: 95%;
+            float: left;
+            line-height: inherit;
+        }
+        i {
+            float: right;
+            line-height: inherit;
+        }
+    }
+    .modal-body {
+        img {
+            border-radius: 20px;
+            margin-bottom: -27px;
+            width: 25px;
+        }
+        padding: 24px;
+        .modal-text {
+            .select-div {
+                width: 100%;
+                color: #bebebe;
+                font-size: 0;
+                padding: 0;
+
+                div.host {
+                    background: none;
+                    border: none;
+                    border-bottom: 2px solid #ededed;
+
+                    &::selection,
+                    &:active,
+                    &:hover {
+                        border-bottom-color: black;
+                    }
+
+                    input[type="text"] {
+                        border: none;
+                    }
+                }
+            }
+
+            input[type="text"] {
+                background: none;
+                border: none;
+                border-bottom: 2px solid #ededed;
+                width: 100%;
+                color: #bebebe;
+                font-size: 18px;
+                //padding: 0 0 5px;
+                &:focus {
+                    outline: none;
+                    color: #444;
+                    border-color: #022a43;
+                }
+                .select-sender {
+                    background: #F0F0F0;
+                    border-radius: 20px;
+                }
+            }
+            label {
+                margin-top: 4px;
+                display: block;
+                color: #173b53;
+                font-size: 14px;
+                padding: 0 0 2px;
+                margin: 0;
+                font-weight: normal;
+                opacity: 0;
+
+            }
+            .display-label {
+                padding: 0 0 2px;
+                margin-top: 4px;
+                opacity: 1;
+            }
+            .mail-body {
+                width: 100%;
+                min-height: 186px;
+                height: auto;
+                background-color: inherit;
+                @include borders(none, none, 1px solid black, none)
+            }
+        }
+        .modal-select {
+            .dropdown {
+                .btn-default {
+                    background: none;
+                    border: none;
+                    border-bottom: 2px solid #ededed;
+                    width: 100%;
+                    color: #bebebe;
+                    font-size: 18px;
+                    padding: 0 0 5px;
+                    border-radius: 0;
+                    margin: 25px 0 0;
+                    &:focus {
+                        outline: none;
+                        color: #444;
+                        border-color: #022a43;
+                    }
+                    &:active {
+                        box-shadow: none;
+                        -webkit-box-shadow: none;
+                    }
+                }
+            }
+            ul.dropdown-menu {
+                border-radius: 5px;
+                -webkit-border-radius: 5px;
+                background: #fff;
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                li {
+                    padding: 10px 15px;
+                    font-size: 16px;
+                    color: #575757;
+                    cursor: pointer;
+                    &.divider {
+                        padding: 0;
+                    }
+                    &:hover {
+                        background: #eee;
+                    }
+                }
+            }
+        }
+        .appt-compose-time-picker {
+            a {
+                outline: none;
+            }
+
+            input[type="text"] {
+                margin: 0 auto;
+            }
+        }
+    }
+
+    .modal-footer {
+        border: none;
+        margin: 0;
+        padding: 24px;
+        &.green-button {
+            .btn-create {
+                background: #6da31a;
+                color: #fff;
+                &:disabled {
+                    background: #f1f1f1;
+                    color: #b4b4b4;
+                }
+            }
+            .btn-cancel {
+                color: #6da31a;
+                &:disabled {
+                    color: #b4b4b4;
+                }
+            }
+        }
+        .mail-icons {
+            margin-top: 21px;
+            float: left;
+            .margin-8 {
+                margin-right: 8px;
+            }
+            .clip-rotate {
+                -ms-transform: rotate(132deg) !important; /* IE 9 */
+                -webkit-transform: rotate(132deg) !important; /* Chrome, Safari, Opera */
+                transform: rotate(132deg) !important;
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+// CUSTOMIZE COMPOSE CALENDAR
+.calendar-compose {
+    .md-toolbar-tools {
+        padding: 0;
+    }
+    md-input-container {
+        label {
+            margin-left: 12px;
+        }
+    }
+    .attendees, .options {
+        margin-bottom: 18px;
+    }
+    .locations {
+        span {
+            bottom: 28px;
+        }
+    }
+    vnc-auto-complete-mail {
+        .tags {
+            background: none;
+            input.input {
+                -webkit-box-ordinal-group: 3;
+                -webkit-order: 2;
+                -ms-flex-order: 2;
+                order: 2;
+                display: block;
+                margin-top: 0;
+                background: none;
+                padding-top: 2px;
+                padding-bottom: 1px;
+                border-width: 0 0 1px 0;
+                line-height: 26px;
+                height: 30px;
+                -ms-flex-preferred-size: 26px;
+                border-radius: 0;
+                border-style: solid;
+                width: 100%!important;
+                box-sizing: border-box;
+                float: left;
+                border-color: rgba(0,0,0,0.12);
+
+            }
+            input.input::-webkit-input-placeholder {
+                display: inline-block;
+                max-width: 100%;
+                margin-bottom: 5px;
+                font-weight: bold;
+                color: rgba(0,0,0,0.26);
+            }
+            input.input:-moz-placeholder {
+                display: inline-block;
+                max-width: 100%;
+                margin-bottom: 5px;
+                font-weight: bold;
+                color: rgba(0,0,0,0.26);
+            }
+        }
+    }
+
+    .block-item {
+        span.m-text {
+            margin-top: 10px;
+            display: block;
+        }
+        .mail-icons {
+            margin-top: 10px;
+        }
+    }
+    md-divider {
+        margin: 15px 0;
+    }
+}
+.md-datepicker-calendar-pane {
+    z-index: 9999!important;
+}
+.md-select-menu-container {
+    position: absolute!important;
+    z-index: 9999!important;
+}

@@ -1,0 +1,132 @@
+/*************************************
+ *
+ *
+ * Sidebar Main File
+ *
+ *
+ **************************************/
+@import '../common';
+vnc-sidebar {
+    display: block;
+}
+
+// Iphone six is max mobile viewport
+/* Portrait */
+// TODO: This is a hack to get us ready for friday demo! Using !important is bad practice
+@media (max-width: 800px) {
+    .sidebar {
+        position: fixed !important;
+        flex: 1 !important;
+        left: -76vw !important;
+        height: 100vh !important;
+        width: 100vw !important;
+        max-width: 75vw !important;
+        max-height: 100vh !important;
+        z-index: 100 !important;
+    }
+    .sidebar.toggled {
+        left: 0vw !important;
+    }
+}
+
+vnc-sidebar {
+    transition: left .33s ease-in-out;
+}
+
+.sidebar {
+    // width: 220px;
+    //min-width: 220px;
+    float: left;
+    width: 100%;
+    overflow: auto;
+    white-space:nowrap;
+    border-right: 1px solid $border-gray;
+    background-color: $body-gray;
+    transition: all .3s cubic-bezier(.55,0,.55,.2);
+    div {
+        overflow-x: hidden;
+        white-space:nowrap;
+    }
+    .sidebar-new-button{
+        margin-bottom: 6px;
+        width: 145px;
+        margin-top: 8px;
+    }
+    .sidebar-fab {
+        position: absolute;
+        z-index: 9999;
+    }
+    .sidebar-tag{
+        margin: 0 25px;
+        padding: 0 0 20px 0;
+        white-space:normal;
+        .loading{
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+    }
+    .header-title {
+        color: $dark-gray;
+        padding: 0 15px;
+        margin: 25px 5px 10px 10px;
+
+        i {
+            font-size: 18px;
+        }
+    }
+    .drag-over-accept{
+        border:1px solid grey !important;
+    }
+    .sidebar-nav{
+        padding: 0;
+        margin: 15px 0;
+        list-style: none;
+        li {
+            line-height: 40px;
+            padding: 0;
+            a {
+                display: block;
+                text-decoration: none;
+                color: $nav-gray;
+                padding-left: 20px;
+                @include set-svg($nav-gray);
+                .icon{
+                    margin-right: 25px;
+                    width: 15px;
+                    height: 15px;
+                    svg{
+                        margin: 0 0 -6px 0;
+                    }
+                }
+                span {
+                    margin-left: 10px;
+                }
+            }
+            &:hover,
+            &.active {
+                a {
+                    @include set-svg($sidebar-active-items);
+                    background: $light-gray;
+                    color: $sidebar-active-items;
+                }
+            }
+            &.current a span {
+                font-weight: 700;
+                color: #00796B;
+            }
+        }
+    }
+    .divider {
+        border-top: 1px solid #c2c2c2;
+        height: 1px;
+        margin: 25px 0 0 0;
+        width: 100%;
+    }
+
+    .sidebar-dropdown-button {
+        button {
+            background-color: #009688;
+        }
+    }
+}

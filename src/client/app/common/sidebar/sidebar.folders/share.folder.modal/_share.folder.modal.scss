@@ -1,0 +1,149 @@
+/*************************************
+ *
+ *
+ * Modal Main File
+ *
+ *
+ **************************************/
+.share-folder{
+    .sub-text{
+        color: #C0C0C0
+    }
+    md-radio-button{
+        .md-container{
+            top: 3px !important;
+            width: 0 !important;
+            height: 0 !important;
+        }
+    }
+
+    //    .folder-share-modal-header{
+//        padding: 15px 15px;
+//        color: #3C5A6E;
+//        border: 0;
+//        font-size: 18px;
+//        font-weight: 500;
+//    }
+//    .folder-share-content{
+//        .border-3{
+//            border-bottom: 3px solid #000 !important;
+//        }
+//        .border-bottom{
+//            //border-bottom: 1px solid #E1E1E1;
+//            p{
+//                color: #C0C0C0;
+//                margin: 0;
+//            }
+//            h4{
+//                padding: 5px;
+//                margin-top: 5px;
+//            }
+//            label{
+//                margin-bottom: 0;
+//                font-weight: normal;
+//            }
+//            input{
+//                background: #FAFAFA;
+//            }
+//            textarea{
+//                width: 100%;
+//                border: none;
+//                resize: none;
+//                background: #FAFAFA;
+//                outline: none;
+//                overflow: hidden;
+//            }
+//        }
+//    }
+//    .share-options-parent{
+//        .share-option{
+//            margin-bottom: 15px;
+//            p{
+//                color: #C0C0C0;
+//            }
+//            .select-one{
+//                input[type = radio]{
+//                    float: left;
+//                    display:none;
+//                    & + label{
+//                        color: #808080;
+//                        font-weight: normal;
+//                        margin-bottom: 0;
+//                        &:before{
+//                            content: "";
+//                            display: inline-block;
+//                            width: 15px;
+//                            height: 15px;
+//                            vertical-align: middle;
+//                            margin-right: 17px;
+//                            background-color: #fff;
+//                            border-radius: 8px;
+//                            border: 2px solid #808080;
+//                            padding: 0 0 0 1px;
+//                        }
+//                    }
+//                    &:checked + label{
+//                        &:before{
+//                            content: "\2022";
+//                            color: #808080;
+//                            font-size: 29px;
+//                            text-align: center;
+//                            line-height: 12px;
+//                        }
+//                    }
+//                }
+//                p{
+//                    margin-left: 30px !important;
+//                    color: #C0C0C0;
+//                }
+//            }
+//
+//        }
+//        & + .modal-footer{
+//            margin: 0;
+//            .btn-create{
+//                border-radius: 2px;
+//            }
+//        }
+//    }
+}
+//
+//.row-no-padding {
+//    [class*="col-"] {
+//        padding-left: 0 !important;
+//        padding-right: 0 !important;
+//    }
+//}
+//
+//.no-padding-left {
+//    padding-left: 0 !important;
+//}
+//
+//.no-padding-right {
+//    padding-right: 0 !important;
+//    color: #bebebe;
+//}
+//.focus-border{
+//    border-color: #022a43 !important;
+//}
+//.distance-elements {
+//    font-size: 18px;
+//    color: #bebebe;
+//    .bcc {
+//        position: absolute !important;
+//        top: 102px;
+//        right: 32px;
+//        &:hover {
+//            color: #000 !important;
+//        }
+//    }
+//    .cross{
+//        position: absolute !important;
+//        top: 152px;
+//        right: 32px;
+//        &:hover {
+//            color: #000 !important;
+//        }
+//    }
+//}
+

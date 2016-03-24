@@ -1,0 +1,71 @@
+<md-toolbar class="main-nav" ng-if="vm.auth.authenticated" layout="row"  layout-align="start center">
+    <div class="md-toolbar-tools" layout="row" flex>
+        <div class="navbar-header" layout="row"  layout-align="start center" flex="30" flex-xs="10" flex-sm="10">
+            <div id="logo">
+                <i class="material-icons">cloud</i>
+            </div>
+            <md-button class="md-icon-button nav-icon" flex aria-label="Menu" layout-align="center center" ng-click="vm.sideMenuToggle()">
+                <md-icon md-font-set="material-icons" flex>menu</md-icon>
+            </md-button>
+            <h2 class="nav-title" flex>
+                <span class="brand-title">VNCuxf <span class="unit-title">{{vm.title}}</span></span>
+            </h2>
+        </div>
+        <div flex="50" class="navbar-form-search" layout-align="end center" flex-xs="80" flex-sm="70">
+            <!-- Navbar Info Items -->
+            <div layout="row" class="form-container">
+                <div class="form-wrapper" flex>
+                    <form id="nav-sb-form" class="navbar-form-search navbar-left" role="search" ng-class="{'open': vm.searchOpen}">
+                        <!-- Search Form Main input -->
+                        <div class="form-group">
+                            <!-- Search Button -->
+                            <input id="search-field" type="text" class="form-control" placeholder="" ng-model="vm.search" ng-keyup="vm.searchEmail($event)">
+                            <button type="button" class="btn btn-default submit-btn" ng-click="vm.searchEmail()"><i class="material-icons">search</i></button>
+                        </div>
+                    </form><!-- End of main nav search form -->
+                </div>
+            </div><!-- End of Form -->
+        </div><!--End of Pull right Nav Date -->
+        <div flex="25" flex-xs="20" layout="row" layout-align="end center">
+            <vnc-avatar ng-if="vm.auth.userEmail" person-email="vm.auth.userEmail" person-size="sm" hide-xs flex="10"></vnc-avatar>
+            <md-menu class="profile-dropdown" flex="10">
+                <md-button aria-label="Open phone interactions menu" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                    <md-icon md-menu-origin class="icon-arrow-down">keyboard_arrow_down</md-icon>
+                </md-button>
+                <md-menu-content width="4" class="profile-dropdown-item">
+                    <md-menu-item layout="row">
+                        <md-icon md-font-set="material-icons" flex="10">help_outline</md-icon>
+                        <a href="#" ng-click="vm.openHelpMenu('userHelp')" translate="COMMON.PRODUCT_HELP" flex></a>
+                    </md-menu-item>
+                    <md-menu-item layout="row">
+                        <md-icon md-font-set="material-icons" flex="10">keyboard</md-icon>
+                        <a href="#" ng-click="vm.openHelpMenu('userShortcuts')" translate="COMMON.SHORTCUTS"></a>
+                    </md-menu-item>
+                    <md-divider></md-divider>
+                    <md-menu-item layout="row">
+                        <md-icon md-font-set="material-icons" flex="10">device_hub</md-icon>
+                        <a href="#" ng-click="vm.openHelpMenu('userAbout')" translate="COMMON.ABOUT"></a>
+                    </md-menu-item>
+                    <md-divider></md-divider>
+                    <md-menu-item layout="row">
+                        <md-icon md-font-set="material-icons" flex="10">settings</md-icon>
+                        <a ui-sref="preferences" translate="COMMON.ACCOUNT_PREFERENCES"></a>
+                    </md-menu-item>
+                    <md-divider></md-divider>
+                    <md-menu-item layout="row">
+                        <md-icon md-font-set="material-icons" flex="10">portable_wifi_off</md-icon>
+                        <a href="#" translate="COMMON.OFFLINE_MODE"></a>
+                    </md-menu-item>
+                    <md-menu-item layout="row">
+                        <md-icon md-font-set="material-icons" flex="10">screen_lock_portrait</md-icon>
+                        <a href="#" translate="COMMON.CHANGE_PASSWORD"></a>
+                    </md-menu-item>
+                    <md-menu-item layout="row">
+                        <md-icon md-font-set="material-icons" flex="10">lock_open</md-icon>
+                        <a href="#" ng-click="vm.logout()" translate="COMMON.SIGN_OUT"></a>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+        </div>
+    </div><!-- End of Collapsable content -->
+</md-toolbar><!-- End of toolbar -->

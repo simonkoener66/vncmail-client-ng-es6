@@ -1,0 +1,32 @@
+<md-dialog aria-label="Contact Move"  flex="30" ng-cloak>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h3 class="modal-title" translate="CONTACTS.MOVE_CONTACT" flex="95"> </h3>
+            <md-button class="md-icon-button" ng-click="vm.cancel($event)">
+                <md-icon md-font-set="materials-icons" class="material-icons md-18" aria-label="Close dialog"> clear
+                </md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <div layout="column" layout-padding class="md-dialog-content contact-move styled">
+            <div layout="row">
+                <div flex=40>
+                    <h4 class="margin-23 no-bold-text" translate="CONTACTS.SELECT_FOLDER"></h4>
+                </div>
+            </div>
+            <div layout="row">
+                <md-radio-group class="md-primary">
+                    <md-radio-button ng-repeat="sysfolder in vm.SystemFolders.folder" id="{{sysfolder.id}}" name="parentFolder" value={{sysfolder.id}} ng-click="vm.selectedFolderName = sysfolder.name; vm.selectedFolderId = sysfolder.id" ng-model="vm.selectedFolderId">
+                        <label for={{sysfolder.id}}><span id="{{sysfolder.name}}">{{sysfolder.name}}</span</label>
+                    </md-radio-button>
+                </md-radio-group>
+            </div>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" layout-padding>
+        <span flex></span>
+        <md-button uib-tooltip="Return to previous view [Esc]" ng-click="vm.cancel()" translate="COMMON.CANCEL"></md-button>
+        <md-button class="md-raised md-primary save-btn" uib-tooltip="Moves the selected contact(s)" ng-click="vm.moveContact()" ng-disabled="!vm.selectedFolderId" translate="COMMON.MOVE"></md-button>
+    </md-dialog-actions>
+</md-dialog>

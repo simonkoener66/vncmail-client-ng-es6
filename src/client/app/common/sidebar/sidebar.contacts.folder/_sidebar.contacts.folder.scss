@@ -1,0 +1,64 @@
+@import '../../common';
+
+.sidebar-mail-folders{
+    .loading{
+        padding: 10px;
+        text-align: center;
+        font-weight: bold;
+    }
+    .sidebar-folders{
+        padding: 0;
+        .sidebar-nav-folder{
+            padding: 0;
+            margin: 15px 0;
+            list-style: none;
+            li {
+                line-height: 40px;
+                text-indent: 0;
+                padding: 0;
+                .unread{
+                   .highlight{
+                       font-weight: bold
+                   }
+                }
+                .pointer{
+                    &.icon{
+                        padding-left: 21px;
+                    }
+                }
+                div {
+                    text-decoration: none;
+                    color: $nav-gray;
+                    cursor: pointer;
+                }
+                &:hover,
+                &.active {
+                    background: $light-gray;
+                    color: $sidebar-active-items;
+                }
+                a {
+                    display: block;
+                    text-decoration: none;
+                    color: $nav-gray;
+                    @include set-svg($nav-gray);
+                    .icon{
+                        margin-right: 25px;
+                        width: 15px;
+                        height: 15px;
+                        svg{
+                            margin: 0 0 -6px 0;
+                        }
+                    }
+                }
+                &:hover,
+                &.active {
+                    a {
+                        @include set-svg($sidebar-active-items);
+                        background: $light-gray;
+                        color: $sidebar-active-items;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,69 @@
+<md-dialog aria-label="Warning" flex="60">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h3 ng-bind="vm.title"></h3>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <div layout="column" layout-padding  class="md-dialog-content move-folder">
+            <div layout-gt-xs="row">
+                <div flex layout="column">
+                    <p flex>Select the destination folder. Type in the box to filter the list</p>
+                    <md-input-container class="md-icon-float md-block">
+                        <label>Search</label>
+                        <md-icon md-font-set="materials-icon" class="material-icons md-18">search</md-icon>
+                        <input ng-model="vm.query" type="text" ng-disabled="vm.reqPending">
+                    </md-input-container>
+                </div>
+            </div>
+            <div layout-gt-xs="row">
+                <div class="folder-bordered" md-dynamic-height>
+                    <div class="sidebar-folders">
+                        <div ui-tree ng-if="vm.folders.length">
+                            <ol ui-tree-nodes ng-model="vm.folders" class="parent">
+                                <li ng-repeat="item in vm.folders" ui-tree-node data-nodrag ng-hide="!vm.treeFilter(item, vm.query, ['$.name'])">
+                                    <div id="ui-tree-handle" ui-tree-handle class="{{vm.getColor(item.$.color) }} folder-selectable" ng-class="{'folder-selected': item.selected}" ng-click="vm.selectFolder(item)">
+                                    <span ng-include="'../images/folder-main.svg'" class="pointer" ng-click="item.collapse = !item.collapse"
+                                          ng-show="!item.folder.length"></span>
+                                    <span ng-include="'../images/folder-main-plus.svg'"  class="pointer" ng-click="item.collapse = !item.collapse"
+                                          ng-show="item.folder.length && item.collapse"></span>
+                                    <span ng-include="'../images/folder-main-minus.svg'"  class="pointer" ng-click="item.collapse = !item.collapse"
+                                          ng-show="item.folder.length && !item.collapse"></span>
+                                        <span class="title" ng-bind="item.$.name"></span>
+                                    </div>
+                                    <div ng-include="'folderTemplate2.html'" ng-if="item.folder"></div>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" id="toastBounds">
+        <md-button class="md-primary" ng-click="vm.createNewFolder()">New</md-button>
+        <span flex></span>
+        <md-button ng-click="vm.cancel()">Cancel</md-button>
+        <md-button ng-if="vm.currentFolder.type" class="md-primary md-raised md-hue-2" ng-click="vm.moveMail()" ng-disabled="!vm.previousSelected">Ok</md-button>
+        <md-button ng-if="!vm.currentFolder.type" class="md-primary md-raised md-hue-2" ng-click="vm.moveFolder()" ng-disabled="!vm.previousSelected">Ok</md-button>
+    </md-dialog-actions>
+</md-dialog>
+
+
+
+<script type="text/ng-template" id="folderTemplate2.html">
+    <ol class="child" ui-tree-nodes ng-model="item.folder" ng-class="{hidden: item.collapse}">
+        <li ng-repeat="item in item.folder" ui-tree-node data-nodrag="false"  ng-hide="!vm.treeFilter(item, vm.query, ['$.name'])">
+            <div ui-tree-handle class="{{vm.getColor(item.$.color)}} folder-selectable" ng-class="{'folder-selected': item.selected}" ng-click="vm.selectFolder(item)">
+                <span ng-include="'../images/folder-main-plus.svg'"  class="pointer" ng-click="item.collapse = !item.collapse"
+                      ng-show="item.folder.length && item.collapse"></span>
+                <span ng-include="'../images/folder-main-minus.svg'"  class="pointer" ng-click="item.collapse = !item.collapse"
+                      ng-show="item.folder.length && !item.collapse"></span>
+                <span ng-include="'../images/folder-sub.svg'" class="pointer" ng-show="!item.folder.length"></span>
+                <span class="title" ng-bind="item.$.name | limitTo : 25"></span>
+                <span ng-if="item.$.name.length > 25">..</span>
+            </div>
+            <div ng-include="'folderTemplate2.html'" ng-if="item.folder"></div>
+        </li>
+    </ol>
+</script>

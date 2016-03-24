@@ -1,0 +1,37 @@
+/*************************************
+ *
+ *
+ * Modal Main File
+ *
+ *
+ **************************************/
+@import '../common';
+
+#modal{
+    cursor: pointer;
+    display: inline-block;
+    //height: 100%;
+    //width: 100%;
+}
+.modal{
+    position: fixed;
+    top: 10%;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    .modal-content{
+        border-radius: 3px;
+    }
+    .modal-header{
+        i{
+            line-height: inherit;
+        }
+    }
+}
+
+//.app-modal-window {
+//    height: auto;
+//    margin-top: -12em;
+//    top: 50% !important;
+//}

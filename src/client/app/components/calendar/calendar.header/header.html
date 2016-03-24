@@ -1,0 +1,65 @@
+<div class="calendar-toolbar"
+     flex
+     layout="row" layout-align="space-between center">
+    <div>
+        <md-button title="Delete selected appointment"
+                   ng-disabled="!vm.selectedAppointment"
+                   ng-click="vm.deleteAppointment()">{{ 'COMMON.DELETE' | translate }}
+        </md-button>
+
+        <md-menu>
+            <!-- Trigger element is a md-button with an icon -->
+            <md-button class="md-icon-button"
+                       title="Move selected appointment"
+                       ng-disabled="!vm.selectedAppointment"
+                       ng-click="$mdOpenMenu($event)">
+                <md-icon md-font-set="material-icons">move_to_inbox</md-icon>
+            </md-button>
+            <md-menu-content>
+                <md-menu-item>
+                    <md-button ng-click="doSomething()">Do Something</md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button title="TODO: Make this menu a Calendar Folder Tree" ng-click="doSomething()"></md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+
+        <md-menu>
+            <!-- Trigger element is a md-button with an icon -->
+            <md-button class="md-icon-button"
+                       title="Tag selected appointment"
+                       ng-disabled="!vm.selectedAppointment"
+                       ng-click="$mdOpenMenu($event)">
+                <md-icon md-font-set="material-icons">more</md-icon>
+            </md-button>
+            <md-menu-content>
+                <md-menu-item>
+                    <md-button ng-click="doSomething()">Do Something</md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button ng-click="doSomething()">TODO: Make this menu a Calendar Folder Tree</md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+
+        <md-button class="md-icon-button"
+                   title="Print calendar">
+            <md-icon md-font-set="material-icons">print</md-icon>
+        </md-button>
+    </div>
+    <div>
+        <md-button ng-class="{'md-raised':vm.calendarView === 'calendar'}"
+                   ng-disabled="vm.calendarView === 'calendar'"
+                   ng-click="vm.changeCalendarView()"
+                   title="Show Calendar">
+            Calendar
+        </md-button>
+        <md-button ng-class="{'md-raised':vm.calendarView === 'list'}"
+                   ng-disabled="vm.calendarView === 'list'"
+                   ng-click="vm.changeCalendarView('list')"
+                   title="Show Calendar as a list">
+            {{ 'CALENDAR.LIST' | translate }}
+        </md-button>
+    </div>
+</div>

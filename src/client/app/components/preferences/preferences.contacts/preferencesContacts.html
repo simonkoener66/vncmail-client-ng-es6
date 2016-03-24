@@ -1,0 +1,43 @@
+<div class="preferences-trusted-notification">
+    <div layout="column" layout-margin>
+        <div class="block">
+            <md-toolbar class="demo-toolbar md-primary">
+                <div class="md-toolbar-tools">
+                    <h2><span translate="PREFERENCES.OPTIONS"></span></h2>
+                </div>
+            </md-toolbar>
+            <div class="block-content">
+                <div class="block-item" layout="row">
+                    <div flex="25" layout="" flex-xs layout-align="start center">
+                        <span translate="PREFERENCES.SETTINGS"></span>
+                    </div>
+                    <div flex="75" flex-xs="75" layout="column">
+                        <md-checkbox aria-label="Checkbox 1" ng-model="vm.addContact" ng-change="vm.updatePreferences(vm.addContact)">
+                            {{ 'PREFERENCES.ADD_NEW_CONTACTS_TO' | translate }}
+                        </md-checkbox>
+                        <md-checkbox aria-label="Checkbox 1" ng-model="vm.initialSearch">
+                            {{ 'PREFERENCES.INITIALLY_SEARCH' | translate }}
+                        </md-checkbox>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+                <div class="block-item" layout="row">
+                    <div flex="25" layout="" flex-xs layout-align="start center">
+                        <span translate="PREFERENCES.AUTOCOMPLETE"></span>
+                    </div>
+                    <div flex="75" flex-xs="75" layout="column">
+                        <md-checkbox aria-label="Checkbox 1" ng-model="vm.includeGlobalAddress">
+                           {{ 'PREFERENCES.INITIALLY_ADDRESSES_GLOBAL' | translate }}
+                        </md-checkbox>
+                        <md-checkbox aria-label="Checkbox 1" ng-model="vm.includesAddresses">
+                            {{ 'PREFERENCES.INITIALLY_ADDRESSES_SHARED' | translate }}
+                        </md-checkbox>
+                        <md-checkbox aria-label="Checkbox 1" ng-model="vm.autoCompleteComma">
+                            {{ 'PREFERENCES.SELECT_AUTOCOMPLETE' | translate }}
+                        </md-checkbox>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,207 @@
+<div flex layout="column"
+     layout-fill
+     class="calendar-hour-detail">
+    <div id="allDay-Calendar"
+         flex
+         layout="column"
+         layout-fill
+         ng-init="vm.disabledMode = false"
+         ng-show="!vm.disabledMode"
+         class="calendar-all-day">
+        <div flex layout="row"
+             class="cal-all-day-row"
+             ng-repeat="hour in vm.allDayList track by $index">
+            <div flex layout layout-padding
+                 class="cal-all-day-cell-label">
+                <strong>All day</strong>
+            </div>
+            <div ng-if="vm.isShowCalendarFolder"
+                 flex layout="column" layout-padding
+                 class="cal-all-day-cell"
+                 ng-style="{'border-left-color': folder.icon.color.color,
+                            'border-right-color': folder.icon.color.color}"
+                 ng-repeat="folder in hour.calendarFolders track by $index"
+                 ng-click="vm.calendarTimeCellOnClick($event, hour.date, true, folder.id)"
+                 context-menu
+                 context-menu-type="calendarItem"
+                 context-menu-calendar-view-type="day"
+                 context-menu-calendar-date="{{hour.date}}"
+                 ng-include="'eventsInFolder.tpl.html'">
+            </div>
+
+            <div ng-if="!vm.isShowCalendarFolder"
+                 flex layout="row" layout-padding
+                 class="cal-all-day-cell"
+                 ng-click="vm.calendarTimeCellOnClick($event, hour.date, true)"
+                 context-menu
+                 context-menu-type="calendarItem"
+                 context-menu-calendar-view-type="day"
+                 context-menu-calendar-date="{{hour.date}}"
+                 ng-include="'eventsNoneFolder.tpl.html'">
+            </div>
+        </div>
+    </div>
+    <div id="calendar-resizer"
+         layout="row"
+         class="resize-horizontal"
+         calendar-resizer="horizontal"
+         resizer-top="#allDay-Calendar">
+        <span ng-click="vm.disabledMode = !vm.disabledMode">
+            <i class="fa"
+               ng-class="{'fa-caret-up': !vm.disabledMode, 'fa-caret-down': vm.disabledMode}"></i>
+            <i class="fa"
+               ng-class="{'fa-caret-up': !vm.disabledMode, 'fa-caret-down': vm.disabledMode}"></i>
+            <i class="fa"
+               ng-class="{'fa-caret-up': !vm.disabledMode, 'fa-caret-down': vm.disabledMode}"></i>
+        </span>
+    </div>
+    <div flex layout="column" layout-fill
+         class="calendar-hour-detail-list">
+        <div flex layout="row"
+             class="calendar-day-row"
+             ng-class="{'work-hours': hour.isInWorkingTime}"
+             ng-repeat="hour in vm.hoursList track by $index">
+            <div flex layout
+                 layout-padding
+                 class="cal-cell-time">
+                <strong ng-bind="hour.label"></strong>
+            </div>
+            <div ng-if="vm.isShowCalendarFolder"
+                 flex layout
+                 layout-padding
+                 class="calendar-row-cell-events"
+                 ng-style="{'border-left-color': folder.icon.color.color, 'border-right-color': folder.icon.color.color}"
+                 ng-repeat="folder in hour.calendarFolders track by $index"
+                 ng-click="vm.calendarTimeCellOnClick($event, hour.date, false, folder.id)"
+                 context-menu
+                 context-menu-type="calendarItem"
+                 context-menu-calendar-view-type="day"
+                 context-menu-calendar-date="{{hour.date}}"
+                 ng-include="'eventsInFolder.tpl.html'">
+            </div>
+            <div ng-if="!vm.isShowCalendarFolder"
+                 flex layout
+                 layout-padding
+                 class="calendar-row-cell-events"
+                 ng-click="vm.calendarTimeCellOnClick($event, hour.date, false)"
+                 context-menu
+                 context-menu-type="calendarItem"
+                 context-menu-calendar-view-type="day"
+                 context-menu-calendar-date="{{hour.date}}"
+                 ng-include="'eventsNoneFolder.tpl.html'">
+            </div>
+        </div>
+    </div>
+
+    <div flex layout="row" layout-fill
+         class="calendar-bottom">
+        <div flex layout
+             layout-padding
+             class="control-mode">
+            <md-button class="md-display-mode-button"
+                       ng-click="vm.calendarDayViewOnClick()">
+                <md-tooltip md-direction="top">{{vm.displayModeModel}}</md-tooltip>
+                <md-icon md-svg-icon="{{vm.displayIconMode}}">
+                </md-icon>
+            </md-button>
+        </div>
+        <div flex layout
+             layout-padding
+             class="calendar-item-group"
+             ng-if="vm.isShowCalendarFolder"
+             ng-style="{'background-color': folder.icon.color.color}"
+             ng-repeat="folder in vm.folderList track by $index">
+            <strong>{{folder.name}}</strong>
+        </div>
+    </div>
+
+    <script type="text/ng-template" id="eventsInFolder.tpl.html">
+        <div class="cal-events"
+             ng-class="{'cal-cel-event': event.allDay !== '1',
+                        'cal-cel-event-all-day': event.allDay === '1'}"
+             ng-style="{height: event.allDay === '1' ? '25px' : event.height + 'px',
+                    'background': '-moz-linear-gradient(0deg, '+folder.icon.color.color+' -50%, #BED2DB 100%)',
+                    'background': '-webkit-gradient(linear, 0deg, color-stop(-50%, '+folder.icon.color.color+'), color-stop(100%, #BED2DB))',
+                    'background': '-webkit-linear-gradient(0deg, '+folder.icon.color.color+' -50%, #BED2DB 100%)',
+                    'background': '-o-linear-gradient(0deg, '+folder.icon.color.color+' -50%, #BED2DB 100%)',
+                    'background': '-ms-linear-gradient(0deg, '+folder.icon.color.color+' -50%, #BED2DB 100%)',
+                    'filter': 'progid:DXImageTransform.Microsoft.gradient(startColorstr=\''+folder.icon.color.color+'\', endColorstr=\'#BED2DB\', GradientType=\'0.8\')',
+                    'background': 'linear-gradient(0deg, '+folder.icon.color.color+' -50%, #BED2DB 100%)',
+                    'border-color': event.allDay !== '1' ? folder.icon.color.color : '',
+                    'top': event.top,
+                    'left': event.allDay !== '1' ? $index === 0 ?
+                    '0px': event.ratioOfLength * $index + '%' : 'auto',
+                    'width': 100 - (event.ratioOfLength * (folder.events.length -1)) + '%',
+                    'z-index': $index + 1}"
+             ng-repeat="event in folder.events track by $index"
+             context-menu
+             context-menu-type="appointmentItem"
+             context-menu-appointment-detail="event">
+            <strong ng-if="event.allDay !== '1'"
+                    class="start-time"
+                    ng-bind="(event.tempStartsAt || event.startsAt) | calendarDate:'time':true"></strong>
+
+            <strong ng-if="event.allDay !== '1' && event.isShowEndTime"
+                    class="end-time"
+                    ng-bind="(event.endsAt) | calendarDate:'time':true"></strong>
+
+            <br ng-if="event.allDay !== '1' && (event.tags.length > 0 || event.attendees.length > 0)" />
+
+            <a
+                href="javascript:;"
+                ng-click="vm.onEventClick({calendarEvent: event})"
+                class="event-item"
+                ng-bind-html="vm.$sce.trustAsHtml(event.title)"
+                uib-tooltip-html="event.title | calendarTrustAsHtml"
+                tooltip-placement="left"
+                tooltip-append-to-body="true">
+            </a>
+            <span ng-if="event.allDay !== '1'" class="cal-stuff">
+                <md-icon ng-if="(event.attendees.length > 0 && event.isOrganizer === '0') || (event.attendees.length > 1 && event.isOrganizer === '1')"
+                         md-svg-icon="mdi:account-multiple"></md-icon>
+                <md-icon ng-if="event.tags.length > 1" md-svg-icon="mdi:tag-multiple"></md-icon>
+                <md-icon ng-if="event.tags.length === 1" md-svg-icon="mdi:tag"
+                         ng-style="{color: event.tags[0].$.rgb}"></md-icon>
+            </span>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="eventsNoneFolder.tpl.html">
+        <div class="cal-events cal-cel-event-background"
+             ng-class="{'cal-cel-event': event.allDay !== '1',
+                        'cal-cel-event-all-day display-in-line': event.allDay === '1'}"
+             ng-style="{'height': event.allDay === '1' ? '25px' : event.height + 'px',
+                        'top': event.allDay !== '1' ? event.top : 'auto',
+                        'width': '250px'}"
+             ng-repeat="event in hour.events track by $index"
+             context-menu
+             context-menu-type="appointmentItem"
+             context-menu-appointment-detail="event">
+            <strong ng-if="event.allDay !== '1'"
+                    class="start-time"
+                    ng-bind="(event.tempStartsAt || event.startsAt) | calendarDate:'time':true"></strong>
+
+            <strong ng-if="event.allDay !== '1' && event.isShowEndTime"
+                    class="end-time"
+                    ng-bind="(event.endsAt) | calendarDate:'time':true"></strong>
+
+            <br ng-if="event.allDay !== '1' && (event.tags.length > 0 || event.attendees.length > 0)" />
+
+            <a href="javascript:;"
+               ng-click="vm.onEventClick({calendarEvent: event})"
+               class="event-item"
+               ng-bind-html="vm.$sce.trustAsHtml(event.title)"
+               uib-tooltip-html="event.title | calendarTrustAsHtml"
+               tooltip-placement="left"
+               tooltip-append-to-body="true">
+            </a>
+            <span ng-if="event.allDay !== '1'" class="cal-stuff">
+                <md-icon ng-if="(event.attendees.length > 0 && event.isOrganizer === '0') || (event.attendees.length > 1 && event.isOrganizer === '1')"
+                         md-svg-icon="mdi:account-multiple"></md-icon>
+                <md-icon ng-if="event.tags.length > 1" md-svg-icon="mdi:tag-multiple"></md-icon>
+                <md-icon ng-if="event.tags.length === 1" md-svg-icon="mdi:tag"
+                         ng-style="{color: event.tags[0].$.rgb}"></md-icon>
+            </span>
+        </div>
+    </script>
+</div>

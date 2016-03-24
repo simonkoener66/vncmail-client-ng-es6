@@ -1,0 +1,71 @@
+/*************************************
+ *
+ *
+ * Modal Main File
+ *
+ *
+ **************************************/
+@import '../../common';
+
+.inline-caret {
+    margin-top: 5px ;
+    float: right ;
+}
+
+.create-new-tag {
+    @include modal-container;
+    .modal-body {
+        .modal-select {
+            .dropdown {
+                .btn-default {
+                    background: none;
+                    border: none;
+                    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+                    width: 100%;
+                    color: rgba(0,0,0,0.26);
+                    font-size: 14px;
+                    padding: 0 0 9px;
+                    border-radius: 0;
+                    margin-top: 1px;
+                    font-weight: bold;
+                    &:focus {
+                        outline: none;
+                        color: #444;
+                        border-color: #022a43;
+                    }
+                    &:active {
+                        box-shadow:none;
+                        -webkit-box-shadow:none;
+                    }
+                }
+            }
+            ul.dropdown-menu {
+                border-radius:5px;
+                -webkit-border-radius:5px;
+                background:#fafafa;
+                margin:0;
+                padding:0;
+                width:100%;
+                li {
+                    padding: 10px 15px;
+                    font-size: 16px;
+                    color: #575757;
+                    cursor: pointer;
+                    &.divider {
+                        padding: 0;
+                    }
+                    &:hover {
+                        background:#eee;
+                    }
+                }
+            }
+        }
+        .margin-10{
+            margin-top: 10px;
+        }
+        .table-button{
+            cursor: pointer;
+            color: rgba(1,42,67,0.6);
+        }
+    }
+}

@@ -1,0 +1,20 @@
+/*************************************
+ *
+ *
+ * Modal Main File
+ *
+ *
+ **************************************/
+@import '../../../common/common';
+.preferencesSignature{
+    .rich-element{
+        margin-top: -40px !important;
+    }
+    .scrolling-div{
+        height: 212px;
+        overflow-y: scroll;
+    }
+    .td-value {
+        background-color: #cecece;
+    }
+}

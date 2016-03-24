@@ -1,0 +1,133 @@
+ <div class="preferences-sharing">
+    <div layout="column" layout-margin>
+        <md-content>
+        <div class="block">
+            <md-toolbar class="demo-toolbar md-primary">
+                <div class="md-toolbar-tools">
+                    <h2><span translate="PREFERENCES.FOLDER_NOT_YET_ACCEPTED"></span></h2>
+                </div>
+            </md-toolbar>
+            <div class="block-content">
+                <div class="block-item" layout="row" layout-xs="column">
+                    <div flex="50">
+                        <md-radio-group ng-model="data.group1">
+                          <md-radio-button value="1" name="inputRadio"> {{ 'PREFERENCES.SHOW_FOLDERS_DISTRIBUTION_LIST' | translate }}</md-radio-button>
+                          <md-radio-button value="Banana" name="inputRadio"> {{ 'PREFERENCES.SHOW_FOLDERS_FOLLOWING_USER' | translate }} </md-radio-button>
+                        </md-radio-group>
+                    </div>
+                    <div flex="50" layout="row">
+                        <md-input-container flex="75">
+                            <input type="text">
+                        </md-input-container>
+                        <div flex="25">
+                            <md-button class="md-raised md-primary">{{ 'PREFERENCES.FIND_SHARES' | translate }}</md-button>
+                        </div>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+                <div class="block-item" layout="column">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="left-border" translate="PREFERENCES.OWNER"></th>
+                                    <th class="left-border" translate="PREFERENCES.ITEM"></th>
+                                    <th class="left-border" translate="PREFERENCES.TYPE"></th>
+                                    <th class="left-border" translate="PREFERENCES.ROLE"></th>
+                                    <th class="left-border" translate="PREFERENCES.ACTION"></th>
+                                    <th class="left-border" translate="PREFERENCES.WITH"></th>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat="data in vm.data track by $index">
+                                <td>{{data.owner}}</td>
+                                <td>{{data.item}}</td>
+                                <td>{{data.type}}</td>
+                                <td>{{data.role}}</td>
+                                <td class="text-muted">{{data.actions}}</td>
+                                <td>{{data.with}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="block">
+            <md-toolbar class="demo-toolbar md-primary">
+                <div class="md-toolbar-tools">
+                    <h2><span translate="PREFERENCES.FOLDERS_SHARED_WITH_ME"></span></h2>
+                </div>
+            </md-toolbar>
+            <div class="block-content">
+                <div class="block-item" layout="column">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="full-padding">
+                                <tr>
+                                    <th class="left-border" translate="PREFERENCES.OWNER"></th>
+                                    <th class="left-border" translate="PREFERENCES.ITEM"></th>
+                                    <th class="left-border" translate="PREFERENCES.TYPE"></th>
+                                    <th class="left-border" translate="PREFERENCES.ROLE"></th>
+                                    <th class="left-border" translate="PREFERENCES.FOLDER"></th>
+                                    <th class="left-border" translate="PREFERENCES.WITH"></th>
+                                </tr>
+                            </thead>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block">
+            <md-toolbar class="demo-toolbar md-primary">
+                <div class="md-toolbar-tools">
+                    <h2><span translate="PREFERENCES.FOLDERS_SHARED_BY_ME"></span></h2>
+                </div>
+            </md-toolbar>
+            <div class="block-content">
+                <div class="block-item" layout="column">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="full-padding">
+                            <tr>
+                                <th class="left-border" translate="PREFERENCES.WITH"></th>
+                                <th class="left-border" translate="PREFERENCES.ITEM"></th>
+                                <th class="left-border" translate="PREFERENCES.TYPE"></th>
+                                <th class="left-border" translate="PREFERENCES.ROLE"></th>
+                                <th class="left-border" translate="PREFERENCES.ACTION"></th>
+                            </tr>
+                            </thead>
+                        </table>
+
+                        <div ng-show="true">
+                            <span class="no-found-text" translate="PREFERENCES.NO_RESULTS_FOUND"></span>
+                        </div>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+                <div class="block-item" layout="column">
+                    <h4 translate="PREFERENCES.SHARE_A_FOLDER"></h4>
+                    <small  translate="PREFERENCES.TO_SHARE_A_FOLDER"></small>
+                    <p></p>
+                    <div layout="row">
+                        <div class="m-text" flex="25">
+                            <span class="m-text" translate="PREFERENCES.FOLDER_TYPE"></span>
+                        </div>
+                        <div layout="row">
+                            <md-button class="md-raised md-primary">{{ 'PREFERENCES.MAIL_FOLDER' | translate }} <b class="caret"></b></md-button>
+                            <md-button class="md-raised md-primary">{{ 'PREFERENCES.SHARE' | translate }}</md-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </md-content>
+    </div>
+</div>

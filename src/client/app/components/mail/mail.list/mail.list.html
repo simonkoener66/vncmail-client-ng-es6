@@ -1,0 +1,381 @@
+<div class="mail" ng-if="vm.auth.authenticated" flex>
+    <div layout="row" layout-xs="column" layout-sm="column">
+        <div class="summary-pane" flex="40" flex-xs="100" flex-sm="100" flex="nogrow">
+            <!-- action button of mails -->
+            <div class="btn-bar">
+                <div layout="row" layout-align="space-between center" flex="100" flex-xs="100" flex="100" flex-xs="100">
+                    <div class="mark-all">
+                        <span>
+                            <md-tooltip md-direction="bottom">Select All</md-tooltip>
+                            <md-checkbox aria-label="Checkbox" ng-model="vm.selectAll" ng-click="vm.markAll()"></md-checkbox>
+                        </span>
+                    </div>
+                    <md-button class="md-icon-button" aria-label="More" ng-click="vm.moveMultipleConversations()" ng-disabled="!vm.selectedMails.length" ng-class="{'disabled-class': !vm.selectedMails.length}">
+                            <md-icon class="material-icons">
+                                <md-tooltip md-direction="bottom">Move Conversation</md-tooltip>
+                                drafts</md-icon>
+                    </md-button>
+                    <md-button class="md-icon-button" aria-label="More" ng-click="vm.makeMultiFunction('spam')" ng-disabled="!vm.selectedMails.length" ng-class="{'disabled-class': !vm.selectedMails.length}">
+                        <md-icon class="material-icons">
+                            <md-tooltip md-direction="bottom">Mark as Spam</md-tooltip>
+                            report</md-icon>
+                    </md-button>
+                    <md-button class="md-icon-button" aria-label="More" ng-click="vm.makeMultiFunction('delete')" ng-disabled="!vm.selectedMails.length" ng-class="{'disabled-class': !vm.selectedMails.length}">
+                        <span>
+                        <md-icon class="material-icons">
+                            <md-tooltip md-direction="bottom">Move to Trash</md-tooltip>
+                            delete</md-icon>
+                        </span>
+                    </md-button>
+                    <md-button class="md-icon-button" aria-label="More">
+                        <vnc-modal template="{{vm.createFolderTemplate}}" use_ctrl="CreateFolderController" size="lg" backdrop="static">
+                            <md-icon class="material-icons">
+                                <md-tooltip md-direction="bottom">Create new Folder</md-tooltip>
+                                folder</md-icon>
+                        </vnc-modal>
+                    </md-button>
+                    <md-button class="md-icon-button" aria-label="More" ng-disabled="!vm.selectedMails.length" ng-class="{'disabled-class': !vm.selectedMails.length}">
+                        <md-menu>
+                                <md-icon class="material-icons" ng-click="vm.selectedMails.length && $mdOpenMenu()">
+                                    <md-tooltip md-direction="bottom">Tag Conversation</md-tooltip>
+                                    local_offer</md-icon>
+                            <md-menu-content width="4">
+                                <md-menu-item ng-repeat="tag in vm.tagService.getTags()">
+                                    <md-button ng-click="vm.makeMultiFunction('tag', tag)">
+                                        <md-icon md-font-set="material-icons" ng-style="{'color': '{{tag.$.rgb}}'}">local_offer</md-icon>
+                                        {{tag.$.name}}
+                                    </md-button>
+                                </md-menu-item>
+                                <md-menu-divider></md-menu-divider>
+                                <md-menu-item>
+                                    <md-button>
+                                        <vnc-modal template="{{vm.createNewTagTemplate}}" use_ctrl="CreateNewTagController" size="lg" backdrop="static">
+                                            <md-icon md-font-set="material-icons">local_offer</md-icon>
+                                            New Tag
+                                        </vnc-modal>
+                                    </md-button>
+                                </md-menu-item>
+                                <md-menu-item ng-if="vm.selectedMails.length">
+                                    <md-button ng-click="vm.makeMultiFunction('remove-tag')">
+                                        <md-icon md-font-set="material-icons">local_offer</md-icon>
+                                        Remove All Tags
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </md-button>
+                </div>
+            </div>
+            <!-- new button bar-->
+            <perfect-scrollbar wheel-propagation="true"
+                               wheel-speed="50"
+                               min-scrollbar-length="50"
+                               refresh-on-change="vm.isBusy"
+                               suppress-scroll-x= "true"
+                               class="summary-pane-mails scroll-bar"
+                               on-scroll="vm.onScroll(scrollTop, scrollHeight)" vnc-resize-header height-space="51">
+                <div infinite-scroll="vm.getPreviousUnreadEmails()"
+                     infinite-scroll-disabled="vm.isBusy"
+                     infinite-scroll-parent="true"
+                     infinite-scroll-distance="3"
+                     infinite-scroll-immediate-check="false">
+                    <div ng-repeat="(d, emails) in vm.email.emails track by $index">
+                        <div layout="column">
+                            <div class="sort-heading text-left">{{d}}
+                                <div class="pull-right" ng-if="vm.email.infiniteScrollDisabled && emails.length">
+                                    <vnc-menu items="vm.searchOptions.items" size="vm.searchOptions.size">
+                                        <i class="fa fa-ellipsis-h"></i>
+                                    </vnc-menu>
+                                </div>
+                            </div>
+                        </div>
+                        <div layout="row" class="list-item pointer" ng-if="!mail.move"
+                             ng-repeat="mail in emails"
+                             ng-dblclick="vm.getEmailDetail(mail, d, $index, $event, 'fullscreen')"
+                             ng-click="vm.getEmailDetail(mail, d, $index, $event)"
+                             no-right
+                             ng-class="{'is-collapse': mail.isCollapse, 'active': mail.active, 'unread-color': mail.flag.indexOf('u') >= 0}">
+                            <div flex="5" class="u-check" layout-align="center center">
+                                <md-checkbox aria-label="Checkbox{{$index}}" ng-model="mail.selected" ng-click="vm.markMultiple(d, $index)"></md-checkbox>
+                            </div>
+                            <div flex="95" class="summary-pane-detail" ng-class="{'Unread': mail.flag.indexOf('u') >= 0}">
+                                <div layout="row">
+                                    <div flex="10" class="text-center avatar-img" ng-if="vm.sender" flex="nogrow">
+                                        <vnc-avatar ng-show="mail.from[mail.from.length - 1].displayName || mail.from[mail.from.length - 1].email"
+                                                    person-email="mail.from[mail.from.length - 1].email"
+                                                    person-name="{{mail.from[mail.from.length - 1].displayName}}" person-size="sm" layout="column" layout-align="center center"></vnc-avatar>
+                                    </div>
+                                    <div flex="10" class="text-center avatar-img" ng-if="vm.receiver">
+                                        <vnc-avatar ng-show="mail.mailTos[mail.mailTos.length - 1].displayName || mail.mailTos[mail.mailTos.length - 1].email"
+                                                    person-email="mail.mailTos[mail.mailTos.length - 1].email"
+                                                    person-name="{{mail.mailTos[mail.mailTos.length - 1].displayName}}" person-size="sm"></vnc-avatar>
+                                    </div>
+                                    <div flex="50">
+                                        <h4 class="name">
+                                            <span ng-if="mail.from.length && vm.sender">
+                                                <span ng-if="mail.from.length <= 2" ng-repeat="mailFrom in mail.from track by $index" ng-class="{comma:!$last}"
+                                                      data-mail="mailFrom">
+                                                    <span ng-show="mailFrom.displayName" class="contact">{{mailFrom.displayName | limitTo:10}} <span ng-if="mailFrom.displayName.length > 10">...</span></span>
+                                                    <span ng-show="!mailFrom.displayName" class="contact"> {{mailFrom.email | userMail}} </span>
+                                                </span>
+                                                <span ng-if="mail.from.length > 2"  data-mail="mail.from[mail.from.length - 1]">
+                                                    <span class="contact">...</span>
+                                                    <span ng-show="mail.from[mail.from.length - 1].displayName" class="contact">
+                                                        {{mail.from[mail.from.length - 1].displayName}}
+                                                    </span>
+                                                    <span ng-show="!mail.from[mail.from.length - 1].displayName" class="contact"> {{(mail.from[mail.from.length - 1].email) | userMail}} </span>
+                                                </span>
+                                            </span>
+                                            <span ng-if="mail.mailTos.length && vm.receiver">
+                                                <span ng-if="mail.mailTos.length <= 2" ng-repeat="mailFrom in mail.mailTos track by $index" ng-class="{comma:!$last}"
+                                                      data-mail="mailFrom">
+                                                    <span ng-show="mailFrom.displayName" class="contact">{{mailFrom.displayName | limitTo:10}} <span ng-if="mailFrom.displayName.length > 10">...</span></span>
+                                                    <span ng-show="!mailFrom.displayName" class="contact"> {{mailFrom.email | userMail}} </span>
+                                                </span>
+                                                <span ng-if="mail.mailTos.length > 2" data-mail="mail.mailTos[mail.mailTos.length - 1]">
+                                                    <span>...</span>
+                                                    <span ng-show="mail.mailTos[mail.mailTos.length - 1].displayName" class="contact">{{mail.mailTos[mail.mailTos.length - 1].displayName}}</span>
+                                                    <span ng-show="!mail.mailTos[mail.mailTos.length - 1].displayName" class="contact"> {{(mail.mailTos[mail.mailTos.length - 1].email) | userMail}} </span>
+                                                </span>
+                                            </span>
+                                            <div class="mail-chain-count-circle">
+                                                <span class="mail-chain-count" ng-if="mail.totalMessages > 1" ng-bind="mail.totalMessages"></span>
+                                            </div>
+                                            <span ng-if="mail.totalMessages > 1" class="pointer" ng-class="{rotate: mail.isCollapse}"
+                                                  ng-click="vm.setCollapseOfMailConversation(mail.isCollapse, d, $index, $event)">
+                                            </span>
+                                        </h4>
+                                    </div>
+                                    <div flex="20" class="sidebar-tag text-right">
+                                        <div ng-show="mail.tags.length">
+                                        <vnc-tag tag-name="{{mail.tags[0].$.name.length  < 9 ? mail.tags[0].$.name : '...'}}"  tag-context-menu-disabled="true"
+                                                 tag-color="{{mail.tags[0].$.color}}" tag-rgb="{{mail.tags[0].$.rgb}}" tag-id="{{mail.tags[0].$.id}}">
+                                        </vnc-tag>
+                                        <vnc-tag ng-show="mail.tags.length > 1" tag-name="{{'+'+ (mail.tags.length -1)}}"  tag-context-menu-disabled="true"></vnc-tag>
+                                        </div>
+                                    </div>
+                                    <div flex="20" class="conv-date text-center">
+                                        <!--<span>-->
+                                           <!--<md-icon md-font-set="materials-icon" class="material-icons md-18" ng-show="mail.flag.indexOf('a') > -1">attach_file</md-icon>-->
+                                            <!--<span>-->
+                                                {{mail.time | date:'h:mm a'}}
+                                             <!-- <md-tooltip  md-direction="bottom" md-delay="1000">
+                                                 <span>{{mail.time | date:'EEEE, MMMM d, yyyy h:mm:ss a'}} ( {{mail.time | timeago}} )</span>
+                                             </md-tooltip> -->
+                                            <!--</span>-->
+                                        <!--</span>-->
+                                    </div>
+                                </div>
+                                <div layout="row">
+                                    <div flex="80" class="mar-top-5">
+                                        <div layout="column">
+                                            <h4 class="cnv-subject">{{mail.subject | limitTo:27}} <span ng-if="mail.subject.length > 27">...</span></h4>
+                                        </div>
+                                        <div layout="column" class="mar-top-5">
+                                            <p class="cnv-content">{{mail.content | limitTo:50}} <span ng-if="mail.content.length > 50">...</span>
+                                                <!-- <md-tooltip  md-direction="bottom">
+                                                    {{mail.content}}
+                                                </md-tooltip> -->
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="action-icons" flex="20" layout-align="center center">
+                                        <span ng-click="vm.markConversationFlagAndUnFlag($event, mail, d, $index)">
+                                            <md-icon md-font-set="material-icon" class="material-icons md-18" ng-show="mail.flag.indexOf('f') < 0"> star_border </md-icon>
+                                            <md-icon md-font-set="materials-icons" class="material-icons md-18 starred-icon" ng-show="mail.flag.indexOf('f') >= 0"> star </md-icon>
+                                        </span>
+                                        <span ng-click="vm.markConversationReadAndUnread($event, mail, d, $index)">
+                                            <md-icon md-font-set="materials-icon" class="material-icons md-18" ng-show="mail.flag.indexOf('u') < 0">radio_button_unchecked</md-icon>
+                                            <md-icon md-font-set="materials-icon" class="material-icons md-18 unread-icon" ng-show="mail.flag.indexOf('u') >= 0">lens</md-icon>
+                                        </span>
+                                        <md-menu-bar style="margin: -29px 0 0 56px ;padding: 0;">
+                                            <md-menu>
+                                                <md-icon>
+                                                <button ng-click="$mdOpenMenu($event)" class="md-icon-button" style="padding: 0">
+                                                    <md-icon md-font-set="material-icons" class="md-18">more_vert</md-icon>
+                                                </button>
+                                                </md-icon>
+                                                <md-menu-content width="4">
+                                                    <md-menu-item ng-if="vm.state.current.name != 'mail.draft'">
+                                                        <md-button>
+                                                            <vnc-modal template="{{vm.mailComposeTemplate}}" use_ctrl="MailComposeController" size="lg" backdrop="static"
+                                                                       resolve='{"emailData": {{mail}}, "actionType": "REPLY"}'>
+                                                                <md-icon md-font-set="material-icons">reply</md-icon>
+                                                                Reply
+                                                            </vnc-modal>
+                                                        </md-button>
+                                                    </md-menu-item>
+                                                    <md-menu-item ng-if="vm.state.current.name != 'mail.draft'">
+                                                        <md-button>
+                                                            <vnc-modal template="{{vm.mailComposeTemplate}}" use_ctrl="MailComposeController" size="lg" backdrop="static"
+                                                                       resolve='{"emailData": {{mail}}, "actionType": "REPLYALL"}'>
+                                                                <md-icon md-font-set="material-icons">reply_all</md-icon>
+                                                                Reply All
+                                                            </vnc-modal>
+                                                        </md-button>
+                                                    </md-menu-item>
+                                                    <md-menu-item ng-if="vm.state.current.name != 'mail.draft'">
+                                                        <md-button>
+                                                            <vnc-modal template="{{vm.mailComposeTemplate}}" use_ctrl="MailComposeController" size="lg" backdrop="static"
+                                                                       resolve='{"emailData": {{mail}}, "actionType": "FORWARD"}'>
+                                                                <md-icon md-font-set="material-icons">forward</md-icon>
+                                                                Forward
+                                                            </vnc-modal>
+                                                        </md-button>
+                                                    </md-menu-item>
+                                                    <md-menu-item ng-if="vm.state.current.name != 'mail.draft'">
+                                                        <md-button ng-if="mail.totalMessages < 2" disabled>
+                                                            <md-icon md-font-set="material-icons">forward</md-icon>
+                                                            Forward Conversation
+                                                        </md-button>
+                                                        <md-button ng-if="mail.totalMessages > 1">
+                                                            <vnc-modal template="{{vm.mailComposeTemplate}}" use_ctrl="MailComposeController" size="lg" backdrop="static"
+                                                                       resolve='{"emailData": {{mail}}, "actionType": "FORWARD_CONVERSATION"}'>
+                                                                <md-icon md-font-set="material-icons">forward</md-icon>
+                                                                Forward Conversation
+                                                            </vnc-modal>
+                                                        </md-button>
+                                                    </md-menu-item>
+                                                    <md-menu-item ng-if="vm.state.current.name != 'mail.draft'">
+                                                        <md-button ng-click="vm.redirectMail(mail.m[0].$.id)">
+                                                            <md-icon md-font-set="material-icons">arrow_forward</md-icon>
+                                                            Redirect
+                                                        </md-button>
+                                                    </md-menu-item>
+                                                    <md-menu-item>
+                                                        <md-button>
+                                                            <vnc-modal template="{{vm.mailComposeTemplate}}" use_ctrl="MailComposeController" size="lg" backdrop="static"
+                                                                       resolve='{"emailData": {{mail}}, "actionType": "EDIT"}'>
+                                                                <md-icon md-font-set="material-icons">edit</md-icon>
+                                                                <span ng-if="::vm.state.current.name != 'mail.draft'">Edit as New</span>
+                                                                <span ng-if="::vm.state.current.name == 'mail.draft'">Edit</span>
+                                                            </vnc-modal>
+                                                        </md-button>
+                                                    </md-menu-item>
+                                                    <md-menu-divider></md-menu-divider>
+                                                    <md-menu-item>
+                                                        <md-button ng-click="vm.moveToTrash(d, $index)">
+                                                            <md-icon md-font-set="material-icons">delete</md-icon>
+                                                            Delete
+                                                        </md-button>
+                                                    </md-menu-item>
+                                                    <md-menu-item ng-if="vm.state.current.name != 'mail.junk' && vm.state.current.name != 'mail.draft'">
+                                                        <md-button ng-click="vm.spamConversation(d, $index)">
+                                                            <md-icon md-font-set="material-icons">block</md-icon>
+                                                            Mark as Spam
+                                                        </md-button>
+                                                    </md-menu-item>
+                                                    <md-menu-item ng-if="vm.state.current.name === 'mail.junk'">
+                                                        <md-button ng-click="vm.unSpamConversation(d, $index)">
+                                                            <md-icon md-font-set="material-icons">block</md-icon>
+                                                            Mark as not Spam
+                                                        </md-button>
+                                                    </md-menu-item>
+                                                    <md-menu-divider></md-menu-divider>
+                                                    <md-menu-item>
+                                                        <md-menu>
+                                                            <md-button ng-click="$mdOpenMenu()">
+                                                                <md-icon md-font-set="material-icons" style="margin: auto 16px auto 0;">local_offer</md-icon>
+                                                                <span ng-if="::vm.state.current.name != 'mail.draft'" style="font-size: 15px;">Tag Conversation</span>
+                                                                <span ng-if="::vm.state.current.name == 'mail.draft'">Tag Message</span>
+                                                            </md-button>
+                                                            <md-menu-content width="4">
+                                                                <md-menu-item ng-repeat="tag in vm.tagService.getTags() | getRemainingTags:mail.tags">
+                                                                    <md-button ng-click="vm.tagService.tagConversation(mail, tag, $parent.$index)">
+                                                                        <md-icon md-font-set="material-icons" ng-style="{'color': '{{tag.$.rgb}}'}">local_offer</md-icon>
+                                                                        {{tag.$.name}}
+                                                                    </md-button>
+                                                                </md-menu-item>
+                                                                <md-menu-divider ng-if="mail.tags.length != vm.tagService.getTags().length"></md-menu-divider>
+                                                                <md-menu-item>
+                                                                    <md-button ng-click="vm.tagConversation(mail, $index)">
+                                                                        <md-icon md-font-set="material-icons">local_offer</md-icon>
+                                                                        New Tag
+                                                                    </md-button>
+                                                                </md-menu-item>
+                                                                <md-menu-item ng-if="mail.tags.length">
+                                                                    <md-menu>
+                                                                        <md-button ng-click="$mdOpenMenu()">
+                                                                            <md-icon md-font-set="material-icons" style="margin: auto 16px auto 0;">local_offer</md-icon>
+                                                                            Remove Tag
+                                                                        </md-button>
+                                                                        <md-menu-content width="4">
+                                                                            <md-menu-item ng-repeat="tag in mail.tags">
+                                                                                <md-button ng-click="vm.tagService.removeTagFromConversation(mail, tag.$.name, $index, $parent.$index)">
+                                                                                    <md-icon md-font-set="material-icons" ng-style="{'color': '{{tag.$.rgb}}'}">local_offer</md-icon>
+                                                                                    {{tag.$.name}}
+                                                                                </md-button>
+                                                                            </md-menu-item>
+                                                                            <md-menu-divider></md-menu-divider>
+                                                                            <md-menu-item>
+                                                                                <md-button ng-click="vm.tagService.removeAllTagFromConversation(mail, $index)">
+                                                                                    <md-icon md-font-set="material-icons">local_offer</md-icon>
+                                                                                    All Tags
+                                                                                </md-button>
+                                                                            </md-menu-item>
+                                                                        </md-menu-content>
+                                                                    </md-menu>
+                                                                </md-menu-item>
+                                                                <md-menu-item ng-if="!mail.tags.length">
+                                                                    <md-button ng-disabled="!mail.tags.length">
+                                                                        <md-icon md-font-set="material-icons">local_offer</md-icon>
+                                                                        Remove Tag
+                                                                    </md-button>
+                                                                </md-menu-item>
+                                                            </md-menu-content>
+                                                        </md-menu>
+                                                    </md-menu-item>
+                                                    <md-menu-item ng-if="vm.state.current.name != 'mail.draft'">
+                                                        <md-button>
+                                                            <vnc-modal template="{{vm.moveConversationTemplate}}"
+                                                                       use_ctrl="moveFolderController" size="lg" backdrop="false"
+                                                                       resolve='{"emailId": {{mail.cid}},"key": "{{d}}","index": {{$index}},"type": "Email"}'>
+                                                                <md-icon md-font-set="material-icons">folder_shared</md-icon>
+                                                                Move
+                                                            </vnc-modal>
+                                                        </md-button>
+                                                    </md-menu-item>
+                                                </md-menu-content>
+                                            </md-menu>
+                                        </md-menu-bar>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" ng-show="mail.isCollapse">
+                                <div class="row single-mail-item" ng-repeat="detail in mail.messages track by $index"
+                                     ng-class="{'active': detail.active}" ng-click="vm.getMessageDetail(detail, d, $parent.$index, $index, $event, mail)">
+                                    <div class="col-sm-2 single-mail-item-image text-center">
+                                        <vnc-avatar person-email="detail.e.$.d" person-name="{{detail.e.$.d}}" person-size="xs"></vnc-avatar>
+                                    </div>
+                                    <div class="col-sm-10 single-mail-pane">
+                                        <h4 class="msg-name" ng-bind="detail.e.$.d"></h4>
+                                        <span class="msg-date">
+                                            {{detail.$.d | date:'h:mm a'}}
+                                            <!-- <md-tooltip md-direction="bottom" md-delay="1000">
+                                                <span>{{detail.$.d | date:'EEEE, MMMM d, yyyy h:mm:ss a'}} ( {{detail.$.d | timeago}} )</span>
+                                            </md-tooltip> -->
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- add -->
+                        </div>
+                    </div>
+                    <md-divider ng-if="!$last"></md-divider>
+                    <div class="row list-item" ng-show="vm.loading">
+                        <div class="noResult"> {{ 'COMMON.LOADING' | translate }}</div>
+                    </div>
+
+                    <div class="row list-item" ng-show="!vm.loading && !vm.keys(vm.email.emails).length">
+                        <div class="noResult"> {{ 'COMMON.NO_RESULT_FOUND' | translate }}</div>
+                    </div>
+                </div>
+            </perfect-scrollbar>
+        </div>
+        <vnc-mail-detail mail-detail="vm.email.messagesDetail" mail-index="vm.email.index" mail-key="vm.email.key" mail-folder="vm.folderId" ng-if="vm.email.messagesDetail.length" flex="60" flex-xs="100" flex-sm="100"></vnc-mail-detail>
+        <!-- <div flex="50" flex-sm="100" flex-xs="100" ng-if="!vm.email.messagesDetail.length" class="email-detail-pane">
+            <p class="text-center">To view a conversation, click on it.</p>
+        </div> -->
+    </div>
+</div>

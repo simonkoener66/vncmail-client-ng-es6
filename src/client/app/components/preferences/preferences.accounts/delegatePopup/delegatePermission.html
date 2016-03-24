@@ -1,0 +1,41 @@
+<div class="row preferences-delegate-permission">
+    <div class="col-md-12 col-xs-12">
+        <div class="block">
+            <md-toolbar class="demo-toolbar md-primary">
+                <div class="md-toolbar-tools">
+                    <h2><span>Delegate Permission</span></h2>
+                </div>
+            </md-toolbar>
+            <div class="block-content">
+                <form role="form" name="delegatePermissionForm">
+                    <div class="row block-item">
+                        <div class="col-md-3 col-xs-3 m-text" ng-hide="vm.hideEmailField">
+                            <span class="m-text">Email</span>
+                        </div>
+                        <div class="col-md-9 col-xs-9" ng-class="vm.hideEmailField ? 'mr2' : ''">
+                            <md-input-container  class="md-block" flex-gt-sm ng-hide="vm.hideEmailField">
+                                <input type="email" name="email" ng-model="vm.delegatePermission.emailAddress"id="email" placeholder="Enter email" ng-required>
+                            </md-input-container>
+                            <md-checkbox ng-model="vm.delegatePermission.sendAs"  aria-label="Send As" ng-true-value="'Send as'" ng-false-value="''">
+                                Send as
+                            </md-checkbox>
+                            <md-checkbox ng-model="vm.delegatePermission.sendOnBehalf"  ng-true-value="'Send On Behalf Of'" ng-false-value="''">
+                                Send On Behalf Of
+                            </md-checkbox>
+                        </div>
+                    </div>
+                    <md-divider></md-divider>
+                    <div class="row block-item">
+                        <div class="col-md-12">
+                            <div class="button-actions pull-right">
+                                <md-button class="md-raised md-primary" ng-hide="vm.hideEmailField"  ng-click="vm.addDelegation(false)">OK</md-button>
+                                <md-button class="md-raised md-primary"  ng-click="vm.addDelegation(true)" ng-show="vm.hideEmailField">Update</md-button>
+                                <md-button class="md-warn md-raised md-hue-2" ng-click="vm.cancel()">Cancel</md-button>
+                            </div>  
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

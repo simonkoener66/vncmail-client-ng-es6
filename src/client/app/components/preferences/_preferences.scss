@@ -1,0 +1,25 @@
+.preferences-content {
+    overflow: hidden;
+    .block {
+    	border: 1px solid #ccc;
+        margin-bottom: 20px;
+    	.block-item	{
+    		padding: 10px;
+    		p {
+    			width: 200px;
+    			float: left;
+    		}
+            span.m-text {
+                margin-top: 15px;
+                margin-left: 10px;
+                display: block;
+            }
+    	}
+        .md-subheader {
+            background: none;
+            .md-subheader-inner {
+                padding-left: 10px;
+            }
+        }
+    }
+}

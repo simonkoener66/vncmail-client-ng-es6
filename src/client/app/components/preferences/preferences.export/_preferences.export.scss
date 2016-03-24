@@ -1,0 +1,48 @@
+/*************************************
+ *
+ *
+ * Modal Main File
+ *
+ *
+ **************************************/
+@import '../../../common/common';
+.mar-23{
+    margin-top: 23px;
+}
+.mar-10{
+    margin-top: 10px;
+}
+.export-item{
+    background-color: #E5E9EE;
+    border-radius: 12px;
+    button{
+        margin: 5px;
+        float: right;
+    }
+    .export-header {
+        border-radius: 12px 12px 0px 0px;
+        color: white;
+        background: #4E6A7B;
+        font-size: 28px;
+        padding: 4px 4px;
+        margin-top: 15px;
+        .header-text{
+            margin-left: 12px;
+        }
+    }
+    .export-body{
+        .m-text{
+            font-weight: bold;
+            text-align: right;
+        }
+        input[type=file]{
+            display: inline;
+            &:focus{
+                outline: none;
+            }
+        }
+        .export-content{
+            margin-top: 5px;
+        }
+    }
+}

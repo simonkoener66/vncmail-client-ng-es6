@@ -1,0 +1,18 @@
+<md-dialog aria-label="Warning" flex="90" hotkey="{'esc': vm.cancel}">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h4>{{vm.detail[0].su | limitTo:25}}<span ng-if="vm.detail[0].su.length > 25">...</span></h4>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="vm.cancel()">
+                <md-icon md-font-set="materials-icons" class="material-icons md-18" aria-label="Close dialog"> clear </md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <div layout="column">
+            <div layout-gt-xs="row">
+                <vnc-mail-detail mail-detail="vm.detail" mail-index="vm.index" mail-key="vm.key" mail-folder="vm.folderId" flex></vnc-mail-detail>
+            </div>
+        </div>
+    </md-dialog-content>
+</md-dialog>

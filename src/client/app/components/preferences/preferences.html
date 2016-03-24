@@ -1,0 +1,11 @@
+<div class="preferences-content">
+
+   <div layout="row" layout-margin flex="20" flex-sm="30" flex-xs="100">
+
+        <md-button class="md-raised md-accent sidebar-new-button" flex ng-click="vm.savePreferences()" ng-disabled="!preferencesForm.$dirty">SAVE</md-button>
+        <md-button class="md-raised md-primary" flex ng-click="vm.cancelPreferences()"  ng-disabled="!preferencesForm.$dirty">CANCEL</md-button>
+    </div>
+    <form action="" name="preferencesForm" layout="row">
+        <div ui-view="" flex vnc-resize-header height-space="51" class="scroll" flex-xs="100" flex-sm="100" flex="nogrow"></div>
+    </form>
+</div>

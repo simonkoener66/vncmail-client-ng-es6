@@ -1,0 +1,16 @@
+<div id="side-menu" ng-class="{toggled: vm.sidemenu}" ng-click="$event.stopPropagation()">
+    <div class="side-menu-wrapper">
+        <ul class="side-menu-nav" when-done-animating="vm.sidebarReady()">
+            <li ng-class="vm.isCurrent(r)"
+                ng-repeat="r in vm.navRoutes track by $index">
+                <a ui-sref="{{r.name}}" uib-tooltip="{{r.settings.tooltip}}" tooltip-placement="bottom" ng-click="vm.sideMenuToggle()">
+                    <span ng-include="r.settings.icon" class="icon"></span>
+                    <span ng-bind-html="r.settings.content"></span>
+                </a>
+            </li>
+            <li>
+                <hr />
+            </li>
+        </ul>
+    </div>
+</div>

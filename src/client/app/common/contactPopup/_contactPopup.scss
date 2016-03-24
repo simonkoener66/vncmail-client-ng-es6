@@ -1,0 +1,13 @@
+#contactPopup {
+    position: fixed;
+    z-index: 999;
+    .contact-info {
+        background: white;
+        box-shadow: 0 0 5px #ddd;
+        padding: 20px;
+    }
+    .contactDetail-title, .contact-full-name {
+        font-weight: bold;
+        color: #333;
+    }
+}

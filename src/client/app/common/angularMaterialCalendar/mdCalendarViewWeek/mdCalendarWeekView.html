@@ -1,0 +1,37 @@
+<div flex layout="column" class="calendar-week-view">
+    <div layout='row' class="subheader week-view-header">
+        <div class="subheader-day week-header-cell"
+             flex
+             layout-padding
+             ng-if="!vm.isShowWorkWeek || (vm.isShowWorkWeek && !day.isWeekend)"
+             ng-repeat="day in vm.view.days track by $index"
+             ng-class="{'cal-day-weekend': day.isWeekend, 'cal-day-today': day.isToday}">
+            <span ng-bind="day.weekDayLabel"></span>
+            <br>
+            <small>
+                <span
+                    data-cal-date
+                    ng-click="vm.calendarCtrl.drillDown(day.date)"
+                    class="pointer"
+                    ng-bind="day.dayLabel">
+                </span>
+            </small>
+        </div>
+    </div>
+
+    <md-content flex layout='column'>
+        <vnc-calendar-hour-list-in-week
+            day-view-start="vm.dayViewStart"
+            day-view-end="vm.dayViewEnd"
+            day-view-split="vm.dayViewSplit"
+            current-day="vm.currentDay"
+            day-in-week="vm.view"
+            on-timespan-click="vm.onTimespanClick"
+            on-time-slot-click="vm.onTimeSlotClick"
+            calendar-folder-list="vm.calendarFolderList"
+            is-show-work-week="vm.isShowWorkWeek"
+            ng-if="vm.showTimes">
+        </vnc-calendar-hour-list-in-week>
+    </md-content>
+</div>
+

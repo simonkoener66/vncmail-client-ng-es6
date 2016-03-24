@@ -1,0 +1,7 @@
+
+<div class="sidebar-mail-folders">
+    <vnc-sidebar-folders ng-if="vm.folders" folders="vm.folders" folder-action="vm.foldersAction(item)" current-state="mail"></vnc-sidebar-folders>
+    <div class="loading" ng-if="vm.loading">
+        loading folders <i class="fa fa-circle-o-notch fa-spin"></i>
+    </div>
+</div>

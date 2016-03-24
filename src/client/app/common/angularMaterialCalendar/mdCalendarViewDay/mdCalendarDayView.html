@@ -1,0 +1,25 @@
+<div flex layout="column" class="calendar-day-view">
+    <div layout='row' class="subheader day-view-header">
+        <div class="subheader-day"
+             layout-padding
+             flex="10"
+             ng-bind="vm.calendarConfig.i18nStrings.timeLabel"></div>
+        <div class="subheader-day"
+             layout-padding
+             flex="90"
+             ng-bind="vm.calendarConfig.i18nStrings.eventsLabel"></div>
+    </div>
+
+    <md-content flex layout='column'>
+        <vnc-calendar-hour-list-in-day
+            day-view-start="vm.dayViewStart"
+            day-view-end="vm.dayViewEnd"
+            day-view-split="vm.dayViewSplit"
+            current-day="vm.currentDay"
+            day-events="vm.view"
+            calendar-folder-list="vm.calendarFolderList"
+            on-timespan-click="vm.onTimespanClick"
+            on-time-slot-click="vm.onTimeSlotClick">
+        </vnc-calendar-hour-list-in-day>
+    </md-content>
+</div>

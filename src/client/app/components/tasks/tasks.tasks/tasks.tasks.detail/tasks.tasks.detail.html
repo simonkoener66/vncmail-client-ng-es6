@@ -1,0 +1,191 @@
+<div id="taskDetailPage">
+<div layout="column" class="task-detail-pane" ng-dblclick="vm.editTask()" vnc-resize-header height-space="52" ng-show="vm.isSelectedTaskId">
+        <div class="detail-margin">
+            <div layout="row"  layout-align="end center" class="subject-padding task-wordWrap">
+                <div flex="90">
+                    <h2 class="task-subject">{{vm.subject}}</h2>
+                </div>
+                <div>
+                    <md-menu-bar style="display: inline;padding: 0; margin-top: 9px;">
+                        <md-menu>
+                            <button ng-click="$mdOpenMenu($event)">
+                                <md-icon md-font-set="material-icons" class="md-18">more_vert</md-icon>
+                            </button>
+                            <md-menu-content width="3">
+                                <md-menu-item>
+                                    <md-button>
+                                        <vnc-modal template="{{vm.taskComposeTemplate}}" use_ctrl="TaskComposeController" size="lg" backdrop="false"
+                                                   resolve='{"operation": "editTask", "taskId": "{{vm.taskDetailList[0].taskId}}","key": "{{vm.key}}" }'>
+                                            <md-icon md-font-set="material-icons">edit</md-icon>
+                                            Edit</vnc-modal>
+                                    </md-button>
+                                </md-menu-item>
+                                <md-menu-item>
+                                    <md-button>
+                                        <vnc-modal template="{{vm.taskDeleteTemplate}}" use_ctrl="TaskDeleteController" size="lg" backdrop="false"
+                                                   resolve='{"taskId": "{{vm.taskDetailList[0].taskId}}","key": "{{vm.key}}"}'>
+                                            <md-icon md-font-set="material-icons">delete</md-icon>
+                                            <span ng-if="::vm.$state.current.id != '3'">Trash</span>
+                                            <span ng-if="::vm.$state.current.id == '3'">Delete</span>
+                                        </vnc-modal>
+                                    </md-button>
+                                </md-menu-item>
+                                <!--<md-menu-item>-->
+                                <!--<md-button>-->
+                                <!--<md-icon md-font-set="material-icons">star_rate</md-icon>-->
+                                <!--Favorite-->
+                                <!--</md-button>-->
+                                <!--</md-menu-item>-->
+                                <md-menu-item>
+                                    <md-button>
+                                        <vnc-modal template="{{vm.createFolderTemplate}}" use_ctrl="CreateFolderController" size="lg" backdrop="static">
+                                            <md-icon md-font-set="material-icons">create_new_folder</md-icon>
+                                            New Folder
+                                        </vnc-modal>
+                                    </md-button>
+                                </md-menu-item>
+                                <md-menu-item>
+                                    <md-menu>
+                                        <md-button ng-click="$mdOpenMenu()">
+                                            <md-icon md-font-set="material-icons" style="margin: auto 16px auto 0;">local_offer</md-icon>
+                                            <span class="text-normalize">Tag Task</span>
+                                        </md-button>
+                                        <md-menu-content width="3">
+                                            <md-menu-item ng-repeat="tag in vm.tagService.getTags() | getRemainingTags: vm.taskDetailList[0].tags">
+                                                <md-button ng-click="vm.tagService.tagTask(vm.taskDetailList[0], tag, vm.key, vm.taskDetailList[0].taskId, true)">
+                                                    <md-icon md-font-set="material-icons" ng-style="{'color': '{{tag.$.rgb}}'}">local_offer</md-icon>
+                                                    {{tag.$.name}}
+                                                </md-button>
+                                            </md-menu-item>
+                                            <md-menu-divider ng-if="all.length != vm.tagService.getTags().length"></md-menu-divider>
+                                            <md-menu-item>
+                                                <md-button ng-click="vm.tagTask(vm.taskDetailList[0], vm.key, vm.taskDetailList[0].taskId)">
+                                                    <md-icon md-font-set="material-icons">local_offer</md-icon>
+                                                    New Tag
+                                                </md-button>
+                                            </md-menu-item>
+                                            <md-menu-item ng-if="vm.taskDetailList[0].tags.length">
+                                                <md-menu>
+                                                    <md-button ng-click="$mdOpenMenu()" style="margin-bottom: -3px">
+                                                        <md-icon md-font-set="material-icons" style="margin: auto 16px auto 0;">local_offer</md-icon>
+                                                        <span class="text-normalize">Remove Tag</span>
+                                                    </md-button>
+                                                    <md-menu-content width="3">
+                                                        <md-menu-item ng-repeat="tag in vm.taskDetailList[0].tags">
+                                                            <md-button ng-click="vm.tagService.removeTagFromTask(vm.taskDetailList[0], $index, tag, vm.key, vm.taskDetailList[0].taskId, true)">
+                                                                <md-icon md-font-set="material-icons" ng-style="{'color': '{{tag.$.rgb}}'}">local_offer</md-icon>
+                                                                {{tag.$.name}}
+                                                            </md-button>
+                                                        </md-menu-item>
+                                                    </md-menu-content>
+                                                </md-menu>
+                                            </md-menu-item>
+                                            <md-menu-item ng-if="! vm.taskDetailList[0].tags || vm.taskDetailList[0].tags.length == 0">
+                                                <md-button ng-disabled="true">
+                                                    <md-icon md-font-set="material-icons">local_offer</md-icon>
+                                                    Remove Tag
+                                                </md-button>
+                                            </md-menu-item>
+                                        </md-menu-content>
+                                    </md-menu>
+                                </md-menu-item>
+                                <md-menu-item>
+                                    <md-button ng-click="vm.printTask()">
+                                        <md-icon md-font-set="material-icons">print</md-icon>
+                                        Print
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </md-menu-bar>
+                </div>
+			</div>
+        </div>
+        <div class="detail-info">
+            <div layout="row" layout-xs="column" ng-hide="!vm.location">
+				<div flex="15" class="task-detail-right">
+					<label translate="TASKS.LOCATION"></label>
+				</div>
+                <div flex="5" class="taskDetailGap">
+					<label></label>
+				</div>
+				<div flex="80" class="detailPadding">
+					{{vm.location}}
+				</div>
+			</div>
+			<div layout="row" layout-xs="column" ng-hide="!vm.startDate">
+				<div flex="15" class="task-detail-right">
+					<label translate="TASKS.START_DATE"></label>
+				</div>
+                <div flex="5" class="taskDetailGap">
+					<label></label>
+				</div>
+				<div flex="80" class="detailPadding">
+					{{vm.startDate}}
+				</div>
+			</div>
+			<div layout="row" layout-xs="column" ng-hide="!vm.endDate">
+				<div flex="15" class="task-detail-right">
+					<label translate="TASKS.DUE_DATE"></label>
+				</div>
+                <div flex="5" class="taskDetailGap">
+					<label></label>
+				</div>
+				<div flex="80" class="detailPadding">
+					{{vm.endDate}}
+				</div>
+			</div>
+			<div layout="row" layout-xs="column" ng-hide="!vm.priority">
+				<div flex="15" class="task-detail-right">
+					<label translate="TASKS.PRIORITY"></label>
+				</div>
+                <div flex="5" class="taskDetailGap">
+                    <label></label>
+                </div>
+				<div flex="80" class="detailPadding">
+					{{vm.priority}}
+				</div>
+			</div>
+			<div layout="row" layout-xs="column" ng-hide="!vm.status">
+				<div flex="15" class="task-detail-right">
+					<label translate="TASKS.STATUS"></label>
+				</div>
+                <div flex="5" class="taskDetailGap">
+                    <label></label>
+                </div>
+				<div flex="80" class="detailPadding">
+					{{vm.status}}
+				</div>
+			</div>
+			<div layout="row" layout-xs="column" ng-hide="vm.progress == 0">
+				<div flex="15" class="task-detail-right">
+					<label translate="TASKS.COMPLETED"></label>
+				</div>
+                <div flex="5" class="taskDetailGap">
+                    <label></label>
+                </div>
+				<div flex="80" class="detailPadding">
+					{{vm.progress || 0}}<span class="percent">%</span>
+				</div>
+			</div>
+            <div layout="row" layout-xs="column" ng-hide="vm.attachments.length == 0 ">
+				<div flex="15" class="task-detail-right">
+					<label translate="TASKS.ATTACHMENTS"></label>
+				</div>
+                <div flex="5" class="taskDetailGap">
+                    <label></label>
+                </div>
+				<div flex="80" class="task-wordWrap detailPadding">
+					<span ng-repeat="attachment in vm.attachments" ng-class="{comma:!$last}"> {{attachment.name}} &nbsp; ({{attachment.size}} {{attachment.unit}})  </span>
+				</div>
+			</div>
+            <div layout="row" layout-xs="column" class="taskDetailCompletedPadding">
+            </div>
+        <div layout="row" class="detail-content task-wordWrap" ng-bind-html="vm.description">
+        </div>  <!--  End of row with class detail-content -->
+    </div>   <!--  End of row with class detail-info -->
+</div>   <!--  End of div with class contact-detail-pane -->
+
+<div layout="column" class="task-detail-pane" ng-style="vm.WindowDetailHeight" ng-show="!vm.isSelectedTaskId">
+</div>  <!--  End of div with class contact-detail-pane having no details to show -->
+</div>

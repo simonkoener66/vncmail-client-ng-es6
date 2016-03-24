@@ -1,0 +1,323 @@
+<div class="preferences-mail">
+    <div layout="column" layout-margin>
+        <div class="block">
+            <md-toolbar class="demo-toolbar md-primary">
+                <div class="md-toolbar-tools">
+                    <h2><span translate="PREFERENCES.DISPLAYING_MESSAGES"></span></h2>
+                </div>
+            </md-toolbar>
+            <div class="block-content">
+                <div layout="row" class="block-item">
+                    <div layout="" layout-align="start center" flex="25">
+                        <span class="md-body-2" translate="PREFERENCES.CHECK_NEW_EMAIL"></span>
+                    </div>
+                    <div flex="25" layout="" layout-align="start center" flex-xs="75">
+                        <md-select ng-model="mailTime">
+                            <md-option>manually</md-option>
+                            <md-option selected>As new Email arrives</md-option>
+                            <md-option>2 minutes</md-option>
+                            <md-option>3 minutes</md-option>
+                            <md-option>4 minutes</md-option>
+                            <md-option>5 minutes</md-option>
+                            <md-option>6 minutes</md-option>
+                            <md-option>7 minutes</md-option>
+                            <md-option>8 minutes</md-option>
+                            <md-option>9 minutes</md-option>
+                            <md-option>10 minutes</md-option>
+                            <md-option>15 minutes</md-option>
+                        </md-select>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+                <div class="block-item" layout="row">
+                    <div flex="25" layout="" layout-align="start center">
+                        <span class="md-body-2" translate="PREFERENCES.DEFAULT_MAIL_SEARCH"></span>
+                    </div>
+                    <div flex="75" flex-xs="75">
+                        <md-input-container  class="md-block" flex-gt-sm>
+                            <input type="text" placeholder="in:Inbox">
+                        </md-input-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block">
+            <md-toolbar class="demo-toolbar md-primary">
+                <div class="md-toolbar-tools">
+                    <h2><span translate="PREFERENCES.RECEIVING_MESSAGES"></span></h2>
+                </div>
+            </md-toolbar>
+            <div class="block-content">
+                <div class="block-item" layout="row">
+                    <div flex="25" layout="" flex-xs layout-align="start center">
+                        <span class="md-body-2" translate="PREFERENCES.MESSAGE_ARRIVAL"></span>
+                    </div>
+                    <div flex="75" flex-xs="75" layout="column" class="mar-top-10">
+                        <md-checkbox aria-label="Checkbox 1" ng-model="vm.includeGlobalAddress">
+                            {{ 'PREFERENCES.FLASH_BROWSER_TITLE' | translate }}
+                        </md-checkbox>
+                    </div>
+                </div>
+                <div class="block-item" layout="row">
+                    <!--TODO to space marign from left-->
+                    <div flex="25" layout="" flex-xs layout-align="start center">
+                    </div>
+                    <div flex="75" flex-xs="75">
+                        <span translate="PREFERENCES.FORWARD_COPY_TO"></span>
+                        <md-input-container  class="md-block child-fields mar-bottom-0" flex-gt-sm>
+                            <input type="text" placeholder="enter email address" ng-disabled="localCopy" ng-class="{'disable': localCopy}">
+                        </md-input-container>
+                        <md-checkbox  ng-model="localCopy" aria-label="Reply To" class="child-fields">
+                            {{ 'PREFERENCES.DONT_KEEP_LOCAL_COPY' | translate }}
+                        </md-checkbox>
+                        <md-divider style="margin:20px 0;"></md-divider>
+                        <md-checkbox  ng-model="notificationMessage" aria-label="Reply To">
+                            {{ 'PREFERENCES.SEND_NOTIFICATION_MESSAGE' | translate }}
+                        </md-checkbox>
+                        <md-input-container  class="md-block child-fields mar-top-0" flex-gt-sm>
+                            <input type="text" placeholder="enter email address" ng-disabled="!notificationMessage" ng-class="{'disable': !notificationMessage}">
+                        </md-input-container>
+                        </div>
+                    </div>
+                <md-divider></md-divider>
+                <div class="block-item" layout="row">
+                    <div flex="25" layout="" flex-xs layout-align="start start">
+                        <div layout="column">
+                            <span class="md-body-2" translate="PREFERENCES.READ_RECEIPT"></span>
+                            <small translate="PREFERENCES.WHEN_I_RECEIVE_REQUEST"></small>
+                        </div>
+                    </div>
+                    <div flex="75" flex-xs="75" layout="column">
+                        <md-radio-group>
+                            <md-radio-button value="1"> {{ 'PREFERENCES.NEVER_SEND' | translate }}</md-radio-button>
+                            <md-radio-button value="2"> {{ 'PREFERENCES.ALWAYS_SEND' | translate }}</md-radio-button>
+                            <md-radio-button value="3"> {{ 'PREFERENCES.ASK_ME' | translate }}</md-radio-button>
+                        </md-radio-group>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+                <div class="block-item" layout="row">
+                    <div flex="25" layout="" flex-xs layout-align="start start">
+                        <div layout="column">
+                            <span class="md-body-2" translate="PREFERENCES.MESSAGE_FROM_ME"></span>
+                            <small translate="PREFERENCES.WHEN_I_RECEIVE_MESSAGE"></small>
+                        </div>
+                    </div>
+                    <div flex="75" flex-xs="75" layout="column">
+                        <md-radio-group>
+                            <md-radio-button value="1"> {{ 'PREFERENCES.PEACE_IN_INBOX' | translate }}</md-radio-button>
+                            <md-radio-button value="2"> {{ 'PREFERENCES.PEACE_IN_INBOX' | translate }}</md-radio-button>
+                            <md-radio-button value="3"> {{ 'PREFERENCES.DISCARD_MESSAGE' | translate }}</md-radio-button>
+                        </md-radio-group>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+                <div class="block-item" layout="row">
+                    <div flex="25" layout="" layout-align="start center">
+                        <span class="md-body-2" translate="PREFERENCES.DUPLICATE_MESSAGES"></span>
+                    </div>
+                    <div flex="75" flex-xs="75" class="mar-top-10">
+                        <md-checkbox aria-label="Checkbox 1">
+                            {{ 'PREFERENCES.AUTOMATICALLY_DELETE' | translate }}
+                        </md-checkbox>
+                    </div>
+                </div>
+             </div>
+        </div>
+        <div class="block">
+            <md-toolbar class="demo-toolbar md-primary">
+                <div class="md-toolbar-tools">
+                    <h2><span translate="PREFERENCES.COMPOSING_MESSAGES"></span></h2>
+                </div>
+            </md-toolbar>
+            <div class="block-content">
+                <div class="block-item" layout="row">
+                    <div flex="25" layout="" flex-xs layout-align="start center">
+                        <span class="md-body-2" translate="PREFERENCES.SETTINGS"></span>
+                    </div>
+                    <div flex="75" flex-xs="75" layout="column">
+                        <md-checkbox aria-label="Checkbox 1" >
+                            {{ 'PREFERENCES.AUTOMATICALLY_SAVE' | translate }}
+                        </md-checkbox>
+                        <md-checkbox aria-label="Checkbox 1" >
+                            {{ 'PREFERENCES.SPELL_CHECK' | translate }}
+                        </md-checkbox>
+                        <md-checkbox aria-label="Checkbox 1" >
+                            {{ 'PREFERENCES.SAVE_SEND_COPY' | translate }}
+                        </md-checkbox>
+                        <md-checkbox aria-label="Checkbox 1" >
+                            {{ 'PREFERENCES.USE_KEYBOARD_SHORTCUT' | translate }} <b>{{ 'PREFERENCES.CONTROL_ENTER' | translate }}</b> {{ 'PREFERENCES.TO_SEND_MESSAGE' | translate}}
+                        </md-checkbox>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+                <div layout="row" class="block-item">
+                    <div layout="" layout-align="start center" flex="25" class="mar-top-10">
+                        <span class="md-body-2" translate="PREFERENCES.EMAIL_REPY"></span>
+                    </div>
+                    <div flex="25" layout="" layout-align="start center" flex-xs="25">
+                        <md-select ng-model="EmailReply">
+                            <md-option>{{ 'PREFERENCES.DONT_INCLUDE_MESSAGE' | translate }}</md-option>
+                            <md-option selected>{{ 'PREFERENCES.INCLUDE_ORIGINAL_MESSAGE' | translate }}</md-option>
+                            <md-option>{{ 'PREFERENCES.INCLUDE_LAST_MESSAGE' | translate }}</md-option>
+                            <md-option>{{ 'PREFERENCES.INCLUDE_MESSAGE_AS_ATTACHMENT' | translate }}</md-option>
+                        </md-select>
+                    </div>
+                    <div layout="" layout-align="start center" flex="50" class="mar-top-20">
+                        <md-checkbox aria-label="Checkbox 1" >
+                            {{ 'PREFERENCES.USE_PREFIX' | translate }}
+                        </md-checkbox>
+                        <md-checkbox aria-label="Checkbox 1" >
+                            {{ 'PREFERENCES.INCLUDE_HEADERS' | translate }}
+                        </md-checkbox>
+                    </div>
+                </div>
+                <div layout="row" class="block-item">
+                    <div layout="" layout-align="start center" flex="25" class="mar-top-10">
+                        <span class="md-body-2" translate="PREFERENCES.EMAIL_FORWARDING"></span>
+                    </div>
+                    <div flex="25" layout="" layout-align="start center" flex-xs="25">
+                        <md-select ng-model="EmailReply">
+                            <md-option>{{ 'PREFERENCES.DONT_INCLUDE_MESSAGE' | translate }}</md-option>
+                            <md-option selected>{{ 'PREFERENCES.INCLUDE_ORIGINAL_MESSAGE' | translate }}</md-option>
+                            <md-option>{{ 'PREFERENCES.INCLUDE_LAST_MESSAGE' | translate }}</md-option>
+                            <md-option>{{ 'PREFERENCES.INCLUDE_MESSAGE_AS_ATTACHMENT' | translate }}</md-option>
+                        </md-select>
+                    </div>
+                    <div layout="" layout-align="start center" flex="50" class="mar-top-20">
+                        <md-checkbox aria-label="Checkbox 1" >
+                            {{ 'PREFERENCES.USE_PREFIX' | translate }}
+                        </md-checkbox>
+                        <md-checkbox aria-label="Checkbox 1" >
+                            {{ 'PREFERENCES.INCLUDE_HEADERS' | translate }}
+                        </md-checkbox>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block">
+            <md-toolbar class="demo-toolbar md-primary">
+                <div class="md-toolbar-tools">
+                    <h2><span translate="PREFERENCES.SPAM_MAIL_OPTIONS"></span></h2>
+                </div>
+            </md-toolbar>
+            <div class="block-content">
+                <div class="block-item" layout="row">
+                    <div flex="50">
+                        <div class="block-item" layout="column" flex="100">
+                            <span layout="row" translate="PREFERENCES.BLOCK_MESSAGE"></span>
+                        <div>
+                            <div layout="row" style="margin-left: 10px;" layout-xs="column" layout-sm="column">
+                                <md-input-container flex="50" class="md-block" flex-xs="100" flex-sm="100" flex="nogrow">
+                                    <input type="text" placeholder="enter email address or domain" ng-model="vm.newAllowedDomain" maxlength="29">
+                                </md-input-container>
+                                <div flex="50" flex-xs="100" flex-sm="100" flex="nogrow">
+                                    <md-button class="md-raised md-primary md-button md-button-margin" ng-click="vm.addAllowedDomain()">{{ 'COMMON.ADD' | translate }}</md-button>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div layout="row" layout-padding>
+                                <div class="data-div scrolling-div" flex="50" flex-gt-sm>
+                                    <md-list>
+                                        <md-list-item ng-repeat="domain in vm.allowedDomains track by $index" ng-class="{'td-value':($index == vm.aIndex)}" ng-click="vm.setAllowedIndex($index)">
+                                            <div class="md-list-item-text" layout="column" >
+                                                <span >{{domain}}</span>
+                                            </div>
+                                        </md-list-item>
+                                    </md-list>
+                                </div>
+                                <div flex="50">
+                                    <md-button class="md-warn md-raised md-hue-2" ng-click="vm.removeAllowedDomain()">{{ 'COMMON.REMOVE' | translate }}</md-button>
+                                </div>
+                            </div>
+                        </div>
+                            <small class="text-muted">{{vm.allowedDomains.length}} of 100 used.</small>
+                    </div>
+                    </div>
+                    <div flex="50">
+                        <div class="block-item" layout="column" flex="100">
+                            <span layout="row" translate="PREFERENCES.ALLOW_MESSAGE"></span>
+                            <div>
+                                <div layout="row" style="margin-left: 10px;" layout-xs="column" layout-sm="column">
+                                    <md-input-container flex="50" class="md-block" flex-xs="100" flex-sm="100" flex="nogrow">
+                                        <input type="text" placeholder="enter email address or domain" ng-model="vm.newBlockedDomain" maxlength="29">
+                                    </md-input-container>
+                                    <div flex="50" flex-xs="100" flex-sm="100" flex="nogrow">
+                                        <md-button class="md-raised md-primary md-button md-button-margin" ng-click="vm.addBlockedDomain()">{{ 'COMMON.ADD' | translate }}</md-button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div layout="row" layout-padding>
+                                    <div class="data-div scrolling-div" flex="50" flex-gt-sm>
+                                        <md-list>
+                                            <md-list-item ng-repeat="domain in vm.blockedDomains track by $index" ng-class="{'td-value':($index == vm.bIndex)}" ng-click="vm.setBlockedIndex($index)">
+                                                <div class="md-list-item-text" layout="column" >
+                                                    <span >{{domain}}</span>
+                                                </div>
+                                            </md-list-item>
+                                        </md-list>
+                                    </div>
+                                    <div flex="50">
+                                        <md-button class="md-warn md-raised md-hue-2" ng-click="vm.removeBlockedDomain()">{{ 'COMMON.REMOVE' | translate }}</md-button>
+                                    </div>
+                                </div>
+                            </div>
+                            <small class="text-muted">{{vm.blockedDomains.length}} of 100 used.</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block">
+            <md-toolbar class="demo-toolbar md-primary">
+                <div class="md-toolbar-tools">
+                    <h2><span translate="PREFERENCES.ACCESS_FROM_OTHERS"></span></h2>
+                </div>
+            </md-toolbar>
+            <div class="block-content">
+                <div layout="row" class="block-item">
+                    <div layout="" layout-align="start center" flex="25">
+                        <span class="md-body-2" translate="PREFERENCES.WHEN_MESSAGE_ACCESSED"></span>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+                <div layout="row" class="block-item">
+                    <div flex="25" layout="" layout-align="start start">
+                        <span class="md-body-2" translate="PREFERENCES.MESSAGE_DOWNLOADS"></span>
+                    </div>
+                    <div flex="75" flex-xs="75">
+                        <md-radio-group>
+                            <md-radio-button value="1"> {{ 'PREFERENCES.DOWNLOAD_ALL_MAIL' | translate }}</md-radio-button>
+                            <md-radio-button value="2"> {{ 'PREFERENCES.ONLY_DOWNLOAD_NEW' | translate }}</md-radio-button>
+                        </md-radio-group>
+                    </div>
+                </div>
+                <div class="block-item" layout="row">
+                    <div flex="25" layout="" layout-align="start center">
+                        <span class="md-body-2" translate="PREFERENCES.INCOMING_JUNK_MESSAGES"></span>
+                    </div>
+                    <div flex="75" flex-xs="75">
+                        <md-checkbox aria-label="Checkbox 1">
+                            {{ 'PREFERENCES.INCLUDE_JUNK_FOLDER' | translate }}
+                        </md-checkbox>
+                    </div>
+                </div>
+                <div layout="row" class="block-item">
+                    <div flex="25" layout="" layout-align="start start">
+                        <span class="md-body-2" translate="PREFERENCES.INCOMING_DELETED_MESSAGES"></span>
+                    </div>
+                    <div flex="75" flex-xs="75">
+                        <md-radio-group>
+                            <md-radio-button value="1"> {{ 'PREFERENCES.COMPLETELY_REMOVE_DELETED_MESSAGE' | translate }}</md-radio-button>
+                            <md-radio-button value="2"> {{ 'PREFERENCES.MOVE_DELETED_MESSAGES' | translate }}</md-radio-button>
+                            <md-radio-button value="3"> {{ 'PREFERENCES.MARK_LEAVE_DELETED_MESSAGES' | translate }}</md-radio-button>
+                            <md-radio-button value="4"> {{ 'PREFERENCES.LEAVE_DELETED_MESSAGES' | translate }}</md-radio-button>
+                        </md-radio-group>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,92 @@
+<md-dialog aria-label="Create New Folder" flex="60">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h3>Create New Folder</h3>
+        </div>
+    </md-toolbar>
+    <md-dialog-content md-dynamic-height>
+        <div layout="column" layout-padding class="md-dialog-content">
+            <div class="create-new-folder">
+                <div layout-gt-xs="row">
+                    <md-input-container class="md-block" flex-gt-xs>
+                        <label>Folder Name</label>
+                        <input ng-model="vm.folderName" ng-disabled="vm.reqPending">
+                    </md-input-container>
+                    <div flex="5" hide-xs hide-sm>
+                        <!-- Spacer //-->
+                    </div>
+                    <md-input-container class="md-block" flex="25" flex-gt-xs>
+                        <label>Select Color</label>
+                        <md-select ng-model="vm.selectColor" ng-disabled="vm.reqPending">
+                            <md-option ng-repeat="color in vm.availableColors" value="{{color}}">
+                                {{color}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div layout-gt-xs="row">
+                    <md-input-container class="md-block" flex="40" flex-gt-xs>
+                        <md-checkbox ng-model="vm.showRssField" ng-disabled="vm.reqPending">
+                            Subscribe to RSS/ATOM feed
+                        </md-checkbox>
+                    </md-input-container>
+                    <div flex="5" hide-xs hide-sm>
+                        <!-- Spacer //-->
+                    </div>
+                    <md-input-container class="md-block" flex-gt-xs ng-show="vm.showRssField">
+                        <label>URL</label>
+                        <input ng-model="vm.rssUrl" ng-disabled="vm.reqPending">
+                    </md-input-container>
+                </div>
+                <div>
+                    <p ng-show="::vm.parentId">Parent: <strong>{{::vm.parentFolderName}}</strong></p>
+                    <p ng-show="::!vm.parentId">Select where to place the new folder:</p>
+                    <br/>
+                    <div ng-show="::!vm.parentId" class="folder-bordered">
+                        <div class="sidebar-folders">
+                            <div ui-tree ng-if="vm.folders.length">
+                                <ol ui-tree-nodes ng-model="vm.folders" class="parent">
+                                    <li ng-repeat="item in vm.folders | filter: search" ui-tree-node data-nodrag ng-init="item.collapse = true">
+                                        <div id="ui-tree-handle" ui-tree-handle class="{{vm.getColor(item.$.color) }} folder-selectable" ng-class="{'folder-selected': item.selected}" ng-click="vm.selectFolder(item)">
+                                <span ng-include="'../images/folder-main.svg'" class="pointer" ng-click="item.collapse = !item.collapse"
+                                      ng-show="!item.folder.length"></span>
+                                <span ng-include="'../images/folder-main-plus.svg'"  class="pointer" ng-click="item.collapse = !item.collapse"
+                                      ng-show="item.folder.length && item.collapse"></span>
+                                <span ng-include="'../images/folder-main-minus.svg'"  class="pointer" ng-click="item.collapse = !item.collapse"
+                                      ng-show="item.folder.length && !item.collapse"></span>
+                                            <span class="title" ng-bind="item.$.name"></span>
+                                        </div>
+                                        <div ng-include="'folderTemplate3.html'" ng-if="item.folder"></div>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <md-divider></md-divider>
+            </div>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" id="toastBounds">
+        <md-button ng-click="vm.cancel()" ng-disabled="vm.reqPending">Cancel</md-button>
+        <md-button class="md-raised md-primary" ng-disabled="!vm.folderName.length || vm.reqPending" ng-click="vm.createFolder()">Create</md-button>
+    </md-dialog-actions>
+</md-dialog>
+
+<script type="text/ng-template" id="folderTemplate3.html">
+    <ol class="child" ui-tree-nodes ng-model="item.folder" ng-class="{hidden: item.collapse}">
+        <li ng-repeat="item in item.folder" ui-tree-node data-nodrag="false">
+            <div ui-tree-handle class="{{vm.getColor(item.$.color)}} folder-selectable" ng-class="{'folder-selected': item.selected}" ng-click="vm.selectFolder(item)">
+                <span ng-include="'../images/folder-main-plus.svg'"  class="pointer" ng-click="item.collapse = !item.collapse"
+                      ng-show="item.folder.length && item.collapse"></span>
+                <span ng-include="'../images/folder-main-minus.svg'"  class="pointer" ng-click="item.collapse = !item.collapse"
+                      ng-show="item.folder.length && !item.collapse"></span>
+                <span ng-include="'../images/folder-sub.svg'" class="pointer" ng-show="!item.folder.length"></span>
+                <span class="title" ng-bind="item.$.name | limitTo : 25"></span>
+                <span ng-if="item.$.name.length > 25">..</span>
+            </div>
+            <div ng-include="'folderTemplate3.html'" ng-if="item.folder"></div>
+        </li>
+    </ol>
+</script>

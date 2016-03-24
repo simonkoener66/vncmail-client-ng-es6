@@ -1,0 +1,481 @@
+<md-dialog aria-label="Compose mail" flex="60" ng-cloak>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h4 ng-if="!vm.saveContactDetail.lastName && !vm.saveContactDetail.firstName && vm.operation !=='edit'">{{ 'CONTACTS.NEW_CONTACT' | translate }}</h4>
+            <h4 ng-if="!vm.saveContactDetail.lastName && !vm.saveContactDetail.firstName && vm.operation ==='edit'">{{ 'CONTACTS.EDIT_CONTACT' | translate }}</h4>
+            <h4 ng-if="vm.saveContactDetail.lastName || vm.saveContactDetail.firstName">{{ vm.saveContactDetail.lastName }} {{ vm.saveContactDetail.firstName }}</h4>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="vm.cancel($event)">
+                <md-icon md-font-set="materials-icons" class="material-icons md-18 link-pointer" aria-label="Close dialog"> clear
+                </md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <form name="contactCompose" novalidate>
+    <md-dialog-content>
+            <div layout="column" layout-padding>
+            <div layout="row">
+                <div flex=40>
+                    <md-input-container class="md-block avatarOne">
+                        <img class="icon-plus" id="edit_contact" ng-show="vm.imgURL"
+                             ng-src="{{ vm.imgURL }}" height="50" width="60"/>
+                        <img class="icon-plus" id="edit_contact2" ng-show="!vm.imgURL"
+                             src="./../images/account-icon.svg" height="50" width="60" style="fill:red"/>
+                        <i class="material-icons link-pointer" ng-click="vm.avtarUpload()" uib-tooltip="{{ 'CONTACTS.ADD_IMAGE' | translate }}">
+                            &#xE439;</i>
+                    </md-input-container>
+
+                </div>
+            </div>
+            <div layout="row">
+                <div flex=5 ng-show="vm.upperLayout.prefix">
+                    <md-input-container class="md-block">
+                        <label translate="CONTACTS.PREFIX"></label>
+                        <input ng-model="vm.saveContactDetail.prefix" ng-keypress="vm.keyPressChange($event)">
+                    </md-input-container>
+                </div>
+                <div flex=20>
+                    <md-input-container class="md-block">
+                        <label translate="CONTACTS.FIRST"></label>
+                        <input ng-model="vm.saveContactDetail.firstName" ng-keypress="vm.keyPressChange($event)">
+                    </md-input-container>
+                </div>
+                <div flex=20 ng-show="vm.upperLayout.middle">
+                    <md-input-container class="md-block">
+                        <label translate="CONTACTS.MIDDLE"></label>
+                        <input ng-model="vm.saveContactDetail.middle" ng-keypress="vm.keyPressChange($event)">
+                    </md-input-container>
+                </div>
+                <div flex=20 ng-show="vm.upperLayout.maiden">
+                    <md-input-container class="md-block">
+                        <div layout>
+                            <div layout flex=10>(</div>
+                            <div layout flex=16>
+                                <label layout class="maidenFieldPadding" translate="CONTACTS.MAIDEN"></label>
+                                <input ng-model="vm.saveContactDetail.maiden" ng-keypress="vm.keyPressChange($event)">
+                            </div>
+                            <div layout flex=10>)</div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div flex=20>
+                    <md-input-container class="md-block">
+                        <label translate="CONTACTS.LAST"></label>
+                        <input ng-model="vm.saveContactDetail.lastName" ng-keypress="vm.keyPressChange($event)">
+                    </md-input-container>
+                </div>
+                <div flex=5 ng-show="vm.upperLayout.suffix">
+                    <md-input-container class="md-block">
+                        <label>{{ 'CONTACTS.SUFFIX' | translate }}</label>
+                        <input ng-model="vm.saveContactDetail.suffix" ng-keypress="vm.keyPressChange($event)">
+                    </md-input-container>
+                </div>
+                <div flex=10>
+                    <md-input-container class="md-block">
+                        <md-menu>
+                            <md-button ng-click="$mdOpenMenu()" class="md-raised md-primary small-button height-12"
+                                       aria-label="Open sample menu">
+                                >>
+                            </md-button>
+                            <md-menu-content style="position: fixed">
+                                <md-menu-item>
+                                    <md-button ng-click="vm.changeUpperLayout('prefix')"
+                                               ng-class="{'md-raised md-primary': vm.upperLayout.prefix}">{{ 'CONTACTS.PREFIX' | translate }}</md-button>
+                                </md-menu-item>
+                                <md-menu-item>
+                                    <md-button ng-click="vm.changeUpperLayout('middle')"
+                                               ng-class="{'md-raised md-primary': vm.upperLayout.middle}">{{ 'CONTACTS.MIDDLE' | translate }}</md-button>
+                                </md-menu-item>
+                                <md-menu-item>
+                                    <md-button ng-click="vm.changeUpperLayout('maiden')"
+                                               ng-class="{'md-raised md-primary': vm.upperLayout.maiden}">{{ 'CONTACTS.MAIDEN' | translate }}</md-button>
+                                </md-menu-item>
+                                <md-menu-item>
+                                    <md-button ng-click="vm.changeUpperLayout('suffix')"
+                                               ng-class="{'md-raised md-primary': vm.upperLayout.suffix}">{{ 'CONTACTS.SUFFIX' | translate }}</md-button>
+                                </md-menu-item>
+                                <md-menu-item>
+                                    <md-button ng-click="vm.changeUpperLayout('nickname')"
+                                               ng-class="{'md-raised md-primary': vm.upperLayout.nickname}">{{ 'CONTACTS.NICKNAME' | translate }}</md-button>
+                                </md-menu-item>
+                                <md-menu-item>
+                                    <md-button ng-click="vm.changeUpperLayout('department')"
+                                               ng-class="{'md-raised md-primary': vm.upperLayout.department}">{{ 'CONTACTS.DEPARTMENT' | translate }}</md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </md-input-container>
+                </div>
+            </div>
+            <div layout="row" ng-show="vm.upperLayout.nickname">
+                <div flex="40">
+                    <md-input-container class="md-block">
+                        <label translate="CONTACTS.NICK_NAME"></label>
+                        <input ng-model="vm.saveContactDetail.nickname" ng-keypress="vm.keyPressChange($event)">
+                    </md-input-container>
+                </div>
+            </div>
+            <div layout="row">
+                <div flex="40">
+                    <md-input-container class="md-block">
+                        <label translate="CONTACTS.JOB_TITLE"></label>
+                        <input ng-model="vm.saveContactDetail.jobTitle" ng-keypress="vm.keyPressChange($event)">
+                    </md-input-container>
+                </div>
+                <div flex="40" ng-show="vm.upperLayout.department">
+                    <md-input-container class="md-block">
+                        <label translate="CONTACTS.DEPARTMENT"></label>
+                        <input ng-model="vm.saveContactDetail.department" ng-keypress="vm.keyPressChange($event)">
+                    </md-input-container>
+                </div>
+            </div>
+            <div layout="row">
+                <div flex="80">
+                    <md-input-container class="md-block">
+                        <label translate="CONTACTS.COMPANY"></label>
+                        <input ng-model="vm.saveContactDetail.company" ng-keypress="vm.keyPressChange($event)">
+                    </md-input-container>
+                </div>
+            </div>
+            <div layout="row" flex layout-align="center center">
+                <a href="" ng-show="!vm.isMoreDetails" ng-click="vm.showMoreDetails()">Show Details</a>
+                <a href="" ng-show="vm.isMoreDetails" ng-click="vm.showMoreDetails()">Hide Details</a>
+            </div>
+            <div ng-show="vm.isMoreDetails">
+              <div layout="row" ng-hide="value.active == false" ng-repeat="(key,value) in vm.saveContactDetail.email track by $index">
+                  <div flex="80">
+                      <md-input-container class="md-block">
+                          <label>{{ 'CONTACTS.EMAIL' | translate }}:</label>
+                          <input type="email" ng-model="value.value"
+                                 ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
+                                 ng-keypress="vm.keyPressChange($event)">
+                      </md-input-container>
+                  </div>
+                  <div flex>
+                      <md-input-container class="md-block">
+                          <i class="material-icons grey-clr link-pointer" ng-click="vm.addEmail($index)">&#xE145;</i>
+                          <i class="material-icons grey-clr link-pointer" ng-if="key != '1'" ng-click="vm.removeEmail(key)">&#xE15B;</i>
+                      </md-input-container>
+                  </div>
+              </div>
+
+              <div layout="row" ng-hide="phone.active == false" ng-repeat="phone in vm.saveContactDetail.phone track by $index">
+                  <div flex="75">
+                      <md-input-container class="md-block">
+                          <label>{{ 'CONTACTS.PHONE' | translate }}:</label>
+                          <input ng-model="vm.saveContactDetail.phone[$index].value" ng-keypress="vm.keyPressChange($event)">
+                      </md-input-container>
+                  </div>
+                  <div flex>
+                      <md-input-container class="md-block">
+                          <md-menu>
+                              <md-button ng-click="$mdOpenMenu()" class="md-raised md-primary height-12"
+                                         aria-label="Open sample menu">
+                                  {{ vm.saveContactDetail.phone[$index].type}} &nbsp;<span class="caret"></span>
+                              </md-button>
+                              <md-menu-content style="position: fixed">
+                                  <md-menu-item>
+                                      <md-button
+                                          ng-click="vm.changePHONEType($index,'mobile')"> {{ 'CONTACTS.MOBILE' | translate }} </md-button>
+                                  </md-menu-item>
+                                  <md-menu-item>
+                                      <md-button
+                                          ng-click="vm.changePHONEType($index,'work')"> {{ 'CONTACTS.WORK' | translate }} </md-button>
+                                  </md-menu-item>
+                                  <md-menu-item>
+                                      <md-button
+                                          ng-click="vm.changePHONEType($index,'workFax')"> {{ 'CONTACTS.WORK_FAX' | translate }} </md-button>
+                                  </md-menu-item>
+                                  <md-menu-item>
+                                      <md-button
+                                          ng-click="vm.changePHONEType($index,'company')"> {{ 'CONTACTS.COMPANY' | translate }} </md-button>
+                                  </md-menu-item>
+                                  <md-menu-item>
+                                      <md-button
+                                          ng-click="vm.changePHONEType($index,'home')"> {{ 'CONTACTS.HOME' | translate }} </md-button>
+                                  </md-menu-item>
+                                  <md-menu-item>
+                                      <md-button
+                                          ng-click="vm.changePHONEType($index,'homeFax')">{{ 'CONTACTS.HOME_FAX' | translate }}</md-button>
+                                  </md-menu-item>
+                                  <md-menu-item>
+                                      <md-button
+                                          ng-click="vm.changePHONEType($index,'pager')"> {{ 'CONTACTS.PAGER' | translate }} </md-button>
+                                  </md-menu-item>
+                                  <md-menu-item>
+                                      <md-button
+                                          ng-click="vm.changePHONEType($index,'callback')"> {{ 'CONTACTS.CALLBACK' | translate }} </md-button>
+                                  </md-menu-item>
+                                  <md-menu-item>
+                                      <md-button
+                                          ng-click="vm.changePHONEType($index,'assisstant')"> {{ 'CONTACTS.ASSISTANT' | translate }} </md-button>
+                                  </md-menu-item>
+                                  <md-menu-item>
+                                      <md-button
+                                          ng-click="vm.changePHONEType($index,'car')"> {{ 'CONTACTS.CAR' | translate }} </md-button>
+                                  </md-menu-item>
+                                  <md-menu-item>
+                                      <md-button
+                                          ng-click="vm.changePHONEType($index,'other')"> {{ 'CONTACTS.OTHER' | translate }} </md-button>
+                                  </md-menu-item>
+                                  <md-menu-item>
+                                      <md-button
+                                          ng-click="vm.changePHONEType($index,'otherFax')"> {{ 'CONTACTS.OTHER_FAX' | translate }} </md-button>
+                                  </md-menu-item>
+                              </md-menu-content>
+                          </md-menu>
+                          <i class="material-icons grey-clr link-pointer" ng-click="vm.addPhone($index)">&#xE145;</i>
+                          <i class="material-icons grey-clr link-pointer" ng-if="$index > 0" ng-click="vm.removePhone($index)">&#xE15B;</i>
+                      </md-input-container>
+                  </div>
+              </div>
+
+                <div layout="row" ng-hide="imscreen.active == false"
+                     ng-repeat="imscreen in vm.saveContactDetail.screen track by $index">
+                    <div flex="75">
+                        <md-input-container class="md-block">
+                            <label>{{ 'CONTACTS.IM' | translate }}:</label>
+                            <input ng-model="vm.saveContactDetail.screen[$index].value" ng-keypress="vm.keyPressChange($event)">
+                        </md-input-container>
+                    </div>
+                    <div flex>
+                        <md-input-container class="md-block">
+                            <md-menu>
+                                <md-button ng-click="$mdOpenMenu()" class="md-raised md-primary height-12"
+                                           aria-label="Open sample menu">
+                                    {{ vm.saveContactDetail.screen[$index].type}} &nbsp;<span class="caret"></span>
+                                </md-button>
+                                <md-menu-content style="position: fixed">
+                                    <md-menu-item>
+                                        <md-button
+                                            ng-click="vm.changeSCREENType($index,'xmpp')">{{ 'CONTACTS.XMPP' | translate }}</md-button>
+                                    </md-menu-item>
+                                    <md-menu-item>
+                                        <md-button
+                                            ng-click="vm.changeSCREENType($index,'yahoo')">{{ 'CONTACTS.YAHOO' | translate }}</md-button>
+                                    </md-menu-item>
+                                    <md-menu-item>
+                                        <md-button
+                                            ng-click="vm.changeSCREENType($index,'aol')">{{ 'CONTACTS.AOL' | translate }}</md-button>
+                                    </md-menu-item>
+                                    <md-menu-item>
+                                        <md-button
+                                            ng-click="vm.changeSCREENType($index,'msn')">{{ 'CONTACTS.MSN' | translate }}</md-button>
+                                    </md-menu-item>
+                                    <md-menu-item>
+                                        <md-button
+                                            ng-click="vm.changeSCREENType($index,'other')">{{ 'CONTACTS.OTHER_SETTINGS' | translate }}</md-button>
+                                    </md-menu-item>
+                                </md-menu-content>
+                            </md-menu>
+                            <i class="material-icons grey-clr link-pointer" ng-click="vm.addScreen($index)">&#xE145;</i>
+                            <i class="material-icons grey-clr link-pointer" ng-if="$index > 0" ng-click="vm.removeScreen($index)">&#xE15B;</i>
+                        </md-input-container>
+                    </div>
+                </div>
+                <div layout="row">
+                    <div flex="75">
+                        <md-input-container class="md-block margin-bottom-20">
+                            <label style="color:black">{{ 'CONTACTS.ADDRESS' | translate }}:</label>
+                            <input type=hidden>
+                        </md-input-container>
+                    </div>
+                </div>
+                <div ng-hide="address.active == false" ng-repeat="address in vm.saveContactDetail.address track by $index">
+                    <div layout="row">
+                        <div flex="25">
+                            <md-input-container class="md-block">
+                                <label translate="CONTACTS.STREET"></label>
+                                <input ng-model="vm.saveContactDetail.address[$index].street" ng-keypress="vm.keyPressChange($event)">
+                            </md-input-container>
+                        </div>
+                        <div flex="25">
+                            <md-input-container class="md-block">
+                                <label translate="CONTACTS.POSTAL_CODE"></label>
+                                <input ng-model="vm.saveContactDetail.address[$index].postalcode"
+                                       ng-keypress="vm.keyPressChange($event)">
+                            </md-input-container>
+                        </div>
+                        <div flex="25">
+                            <md-input-container class="md-block">
+                                <label translate="CONTACTS.CITY"></label>
+                                <input ng-model="vm.saveContactDetail.address[$index].city" ng-keypress="vm.keyPressChange($event)">
+                            </md-input-container>
+                        </div>
+                        <div flex>
+                            <md-input-container class="md-block">
+                                <md-menu>
+                                    <md-button ng-click="$mdOpenMenu()" class="md-raised md-primary height-12"
+                                               aria-label="Open sample menu">
+                                        {{ vm.saveContactDetail.address[$index].type}} &nbsp;<span class="caret"></span>
+                                    </md-button>
+                                    <md-menu-content style="position: fixed">
+                                        <md-menu-item>
+                                            <md-button
+                                                ng-click="vm.changeADDRESSType($index,'home')">{{ 'CONTACTS.HOME' | translate }}</md-button>
+                                        </md-menu-item>
+                                        <md-menu-item>
+                                            <md-button
+                                                ng-click="vm.changeADDRESSType($index,'work')">{{ 'CONTACTS.WORK' | translate }}</md-button>
+                                        </md-menu-item>
+                                        <md-menu-item>
+                                            <md-button
+                                                ng-click="vm.changeADDRESSType($index,'other')">{{ 'CONTACTS.OTHER' | translate }}</md-button>
+                                        </md-menu-item>
+                                    </md-menu-content>
+                                </md-menu>
+                                <i class="material-icons grey-clr link-pointer" ng-click="vm.addAddress($index)">&#xE145;</i>
+                                <i class="material-icons grey-clr link-pointer" ng-if="$index > 0" ng-click="vm.removeAddress($index)">&#xE15B;</i>
+
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div layout="row">
+                        <div flex="35">
+                            <md-input-container class="md-block">
+                                <label translate="CONTACTS.STATE"></label>
+                                <input ng-model="vm.saveContactDetail.address[$index].state" ng-keypress="vm.keyPressChange($event)">
+                            </md-input-container>
+                        </div>
+                        <div flex="35">
+                            <md-input-container class="md-block">
+                                <label translate="CONTACTS.COUNTRY"></label>
+                                <input ng-model="vm.saveContactDetail.address[$index].country" ng-keypress="vm.keyPressChange($event)">
+                            </md-input-container>
+                        </div>
+                    </div>
+                </div>
+                <div layout="row" ng-hide="url.active == false" ng-repeat="url in vm.saveContactDetail.url track by $index">
+                    <div flex="75">
+                        <md-input-container class="md-block">
+                            <label translate="CONTACTS.URL">
+                                URL:</label>
+                            <input ng-model="vm.saveContactDetail.url[$index].value" ng-keypress="vm.keyPressChange($event)">
+                    </div>
+                    <div flex>
+                        <md-input-container class="md-block">
+                            <md-menu>
+                                <md-button ng-click="$mdOpenMenu()" class="md-raised md-primary height-12"
+                                           aria-label="Open sample menu">
+                                    {{ vm.saveContactDetail.url[$index].type}} &nbsp;<span class="caret"></span>
+                                </md-button>
+                                <md-menu-content style="position: fixed">
+                                    <md-menu-item>
+                                        <md-button
+                                            ng-click="vm.changeURLType($index,'home')">{{ 'CONTACTS.HOME' | translate }}</md-button>
+                                    </md-menu-item>
+                                    <md-menu-item>
+                                        <md-button
+                                            ng-click="vm.changeURLType($index,'work')">{{ 'CONTACTS.WORK' | translate }}</md-button>
+                                    </md-menu-item>
+                                    <md-menu-item>
+                                        <md-button
+                                            ng-click="vm.changeURLType($index,'other')">{{ 'CONTACTS.OTHER_SETTINGS' | translate }}</md-button>
+                                    </md-menu-item>
+                                </md-menu-content>
+                            </md-menu>
+                            <i class="material-icons grey-clr link-pointer" ng-click="vm.addUrl($index)">&#xE145;</i>
+                            <i class="material-icons grey-clr link-pointer" ng-if="$index > 0" ng-click="vm.removeUrl($index)">&#xE15B;</i>
+                        </md-input-container>
+                    </div>
+                </div>
+
+                <div layout="row">
+                    <div flex="80">
+                        <md-input-container class="md-block margin-bottom-20">
+                            <label style="color:black">{{ 'CONTACTS.OTHER' | translate }}:</label>
+                            <input type=hidden>
+                        </md-input-container>
+                    </div>
+                </div>
+                <div layout="row" ng-hide="others.active == false" ng-repeat="others in vm.saveContactDetail.others track by $index">
+                    <div flex="30" ng-show="vm.saveContactDetail.others[$index].type !== 'custom'">
+                            <md-datepicker ng-model="vm.saveContactDetail.others[$index].datevalue" md-placeholder="Enter date" ng-keypress="vm.keyPressChange($event)"></md-datepicker>
+                    </div>
+                      <div flex="30" ng-show="vm.saveContactDetail.others[$index].type === 'custom'">
+                        <md-input-container class="md-block" ng-show="vm.saveContactDetail.others[$index].type === 'custom'">
+                            <label> {{ 'CONTACTS.OTHER' | translate }}: </label>
+                            <input ng-model="vm.saveContactDetail.others[$index].value" ng-keypress="vm.keyPressChange($event)">
+                        </md-input-container>
+                      </div>
+                    <div flex>
+                        <md-input-container class="md-block">
+                            <md-menu>
+                                <md-button ng-click="$mdOpenMenu()" class="md-raised md-primary height-12"
+                                           aria-label="Open sample menu">
+                                    {{ vm.saveContactDetail.others[$index].type}} &nbsp;<span class="caret"></span>
+                                </md-button>
+                                <md-menu-content style="position: fixed">
+                                    <md-menu-item>
+                                        <md-button
+                                            ng-click="vm.changeOTHERSType($index,'birthday')">{{ 'CONTACTS.BIRTHDAY' | translate }}</md-button>
+                                    </md-menu-item>
+                                    <md-menu-item>
+                                        <md-button
+                                            ng-click="vm.changeOTHERSType($index,'anniversary')">{{ 'CONTACTS.ANNIVERSARY' | translate }}</md-button>
+                                    </md-menu-item>
+                                    <md-menu-item>
+                                        <md-button
+                                            ng-click="vm.changeOTHERSType($index,'custom')">{{ 'CONTACTS.CUSTOM' | translate }}</md-button>
+                                    </md-menu-item>
+                                </md-menu-content>
+                            </md-menu>
+                            <i class="material-icons grey-clr link-pointer" ng-click="vm.addOthers($index)">&#xE145;</i>
+                            <i class="material-icons grey-clr link-pointer" ng-if="$index > 0" ng-click="vm.removeOthers($index)">&#xE15B;</i>
+                        </md-input-container>
+                    </div>
+                </div>
+                <div layout="row">
+                    <div flex="90">
+                        <md-input-container class="md-block">
+                            <label>{{ 'CONTACTS.NOTES' | translate }}: </label>
+                        <textarea ng-model="vm.saveContactDetail.notes" columns="1" md-maxlength="150" rows="5"
+                                  ng-keypress="vm.keyPressChange($event)"></textarea>
+                        </md-input-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" layout-padding>
+
+        <span flex></span>
+        <md-button uib-tooltip="Return to previous view [Esc]"
+                   ng-click="vm.cancel()">{{ 'COMMON.CANCEL' | translate }}</md-button>
+        <md-button class="md-raised md-primary save-btn" ng-if="vm.operation!=='edit'" ng-click="vm.createNewContact()"
+                   uib-tooltip="Save the current contact"
+                   ng-disabled="vm.keyPress === false">{{ 'COMMON.SAVE' | translate }}</md-button>
+        <md-button class="md-raised md-primary save-btn" ng-if="vm.operation==='edit'" ng-click="vm.modifyContact()"
+                   uib-tooltip="Save the current contact">{{ 'COMMON.SAVE' | translate }}</md-button>
+
+    </md-dialog-actions>
+    </form>
+</md-dialog>
+
+
+<script type="text/ng-template" id="savingContactModal.html">
+    <md-dialog aria-label="Warning" flex="40" ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h4 translate="CONTACTS.WARNING"></h4>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div layout="column" layout-padding class="md-dialog-content">
+                <div layout-gt-xs="row">
+                    <p>
+                        <md-icon md-font-set="materials-icons" style="color: gold;" class="material-icons md-18">
+                            warning
+                        </md-icon>
+                        {{ 'CONTACTS.DO_YOU_WANT_TO_SAVE_CHANGES' | translate }}
+                    </p>
+                </div>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <md-button class="md-primary md-raised md-hue-2" ng-click="vm.yes()" hotkey="{'y': vm.yes}">YES</md-button>
+            <md-button class="md-primary md-raised md-hue-2" ng-click="vm.no()" hotkey="{'n': vm.no}">No</md-button>
+            <md-button class="md-warn md-raised md-hue-2" ng-click="vm.cancel()" hotkey="{'c': vm.cancel }">Cancel</md-button>
+        </md-dialog-actions>
+    </md-dialog>
+</script>

@@ -1,0 +1,60 @@
+<div class="choose-folder">
+    <!-- Header -->
+    <div class="modal-header">
+        <h4 class="modal-title" translate="CALENDAR.CHOOSE_FOLDER"></h4>
+    </div>
+    <!-- Body -->
+    <div class="modal-body">
+        <div class="calendarTreeView">
+            <ul class="root-node">
+                <li ng-repeat="calendarItem in vm.calendarItemsInHierachy"
+                    ng-include="'simpleCalendarTreeViewTemplate'">
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Footer buttons -->
+    <div class="modal-footer green-btns">
+        <!--TODO: Implement the New Folder button-->
+        <!--<button class="btn-ok" type="button" ng-click="vm.newFolder()">New</button>-->
+
+        <button class="btn-ok" type="button" ng-click="vm.ok()" translate="CALENDAR.OK"></button>
+        <button class="btn-cancel" type="button" ng-click="vm.cancel()" translate="CALENDAR.CANCEL"></button>
+    </div>
+</div>
+
+<script type="text/ng-template" id="simpleCalendarTreeViewTemplate">
+    <div class="calendar-title"
+         ng-class="{'tree-expand': calendarItem.isNodeExpanded, 'tree-collapse': !calendarItem.isNodeExpanded}"
+         calendar-id="{{calendarItem.uuid}}"
+         calendar-parent-id="{{calendarItem.parentUuid}}"
+         calendar-name="{{calendarItem.name}}">
+        <i class="fa"
+           ng-class="{'fa-plus-square-o': !calendarItem.isNodeExpanded, 'fa-minus-square-o': calendarItem.isNodeExpanded}"
+           ng-style="{visibility: calendarItem.childList.length > 0 ? 'visible': 'hidden'}"
+           ng-click="calendarItem.isNodeExpanded = !calendarItem.isNodeExpanded"></i>
+
+        <span class="calendar-checkbox">
+            <input id="simpleCalendar_{{calendarItem.id}}" type="checkbox"
+                   class="checkbox-inline"
+                   ng-model="calendarItem.isSelected"
+                   ng-change="vm.onCalendarSelectedItemChange(calendarItem)"/>
+            <label for="simpleCalendar_{{calendarItem.id}}"></label>
+        </span>
+        <span>
+            <label for="simpleCalendar_{{calendarItem.id}}">
+                <i ng-class="calendarItem.icon.classes" ng-style="calendarItem.icon.color"></i>
+                {{calendarItem.name}}
+            </label>
+        </span>
+    </div>
+    <ul class="branch-node" ng-if="calendarItem.childList.length > 0">
+        <li ng-repeat="calendarItem in calendarItem.childList"
+            ng-include="'simpleCalendarTreeViewTemplate'"
+            calendar-id="{{calendarItem.uuid}}"
+            calendar-parent-id="{{calendarItem.parentUuid}}"
+            calendar-name="{{calendarItem.name}}">
+        </li>
+    </ul>
+</script>

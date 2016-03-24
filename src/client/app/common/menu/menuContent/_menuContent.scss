@@ -1,0 +1,106 @@
+@import '../../common';
+
+#menuContent{
+  z-index: 1050;
+    .menu-item-parent{
+        list-style: none;
+        padding: 0;
+        border-radius: 3px;
+        position: absolute;
+        left: -15px;
+        z-index: 1000;
+        min-width: 165px;
+        background-color: white;
+        transition: all .4s cubic-bezier(.25,.8,.25,1);
+        transition-duration: 200ms;
+        transform-origin: left top 0px;
+        box-shadow: 1px 2px 0px -1px rgba(0,0,0,.2),0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12);
+        &.active{
+            opacity: 1;
+            visibility: visible;
+            transition: all .4s cubic-bezier(.25,.8,.25,1);
+        }
+        li{
+            line-height: 37px;
+            transition: opacity .2s cubic-bezier(.4,0,.2,1);
+            padding: 0 15px;
+            cursor: pointer;
+            .icon{
+                width: 15px;
+                height: 15px;
+            }
+            &:hover {
+                @include set-svg($sidebar-active-items);
+                background: $light-gray;
+                color: $sidebar-active-items;
+            }
+            &.disabledMenu{
+                background: #fff;
+                color: lightgrey;
+                &:hover,
+                &:active,
+                .active{
+                    background: #fff !important;
+                    color: lightgrey !important;
+                }
+            }
+            &.disable{
+                cursor: not-allowed !important;
+                background: #fff;
+                #modal{
+                    cursor: not-allowed !important;
+                }
+                span{
+                    &.disable{
+                        background: #fff;
+                    }
+                }
+            }
+            &.parent{
+                position: relative;
+                overflow: hidden;
+                &.active{
+                    overflow: visible;
+                    .menu-item-child {
+                        opacity: 1;
+                        transition: all .4s cubic-bezier(.25, .8, .25, 1);
+                    }
+                }
+            }
+            .menu-item-child{
+                list-style: none;
+                padding: 0;
+                opacity: 0;
+                border-bottom-right-radius: 3px;
+                border-top-right-radius: 3px;
+                top: 0;
+                position: absolute;
+                z-index: 1;
+                min-width: 165px;
+                background-color: white;
+                transition: all .4s cubic-bezier(.25,.8,.25,1);
+                transition-duration: 200ms;
+                transform-origin: left top 0px;
+                box-shadow: 1px 2px 0px -1px rgba(0,0,0,.2),0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12);
+            }
+        }
+    }
+    .menu-sm{
+        min-width: 165px;
+        .menu-item-child{
+            left: 166px;
+        }
+    }
+    .menu-md{
+        min-width: 200px;
+        .menu-item-child{
+            left: 201px;
+        }
+    }
+    .menu-lg{
+        min-width: 265px;
+        .menu-item-child{
+            left: 266px;
+        }
+    }
+}

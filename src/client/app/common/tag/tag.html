@@ -1,0 +1,20 @@
+<span id="tag" ng-style="{'background-color': vm.rgb || vm.color}">
+    <span ng-if="!vm.tagContextMenuDisabled"
+          ng-bind="vm.name"
+          context-menu
+          context-menu-type="tagItem"
+          tag-id="{{vm.tagId}}"
+          tag-name="{{vm.name}}"
+          class="drag-tag-contact pointer"
+          draggable="true"
+          effect-allowed="copy"
+          draggable-type="custom-object"
+          draggable-data="{index: $index, tagName: vm.name}"></span>
+    <span ng-if="vm.tagContextMenuDisabled"
+          ng-bind="vm.name"
+          class="drag-tag-contact pointer"
+          draggable="true"
+          effect-allowed="copy"
+          draggable-type="custom-object"
+          draggable-data="{index: $index, tagName: vm.name}"></span>
+</span>

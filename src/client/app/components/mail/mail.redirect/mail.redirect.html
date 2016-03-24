@@ -1,0 +1,19 @@
+<md-dialog aria-label="Warning" flex="50">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h4>Redirect</h4>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <div layout="column" layout-padding class="md-dialog-content">
+            <div layout-gt-xs="row">
+                <vnc-auto-complete-mail flex mail-array="vm.toEmails" placeholder="To"></vnc-auto-complete-mail>
+            </div>
+            <p>Enter recipient(s) to redirect this message 'To' without including your 'Forward' information.</p>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" id="toastBounds">
+        <md-button ng-click="vm.cancel()">Cancel</md-button>
+        <md-button class="md-primary md-raised md-hue-2" ng-click="vm.ok()">Ok</md-button>
+    </md-dialog-actions>
+</md-dialog>

@@ -1,0 +1,94 @@
+/*************************************
+ *
+ *
+ * task move operation
+ *
+ *
+ **************************************/
+
+#task-move{
+    .task-move{
+        background-color: #fafafa;
+        .modal-header{
+            border: 0;
+        }
+    }
+    .modal-header h3{
+        color:#022a44 !important;
+        font-weight:normal !important;
+    }
+    .color-black{
+        color:#000 !important;
+    }
+    .inline-caret{
+        margin-top: 5px ;
+        float: right ;
+    }
+    .styled {
+        input[type=radio] {
+            display:none;
+        }
+        input[type=radio] {
+            margin-right: 39px !important;
+        }
+        input[type=radio] + label:before {
+            content: "";
+            padding: 0 5px 0 0;
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            vertical-align: middle;
+            margin-right: 17px;
+            background-color: #fff;
+            border-radius: 8px;
+            border: 1px solid #000;
+        }
+
+        input[type=radio]:checked + label:before {
+            content: "\2022";
+            color: #FFA729;
+            font-size: 2.5em;
+            text-align: center;
+            line-height: 15px;
+            border: 1px solid #FFA729;
+
+        }
+
+        .margin-23 {
+            margin-bottom: 23px;
+        }
+
+    }
+    .no-bold-text,label{
+        font-weight:normal !important;
+        font-size: 15px !important;
+    }
+    .modal-footer {
+        border:none;
+
+        padding:15px;
+        &.green-btns {
+            .btn-create {
+                background: #6da31a;
+                color: #fff;
+                &:disabled {
+                    background:#f1f1f1;
+                    color:#b4b4b4;
+                }
+            }
+            .btn-cancel {
+                color: #6da31a;
+                &:disabled {
+                    color:#b4b4b4;
+                }
+            }
+        }
+        .no-border{
+            border:0 !important;
+        }
+    }
+    .modal-dialog{
+        width:390px !important;
+        height:auto !important;
+    }
+}

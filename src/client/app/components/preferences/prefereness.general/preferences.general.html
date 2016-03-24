@@ -1,0 +1,230 @@
+<div class="preferences-general">
+    <div layout="column" layout-margin>
+        <div class="block">
+            <md-toolbar class="demo-toolbar md-primary">
+                <div class="md-toolbar-tools">
+                    <h2><span translate="PREFERENCES.SIGN_IN"></span></h2>
+                </div>
+            </md-toolbar>
+            <div class="block-content">
+                <div layout="row" class="block-item">
+                    <div flex="25" layout="" layout-align="start center">
+                        <span translate="PREFERENCES.PASSWORD"></span>
+                    </div>
+                    <div flex="75">
+                        <md-button class="md-raised md-primary">{{ 'PREFERENCES.PRIMARY' | translate }}</md-button>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+                <div layout="row" class="block-item">
+                    <div flex="25" layout="" layout-align="start center">
+                        <span translate="PREFERENCES.DEFAULT_CLIENT"></span>
+                    </div>
+                    <div flex="75" flex-xs="75">
+                        <md-radio-group>
+                            <md-radio-button value="1"> {{ 'PREFERENCES.ADVANCED_AJAX' | translate }}</md-radio-button>
+                            <md-radio-button value="2"> {{ 'PREFERENCES.STANDARD_HTML' | translate }}</md-radio-button>
+                        </md-radio-group>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block">
+            <md-toolbar class="demo-toolbar md-primary">
+                <div class="md-toolbar-tools">
+                    <h2><span translate="PREFERENCES.APPEARANCE"></span></h2>
+                </div>
+            </md-toolbar>
+            <div class="block-content">
+                <div layout="row" class="block-item">
+                    <div flex="25" layout="" layout-align="start center">
+                        <span translate="PREFERENCES.THEME"></span>
+                    </div>
+                    <div flex="25" layout="" layout-align="start center" flex-xs="75">
+                        <md-select ng-model="theme">
+                            <md-option>{{ 'PREFERENCES.BARE' | translate }}</md-option>
+                            <md-option>{{ 'PREFERENCES.BEACH' | translate }}</md-option>
+                            <md-option>{{ 'PREFERENCES.BONES' | translate }}</md-option>
+                            <md-option>{{ 'PREFERENCES.CARBON' | translate }}</md-option>
+                            <md-option>{{ 'PREFERENCES.HARMONY' | translate }}</md-option>
+                            <md-option>{{ 'PREFERENCES.LEMONGRASS' | translate }}</md-option>
+                            <md-option>{{ 'PREFERENCES.SERENITY' | translate }}</md-option>
+                            <md-option>{{ 'PREFERENCES.VNC' | translate }}</md-option>
+                        </md-select>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+                <div layout="row" class="block-item">
+                    <div flex="25" layout="" layout-align="start center">
+                        <span translate="PREFERENCES.FONT"></span>
+                    </div>
+                    <div flex="25" layout="" layout-align="start center" flex-xs="75">
+                        <md-select ng-model="fontStyle">
+                            <md-option>{{ 'PREFERENCES.STANDARD' | translate }}</md-option>
+                            <md-option>{{ 'PREFERENCES.MORDEN' | translate }}</md-option>
+                            <md-option>{{ 'PREFERENCES.CLASSIC' | translate }}</md-option>
+                            <md-option>{{ 'PREFERENCES.WIDE' | translate }}</md-option>
+                        </md-select>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+                <div layout="row" class="block-item">
+                    <div flex="25" layout="" layout-align="start center">
+                        <span translate="PREFERENCES.DISPLAY_FONT_SIZE"></span>
+                    </div>
+                    <div flex="25" layout="" layout-align="start center" flex-xs="75">
+                        <md-select ng-model="fontDisplay">
+                            <md-option>{{ 'PREFERENCES.SMALL' | translate }}</md-option>
+                            <md-option>{{ 'PREFERENCES.NORMAL' | translate }}</md-option>
+                            <md-option>{{ 'PREFERENCES.LARGE' | translate }}</md-option>
+                            <md-option>{{ 'PREFERENCES.EXTRA_LARGE' | translate }}</md-option>
+                        </md-select>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+                <div layout="row" class="block-item">
+                    <div flex="25" layout="" layout-align="start center">
+                        <span translate="PREFERENCES.DISPLAY_FONT_SIZE"></span>
+                    </div>
+                    <div flex="25" layout="" layout-align="start center" flex-xs="75">
+                        <md-select ng-model="fontSize">
+                            <md-option ng-repeat="fontSize in vm.printFontSize track by $index" ng-hide="$index < 8"> {{$index}}pt </md-option>
+                        </md-select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block">
+            <md-toolbar class="demo-toolbar md-primary">
+                <div class="md-toolbar-tools">
+                    <h2><span translate="PREFERENCES.TIME_ZONE_AND_LANGUAGE"></span></h2>
+                </div>
+            </md-toolbar>
+            <div class="block-content">
+                <div layout="row" class="block-item">
+                    <div flex="25" layout="" layout-align="start center">
+                        <span translate="PREFERENCES.TIME_ZONE"></span>
+                    </div>
+                    <div flex="25" layout="" layout-align="start center" flex-xs="75">
+                        <md-select ng-model="timeZone">
+                            <md-option>{{ 'PREFERENCES.BARE' | translate }}</md-option>
+                            <md-option>{{ 'PREFERENCES.BEACH' | translate }}</md-option>
+                            <md-option>{{ 'PREFERENCES.BONES' | translate }}</md-option>
+                            <md-option>{{ 'PREFERENCES.CARBON' | translate }}</md-option>
+                            <md-option>{{ 'PREFERENCES.HARMONY' | translate }}</md-option>
+                            <md-option>{{ 'PREFERENCES.LEMONGRASS' | translate }}</md-option>
+                            <md-option>{{ 'PREFERENCES.SERENITY' | translate }}</md-option>
+                            <md-option>{{ 'PREFERENCES.VNC' | translate }}</md-option>
+                        </md-select>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+                <div layout="row" class="block-item">
+                    <div flex="25" layout="" layout-align="start center">
+                        <span translate="PREFERENCES.FONT"></span>
+                    </div>
+                    <div flex="25" layout="" layout-align="start center" flex-xs="75">
+                        <md-select ng-model="fontStyle">
+                            <md-option>{{ 'PREFERENCES.STANDARD' | translate }}</md-option>
+                            <md-option>{{ 'PREFERENCES.MORDEN' | translate }}</md-option>
+                            <md-option>{{ 'PREFERENCES.CLASSIC' | translate }}</md-option>
+                            <md-option>{{ 'PREFERENCES.WIDE' | translate }}</md-option>
+                        </md-select>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+                <div layout="row" class="block-item">
+                    <div flex="25" layout="" layout-align="start center">
+                        <span translate="PREFERENCES.COMPOSE_DIRECTION"></span>
+                   </div>
+                    <div class="col-md-3 col-xs-3">
+                        <md-select ng-model="composeDirection">
+                            <md-option>{{ 'PREFERENCES.LEFT_TO_RIGHT' | translate }}</md-option>
+                            <md-option>{{ 'PREFERENCES.RIGHT_TO_LEFT' | translate }}</md-option>
+                        </md-select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block">
+            <md-toolbar class="demo-toolbar md-primary">
+                <div class="md-toolbar-tools">
+                    <h2><span translate="PREFERENCES.SEARCH"></span></h2>
+                </div>
+            </md-toolbar>
+            <div class="block-content">
+                <div layout="row" class="block-item">
+                    <div flex="25" layout="" layout-align="start center">
+                        <span translate="PREFERENCES.SEARCH_FOLDERS"></span>
+                    </div>
+                    <div flex="40" flex-xs="75">
+                        <md-checkbox aria-label="Checkbox 1">
+                            {{ 'PREFERENCES.INCLUDE_SPAM_FOLDER_IN_SEARCHES' | translate }}
+                        </md-checkbox>
+                        <md-checkbox aria-label="Checkbox 1">
+                            {{ 'PREFERENCES.INCLUDE_TRASH_FOLDER_IN_SEARCHES' | translate }}
+                        </md-checkbox>
+                        <md-checkbox aria-label="Checkbox 1">
+                            {{ 'PREFERENCES.INCLUDE_SHARE_FOLDER_IN_SEARCHES' | translate }}
+                        </md-checkbox>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+                <div layout="row" class="block-item">
+                    <div flex="25" layout="" layout-align="start center">
+                        <span translate="PREFERENCES.SEARCH_LANGUAGE"></span>
+                    </div>
+                    <div flex="40" flex-xs="75">
+                        <md-checkbox aria-label="Checkbox 1">
+                            {{ 'PREFERENCES.SHOW_ADVANCED_SEARCH_LANGUAGE' | translate }}
+                        </md-checkbox>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block">
+            <md-toolbar class="demo-toolbar md-primary">
+                <div class="md-toolbar-tools">
+                    <h2><span translate="PREFERENCES.OTHER_SETTING"></span></h2>
+                </div>
+            </md-toolbar>
+            <div class="block-content">
+                <div layout="row" class="block-item">
+                    <div layout="" layout-align="start center" flex="25">
+                        <span translate="PREFERENCES.SCROLLING"></span>
+                    </div>
+                    <div flex="25" layout="" layout-align="start center" flex-xs="75">
+                        <md-select ng-model="scolling">
+                            <md-option>25</md-option>
+                            <md-option selected>50</md-option>
+                            <md-option>75</md-option>
+                            <md-option>100</md-option>
+                        </md-select>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+                <div layout="row" class="block-item">
+                    <div layout="" layout-align="start center" flex="25">
+                        <span translate="PREFERENCES.SELECTION"></span>
+                    </div>
+                    <div flex="75" flex-xs="75">
+                        <md-checkbox aria-label="Checkbox 1">
+                            {{ 'PREFERENCES.DISPLAY_CHECKBOXES' | translate }}
+                        </md-checkbox>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+                <div layout="row" class="block-item">
+                    <div layout="" layout-align="start center" flex="25">
+                        <span translate="PREFERENCES.EMAIL_ADDRESSES"></span>
+                    </div>
+                    <div flex="75" flex-xs="75">
+                        <md-checkbox aria-label="Checkbox 1">
+                            {{ 'PREFERENCES.DISPLAY_NAMES' | translate }}
+                        </md-checkbox>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,243 @@
+// Main Brand Colors
+$brand-blue-main: #002944;
+$brand-blue-light: #4E6A7C;
+$brand-blue-highlight: #94A5B0;
+
+// Color general
+$white: #fff;
+$black: #000;
+$background: #e3e7ed;
+$color-default: #9b9b9b;
+$color-primary: #11aaff;
+$color-success: #00cc00;
+$color-error: #d0021b;
+$color-danger: $color-error;
+$color-text: #4a4a4a;
+$color-silver: #bbb;
+$color-separated: #e4e4e4;
+$color-blue: #001155;
+$color-green-hightlight: #ddedc8;
+
+// Grays - Can be used for text and menu icons
+$dark-gray: #6B6B6B;
+$light-gray: #E0E0E0;
+$border-gray: #CCCCCC;
+$nav-gray: #6A6A6A;
+// Main Body
+$body-gray: #EEEEEE;
+
+$white: #FFFFFF;
+$black: #000000;
+
+// Radius general
+$radius-normal: 3px;
+
+// Sidebar
+$sidebar-active-items: #022a43 !important;
+
+// Avatar Image
+$avatar-img: #a4be7d;
+
+//Mails
+$mail-grey: #B2B2B2;
+$mail-dark-grey: #707070;
+
+// Main Accent Colors
+$accent-red: #F1524A;
+$accent-green: #66bb6a;
+$accent-lightgreen: #0098a6;
+$accent-purple: #5B69C3;
+$accent-orange: #ef6c00;
+$accent-blue: #42a5f6;
+$accent-pink: #E91E63;
+$accent-cyan: #00BCD4;
+
+// Grays - Can be used for text and menu icons
+$dark-gray: #6B6B6B;
+$light-gray: #E0E0E0;
+
+/* BADGE */
+$badge-font-size: 9px !default;
+$badge-color: $white !default;
+$badge-color-inverse: $dark-gray !default;
+$badge-background: $accent-red !default;
+$badge-background-inverse: $accent-green !default;
+$badge-size : 18px !default;
+$badge-padding: 2px !default;
+
+// Input
+$input-background: #eee;
+$input-border-default: $color-default;
+$input-border-success: $color-success;
+$input-border-error: $color-error;
+$input-border-danger: $color-danger;
+$input-text: $black;
+$input-hint: $color-text;
+$input-label: $color-text;
+$input-icon: #999;
+$input-radius: $radius-normal;
+$input-height: 36px;
+
+// Z-indexes
+//--------------------------------------------
+
+$z-index-tooltip: 100 !default;
+$z-index-menu: 99 !default;
+$z-index-select: 99 !default;
+$z-index-dialog: 80 !default;
+$z-index-toast: 90 !default;
+$z-index-bottom-sheet: 70 !default;
+$z-index-scroll-mask: 65 !default;
+$z-index-sidenav: 60 !default;
+$z-index-backdrop: 50 !default;
+$z-index-fab: 20 !default;
+
+// Easing Curves
+//--------------------------------------------
+
+$swift-ease-out-duration: 0.4s !default;
+$swift-ease-out-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1) !default;
+$swift-ease-out: all $swift-ease-out-duration $swift-ease-out-timing-function !default;
+
+$swift-ease-in-duration: 0.3s !default;
+$swift-ease-in-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2) !default;
+$swift-ease-in: all $swift-ease-in-duration $swift-ease-in-timing-function !default;
+
+$swift-ease-in-out-duration: 0.5s !default;
+$swift-ease-in-out-timing-function: cubic-bezier(0.35, 0, 0.25, 1) !default;
+$swift-ease-in-out: all $swift-ease-in-out-duration $swift-ease-in-out-timing-function !default;
+
+$swift-linear-duration: 0.08s !default;
+$swift-linear-timing-function: linear !default;
+$swift-linear: all $swift-linear-duration $swift-linear-timing-function !default;
+
+// Mixin Border radius
+@mixin border-radius($radius) {
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    -ms-border-radius: $radius;
+    border-radius: $radius;
+}
+
+// Mixin Borders
+@mixin borders($top, $right, $bottom, $left) {
+    border-left: $left;
+    border-right: $right;
+    border-top: $top;
+    border-bottom: $bottom;
+}
+
+// Mixin Transition
+@mixin transition($property) {
+    transition: $property;
+    -webkit-transition: $property;
+    -moz-transition: $property;
+    -o-transition: $property;
+}
+
+// Mixin Transition
+@mixin set-svg($property) {
+    svg {
+        path{
+            fill: $property;
+        }
+    }
+}
+
+$online-color: #6da21b;
+$busy-color: #ef5350;
+$away-color: #ef6c00;
+$offline-color: #fafafa;
+
+// ICONS
+$icon-inactive-color: #6b6b6b;
+$icon-active-color: #022A43;
+
+@mixin svg-fill-color-active {
+  svg {
+    fill: $icon-active-color;
+  }
+}
+
+// CONVERT INPUT TO AM (Angular Material)
+@mixin input-am {
+    background: none;
+    input {
+        -webkit-box-ordinal-group: 3;
+        -webkit-order: 2;
+        -ms-flex-order: 2;
+        order: 2;
+        display: block;
+        margin-top: 0;
+        background: none;
+        padding-top: 2px;
+        padding-bottom: 1px;
+        border-width: 0 0 1px 0;
+        line-height: 26px;
+        height: 30px;
+        -ms-flex-preferred-size: 26px;
+        border-radius: 0;
+        border-style: solid;
+        width: 100%!important;
+        box-sizing: border-box;
+        float: left;
+        border-color: rgba(0,0,0,0.12);
+
+    }
+    input::-webkit-input-placeholder {
+        display: inline-block;
+        max-width: 100%;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: rgba(0,0,0,0.26);
+    }
+    input:-moz-placeholder {
+        display: inline-block;
+        max-width: 100%;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: rgba(0,0,0,0.26);
+    }
+}
+
+@mixin modal-container {
+    .modal-header {
+        padding: 15px;
+        border-bottom: 1px solid #e5e5e5;
+        .modal-title {
+            margin: 0;
+            line-height: 1.42857;
+        }
+    }
+    .modal-body {
+        padding: 15px;
+    }
+    .model-footer {
+        padding: 15px;
+        border-top: 1px solid #e5e5e5;
+    }
+}
+
+@mixin md-checkbox-12 {
+    md-checkbox {
+        min-width: 12px;
+        min-height: 20px;
+        width: 12px;
+        .md-container {
+            height: 12px;
+            .md-icon {
+                width: 12px;
+                height: 12px;
+                font-size: 12px;
+            }
+        }
+        &.md-checked {
+            .md-icon:after {
+                left: 4.66667px;
+                width: 6px;
+                height: 10px;
+                top: 0.5px;
+            }
+        }
+    }
+}

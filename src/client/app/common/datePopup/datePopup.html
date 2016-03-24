@@ -1,0 +1,7 @@
+<div class="date-info">
+    <h3>{{ vm.date | date: 'EEEE, MMMM dd, yyyy' }}</h3>
+    <ul ng-if="vm.appointments.length > 0">
+        <li ng-repeat="appointment in vm.appointments"><a ui-sref="calendar">{{ appointment.$.d | date:'MMMM dd, yyyy h:mm a' }} {{ appointment.$.name }}</a></li>
+    </ul>
+    <p ng-if="vm.appointments.length === 0" translate="NO_APPOINTMENTS"></p>
+</div>

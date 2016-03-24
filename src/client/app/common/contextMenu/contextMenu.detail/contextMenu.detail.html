@@ -1,0 +1,36 @@
+<div class="context-menu-list"
+     ng-if="vm.contextMenuPosition"
+     ng-style="vm.contextMenuPosition">
+    <ul class="main-menu">
+        <li class="context-item"
+            ng-repeat="contextItem in vm.contextListItems track by $index"
+            ng-class="{'divider': contextItem.isDivider, 'item': !contextItem.isDivider,
+            'extended': contextItem.hasSubMenu, 'disabled': contextItem.isDisabled}"
+            ng-click="vm.generalContextItemEvent(contextItem)"
+            ng-mouseenter="vm.onContextItemHover($event, contextItem.text)"
+            ng-mouseleave="vm.onContextItemBlur($event)"
+            on-finish-render="onContextItemRepeatFinished"
+            ng-include="'contextMenuTree'" layout="row">
+        </li>
+    </ul>
+</div>
+
+<script type="text/ng-template" id="contextMenuTree">
+    <i ng-if="!contextItem.isDivider" class="material-icons"
+       ng-style="{color: contextItem.icon.color}" flex="10">{{contextItem.icon.classes}}</i>
+    <span ng-if="!contextItem.isDivider" flex="90">{{contextItem.text}}</span>
+    <i ng-if="contextItem.hasSubMenu" class="material-icons pull-right" flex="5">keyboard_arrow_right</i>
+    <ul class="sub-menu"
+        ng-if="contextItem.hasSubMenu"
+        ng-style="vm.contextSubMenuStyle[contextItem.text]">
+        <li class="sub-item"
+            ng-repeat="contextItem in contextItem.subMenuItems track by $index"
+            ng-class="{'divider': contextItem.isDivider, 'item': !contextItem.isDivider,
+                    'extended': contextItem.hasSubMenu, 'disabled': contextItem.isDisabled}"
+            ng-click="vm.generalContextItemEvent(contextItem)"
+            ng-mouseenter="vm.onContextItemHover($event, contextItem.text)"
+            ng-mouseleave="vm.onContextItemBlur($event)"
+            ng-include="'contextMenuTree'">
+        </li>
+    </ul>
+</script>

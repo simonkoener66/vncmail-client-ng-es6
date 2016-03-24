@@ -1,0 +1,16 @@
+<div class="delete-mail-modal-content">
+    <div class="modal-header">
+        <h4 class="modal-title">Warning</h4>
+    </div>
+    <div class="modal-body">
+        <i class="material-icons" style="color: gold;" flex="5">warning</i>
+        <span ng-if="isTrash" flex="95" class="warning-message-compose-email pull-right">Do you really want to delete this mail. It will be permanently deleted and not go to Trash?</span>
+        <span ng-if="!isTrash" flex="95" class="warning-message-compose-email pull-right">Are you sure that you want to permanently delete the selected item?</span>
+    </div>
+    <div class="modal-footer">
+        <div layout="row" layout-align="end center">
+            <md-button class="md-raised md-primary" ng-click="yes()">YES</md-button>
+            <md-button class="md-raised"  ng-click="cancel()">Cancel</button>
+        </div>
+    </div>
+</div>

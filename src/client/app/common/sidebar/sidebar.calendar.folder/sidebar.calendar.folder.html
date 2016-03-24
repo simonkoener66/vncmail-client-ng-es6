@@ -1,0 +1,67 @@
+<div class="sidebar-calendar-folders" layout="column">
+    <div layout="row" layout-align="space-between center">
+        <label>Calendars</label>
+        <vnc-menu items="vm.externalMenu.items" size="vm.externalMenu.size">
+            <md-icon md-font-set="material-icons">
+                more_horiz
+            </md-icon>
+        </vnc-menu>
+    </div>
+    <div ui-tree="vm.treeOptions">
+        <ol ui-tree-nodes class="parent sidebar-nav-folder"
+            ng-model="vm.folders">
+            <!-- Calendar and Trash nodes cannot be dragged. -->
+            <li ui-tree-node
+                ng-class="{'current': vm.currentChildState.indexOf(item.$.name.toLowerCase()) >= 0}"
+                ng-repeat="item in vm.folders"
+                ng-include="'calendarTemplate.html'"></li>
+        </ol>
+    </div>
+
+    <div class="loading" ng-if="vm.loading">
+        loading folders <i class="fa fa-circle-o-notch fa-spin"></i>
+    </div>
+</div>
+
+<script type="text/ng-template" id="calendarTemplate.html">
+    <div layout="row" layout-align="space-between center"
+         context-menu context-menu-type="calendarSideBarItem"
+         ng-click="vm.nodeClicked(item)">
+        <div layout="row" flex="90">
+            <div flex="10" data-nodrag>
+                <md-icon md-font-set="material-icons"
+                         ng-click="vm.toggle(this)"
+                         ng-show="item.folder.length && collapsed">add</md-icon>
+                <md-icon md-font-set="material-icons"
+                         ng-click="vm.toggle(this)"
+                         ng-show="item.folder.length && !collapsed">remove</md-icon>
+            </div>
+            <div ui-tree-handle flex="90" class="{{vm.getColor(item.$.color)}}">
+                <md-icon md-font-set="material-icons"
+                         ng-show="item.$.id !== '3' && item.$.isLink">folder_shared</md-icon>
+                <md-icon md-font-set="material-icons"
+                         ng-show="item.$.id !== '3' && !item.$.isLink">folder</md-icon>
+                <md-icon md-font-set="material-icons"
+                         ng-show="item.$.id === '3'">delete</md-icon>
+                <span title="{{item.$.name}}">{{ item.$.name | limitTo : 15 }}
+                    <span ng-if="item.$.name.length > 15">...</span>
+                </span>
+            </div>
+        </div>
+
+        <!-- md-checkbox SQUARE doesn't display properly -->
+        <div layout="row" flex="10" layout-align="center center">
+            <vnc-menu items="vm.internalMenu.items" size="vm.internalMenu.size" data="item">
+                <md-icon md-font-set="material-icons" ng-click="vm.selectFolder($index, item)">arrow_drop_down</md-icon>
+            </vnc-menu>
+        </div>
+    </div>
+
+    <ol class="child" ng-class="{hidden: collapsed}"
+        ui-tree-nodes=""
+        ng-model="item.folder">
+        <li ui-tree-node data-nodrag="false"
+            ng-repeat="item in item.folder"
+            ng-include="'calendarTemplate.html'"></li>
+    </ol>
+</script>

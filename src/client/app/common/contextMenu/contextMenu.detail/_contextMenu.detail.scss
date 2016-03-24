@@ -1,0 +1,126 @@
+@import '../../common';
+div.context-menu-list {
+    background-color: white;
+    @include border-radius(6px);
+    box-shadow: 1px 2px 10px gray;
+    display: block;
+    padding: 10px 0;
+    position: absolute;
+    z-index: 9999;
+    ul.main-menu {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        li {
+            display: block;
+            min-width: 140px;
+            padding: 0 10px;
+            &.item {
+                font-size: 13px;
+                height: 25px;
+                line-height: 25px;
+                &:hover {
+                    background-color: #11aaff;
+                    cursor: pointer;
+                    color: white;
+                }
+            }
+            &.extended {
+                position: relative;
+                &:hover {
+                    > ul.sub-menu {
+                        display: block;
+                        li.sub-item {}
+                    }
+                }
+                ul.sub-menu {
+                    background-color: white;
+                    @include border-radius(6px);
+                    box-shadow: 1px 2px 10px gray;
+                    color: #333;
+                    display: none;
+                    margin: 0;
+                    padding: 10px 0;
+                    position: absolute;
+                    top: 0;
+                    left: 95%;
+                    white-space: nowrap;
+                    li.sub-item {
+                        i {
+                            font-size: 15px;
+                            width: 15px;
+                            height: 15px;
+                        }
+                    }
+                }
+            }
+            &.disabled {
+                color: #bbb;
+                cursor: not-allowed;
+                pointer-events: none;
+            }
+            &.divider {
+                border-bottom: 1px solid #bfbfbf;
+                margin: 5px;
+            }
+            span {
+                margin: 0 5px;
+            }
+            i {
+                line-height: 25px;
+                float: left;
+                font-size: 18px;
+                width: 18px;
+                height: 18px;
+            }
+        }
+    }
+}
+
+.modal-middle-position {
+    height: auto;
+    margin-top: -12em;
+    top: 50% !important;
+}
+
+.delete-appt-icon {
+    font-size: 20px;
+    color: gold;
+}
+
+.color-option {
+    .green {
+        @include set-svg($accent-green);
+    }
+    .yellow {
+        @include set-svg($accent-orange);
+    }
+    .purple {
+        @include set-svg($accent-purple);
+    }
+    .blue {
+        @include set-svg($accent-blue);
+    }
+    .cyan {
+        @include set-svg($accent-cyan);
+    }
+    .pink {
+        @include set-svg($accent-pink);
+    }
+    .gray {
+        @include set-svg($light-gray);
+    }
+    .red {
+        @include set-svg($accent-red);
+    }
+    .orange {
+        @include set-svg($accent-orange);
+    }
+    &.dark-grey {
+        @include set-svg($nav-gray);
+    }
+}

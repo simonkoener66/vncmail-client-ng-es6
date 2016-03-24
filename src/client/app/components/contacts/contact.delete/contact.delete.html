@@ -1,0 +1,24 @@
+<md-dialog aria-label="Contact Delete"  flex="30" ng-cloak>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h3 translate="CONTACTS.DELETE_CONTACT" flex="95"> </h3>
+            <md-button class="md-icon-button" ng-click="vm.cancel($event)">
+                <md-icon md-font-set="materials-icons" class="material-icons md-18" aria-label="Close dialog"> clear
+                </md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <div layout="column" layout-padding class="md-dialog-content styled">
+            <div layout="row">
+                <span ng-if="vm.$state.includes('contacts.trashContacts')">{{ 'CONTACTS.ARE_YOU_SURE_PERMANENTLY_DELETE' | translate }}</span>
+                <span ng-if="!vm.$state.includes('contacts.trashContacts')">{{ 'CONTACTS.ARE_YOU_SURE_DELETE' | translate }}</span>
+            </div>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" layout-padding>
+        <span flex></span>
+        <md-button uib-tooltip="Return to previous view [Esc]" ng-click="vm.cancel()" translate="COMMON.CANCEL"></md-button>
+        <md-button class="md-raised md-primary save-btn" uib-tooltip="Moves the selected contact(s) to Trash" ng-click="vm.deleteContact()" translate="COMMON.DELETE"></md-button>
+    </md-dialog-actions>
+</md-dialog>

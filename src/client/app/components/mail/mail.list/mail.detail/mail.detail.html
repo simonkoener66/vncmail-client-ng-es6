@@ -1,0 +1,177 @@
+<div id="mail-detail" class="email-detail-pane populated" vnc-resize-header height-space="52" ng-if="vm.mailDetail.length">
+    <div class="email-detail-header-row" layout="row" layout-xs="column">
+        <div flex-gt-md="50" flex-md="85" flex-sm="85" class="detail-header" flex-xs="100">
+            <md-button class="md-fab back-to-mail show" ng-click="vm.backToMail()">
+                <md-icon class="material-icons">arrow_back</md-icon>
+            </md-button>
+            <i class="material-icons" ng-if="vm.emailDetailList.isCollapsed" ng-click="vm.toggleMail()">keyboard_arrow_down</i>
+            <i class="material-icons" ng-if="!vm.emailDetailList.isCollapsed" ng-click="vm.toggleMail()">keyboard_arrow_up</i>
+
+            <h3>{{vm.emailDetailList.subject | limitTo:50}}<span ng-if="vm.emailDetailList.subject.length > 50">...</span></h3>
+            <p>{{vm.emailDetailList.messages.length}} messages started on {{vm.emailDetailList.startDate | date:'MM/dd/yyyy'}}</p>
+        </div>
+        <div flex-gt-md="50" flex-md="15" flex-sm="15" class="text-right" flex-xs="100">
+            <vnc-avatar person-name="{{vm.emailDetailList.messages[0].sender.fullName || vm.emailDetailList.messages[0].sender.displayName}}"
+                        person-email="vm.emailDetailList.messages[0].sender.email" person-size="xs"></vnc-avatar>
+            <vnc-avatar ng-repeat="to in vm.emailDetailList.messages[0].mailTos" person-name="{{to.fullName || to.displayName}}" person-email="to.email" person-size="xs"></vnc-avatar>
+            <vnc-avatar ng-repeat="to in vm.emailDetailList.messages[0].mailCcTos" person-name="{{to.fullName || to.displayName}}" person-email="to.email" person-size="xs"></vnc-avatar>
+            <vnc-avatar ng-repeat="to in vm.emailDetailList.messages[0].mailBccTos" person-name="{{to.fullName || to.displayName}}" person-email="to.email" person-size="xs"></vnc-avatar>
+        </div>
+    </div>
+    <perfect-scrollbar wheel-propagation="true"
+                       wheel-speed="50"
+                       min-scrollbar-length="50"
+                       refresh-on-change="vm.emailDetailList.messages"
+                       suppress-scroll-x= "true"
+                       class="mail-detail scroll-bar"
+                       vnc-resize-header height-space="143">
+        <div layout="column" class="email-detail-info" ng-repeat="message in vm.emailDetailList.messages track by $index" ng-if="!message.move">
+            <div layout="row" class="collapse-div" ng-click="vm.toggleMessage($index, $event)" no-right
+                 context-menu context-menu-type="mailItem" context-menu-contact-id="{{message.id}}" context-menu-mail-index="$index" layout-padding layout-xs="column">
+              <div class="read-Unread-parent" flex="10">
+                <vnc-avatar ng-show="message.sender.displayName" person-email="message.sender.email" person-name="{{message.sender.fullName || message.sender.displayName}}" person-size="md"></vnc-avatar>
+              </div>
+              <div class="mail-info" flex-gt-md="85" flex-md="65" flex-sm="70" flex-xs="100">
+                <h4 ng-bind="message.sender.fullName || message.sender.displayName" ng-dblclick="vm.mailTo(message.sender)"></h4>
+                <p ng-bind="message.sentDate | date:'EEEE, MMMM d yyyy - h:mm a'"></p>
+                <span>To: </span>
+                <span ng-repeat="mailTo in message.mailsToShow track by $index" ng-class="{comma:!$last}">
+                    <span ng-show="mailTo.fullName">{{mailTo.fullName}}</span>
+                    <span ng-show="!mailTo.fullName"> {{mailTo.displayName}} </span>
+                    <span ng-show="'!mailTo.fullName' && !mailTo.displayName"> {{mailTo.email}} </span>
+                </span>
+                <span>Cc: </span>
+                <span ng-repeat="mailTo in message.mailsCcShow track by $index" ng-class="{comma:!$last}">
+                    <span ng-show="mailTo.fullName">{{mailTo.fullName}}</span>
+                    <span ng-show="!mailTo.fullName"> {{mailTo.displayName}} </span>
+                    <span ng-show="'!mailTo.fullName' && !mailTo.displayName"> {{mailTo.email}} </span>
+                </span>
+                <span class="mail-info-inner" ng-mouseover="vm.showHideDetail(true, $index)" ng-mouseleave="vm.showHideDetail(false, $index)" ng-click="vm.showHideDetail(!message.showDetail, $index)" ng-class="{active: message.showDetail}" >
+                    <i class="material-icons">arrow_drop_down</i>
+                    <table class="mail-info-inner-detail">
+                        <tr>
+                            <td class="first">From: </td>
+                            <td class="last">{{message.sender.fullName || message.sender.displayName}}<{{message.sender.email}}></td>
+                        </tr>
+                        <tr ng-repeat="to in message.mailTos track by $index" ng-class="{comma:!$last}">
+                            <td class="first" ng-show="$index == 0">To: </td>
+                            <td class="first" ng-show="$index != 0"></td>
+                            <td class="last">{{to.fullName || to.displayName}} <{{to.email}}></td>
+                        </tr>
+                        <tr ng-repeat="cc in message.mailCcTos track by $index" ng-class="{comma:!$last}">
+                            <td class="first" ng-show="$index == 0">Cc: </td>
+                            <td class="first" ng-show="$index != 0"></td>
+                            <td class="last">{{cc.fullName || cc.displayName}} <{{cc.email}}></td>
+                        </tr>
+                        <tr>
+                            <td class="first">Date: </td>
+                            <td class="last" ng-bind="message.sentDate | date:'EEEE, MMMM d yyyy to h:mm a'"></td>
+                        </tr>
+                        <tr>
+                            <td class="first">Subject: </td>
+                            <td class="last" ng-bind="message.subject"></td>
+                        </tr>
+                    </table>
+                </span>
+                  <div ng-show="message.attachmentList.length > 0">
+                      <div ng-repeat="mailAttachment in message.attachmentList track by $index" >
+                          <md-icon md-font-set="materials-icon" class="material-icons md-18">attach_file</md-icon>
+                      <span ng-class="{space:!$last}">
+                        <span class="attachment">
+                            <a target="_blank" href="{{ message.apiUrl }}/getAttachment?id={{message.id}}&amp;part={{mailAttachment.part}}">
+                                {{mailAttachment.filename}}
+                            </a>
+                            ({{mailAttachment.s | bytes}})
+                        </span>
+                        <span class="attachment-opt border">
+                            <a target="_blank" href="{{ message.apiUrl }}/getAttachment?id={{message.id}}&amp;part={{mailAttachment.part}}&amp;disp=a">
+                                Download
+                            </a>
+                        </span>
+                        <span class="attachment-opt">
+                            <a target="_blank" href="{{ message.apiUrl }}/getAttachment?id={{message.id}}&amp;part={{mailAttachment.part}}&amp;disp=a">
+                                Remove
+                            </a>
+                        </span>
+                      </span>
+                      </div>
+                  </div>
+                  <div>
+                  <vnc-tag ng-repeat="tag in message.tags" tag-name="{{tag.$.name}}"
+                           tag-color="{{tag.$.color}}" tag-rgb="{{tag.$.rgb}}" tag-context-menu-disabled="true">
+                  </vnc-tag>
+                  </div>
+              </div>
+
+              <div flex-gt-md="15" flex-md="35" flex-sm="30" class="mail-details-actions" flex-xs="100">
+                <div layout="row" layout-align="start start">
+                  <md-button flex="20" flex-xs="10" ng-click="vm.markMessageReadAndUnread($event, message)" class="md-icon-button">
+                        <md-icon ng-show="message.flag.indexOf('u') >= 0" class="material-icons md-18 unread-icon">lens</md-icon>
+                        <md-icon ng-show="message.flag.indexOf('u') === -1" class="material-icons md-18">panorama_fish_eye</md-icon>
+                  </md-button>
+                  <md-button class="md-icon-button" flex="20" flex-xs="10" ng-click="vm.markConversationFlagAndUnFlag($event, message)" >
+                      <md-icon md-font-set="material-icon" class="material-icons md-18" ng-show="message.flag.indexOf('f') < 0"> star_border </md-icon>
+                      <md-icon md-font-set="materials-icons" class="material-icons md-18 starred-icon" ng-show="message.flag.indexOf('f') >= 0"> star </md-icon>
+                  </md-button>
+                  <md-button class="md-icon-button" flex="20" flex-xs="10">
+                      <vnc-modal template="{{vm.mailComposeTemplate}}" use_ctrl="MailComposeController" size="lg" backdrop="static" resolve='{"emailData": {{message}}, "actionType": "REPLY"}'>
+                          <md-icon md-font-set="material-icons">reply</md-icon>
+                      </vnc-modal>
+                  </md-button>
+                  <md-menu class="email-detail-icons" flex="20" flex-xs="10">
+                    <md-button aria-label="Open phone interactions menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+                      <md-icon md-font-set="material-icons">more_vert</md-icon>
+                    </md-button>
+                    <md-menu-content>
+                        <md-menu-item>
+                            <md-button>
+                                <vnc-modal template="{{vm.mailComposeTemplate}}" use_ctrl="MailComposeController" size="lg" backdrop="static"
+                                           resolve='{"emailData": {{message}}, "actionType": "REPLYALL"}'>
+                                    <md-icon md-font-set="material-icons">reply_all</md-icon>
+                                    Reply All
+                                </vnc-modal>
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button>
+                                <vnc-modal template="{{vm.mailComposeTemplate}}" use_ctrl="MailComposeController" size="lg" backdrop="static"
+                                           resolve='{"emailData": {{message}}, "actionType": "FORWARD"}'>
+                                    <md-icon md-font-set="material-icons">forward</md-icon>
+                                    Forward
+                                </vnc-modal>
+                            </md-button>
+                        </md-menu-item>
+                      <md-divider></md-divider>
+                      <md-menu-item>
+                          <md-button>
+                              <md-icon md-font-set="material-icons">create_new_folder</md-icon>
+                              New Folder
+                          </md-button>
+                      </md-menu-item>
+                      <md-menu-item>
+                          <md-button ng-click="vm.moveToTrash()">
+                              <md-icon md-font-set="material-icons" >delete</md-icon>
+                              Trash
+                          </md-button>
+                      </md-menu-item>
+                      <md-menu-item>
+                          <md-button ng-click="vm.deleteEmail()">
+                              <md-icon md-font-set="material-icons">cancel</md-icon>
+                              Delete
+                          </md-button>
+                      </md-menu-item>
+                      <md-menu-item>
+                          <md-button>
+                              <md-icon md-font-set="material-icons">label</md-icon>
+                              Tag
+                          </md-button>
+                      </md-menu-item>
+                    </md-menu-content>
+                  </md-menu>
+                </div>
+              </div>
+            </div>
+            <div ng-hide="message.isCollapsed" class="detail-content" flex="100" ng-bind-html="message.content"></div>
+        </div>
+    </perfect-scrollbar>
+</div>

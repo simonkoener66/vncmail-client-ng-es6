@@ -1,0 +1,33 @@
+<div class="sidebar-dropdown-button" layout="row" layout-align="center center" layout-align-xs="center center">
+    <md-button class="md-raised md-primary" ng-disabled="vm.enableButton">
+        <vnc-modal template="{{vm.dropdownButton.template}}"
+                   use-ctrl="{{vm.dropdownButton.useCtrl}}"
+                   size="lg" backdrop="true">
+            {{vm.dropdownButton.label}}
+        </vnc-modal></md-button>
+<!--     <vnc-menu items="vm.dropdownMenus.items" size="vm.dropdownMenus.size">
+        <md-icon md-font-set="material-icons">
+            keyboard_arrow_down
+        </md-icon>
+    </vnc-menu> -->
+    <div class="sidebar-fab">
+        <md-fab-speed-dial md-open="vm.isOpen" md-direction="down" class="md-fling" ng-mouseenter="vm.isOpen=true" ng-mouseleave="vm.isOpen=false">
+            <md-fab-trigger>
+              <md-button aria-label="menu" class="md-fab md-raised md-primary md-mini">
+                <md-tooltip md-direction="top">Show/Hide Menu</md-tooltip>
+                <md-icon md-font-set="material-icons">keyboard_arrow_down</md-icon>
+              </md-button>
+            </md-fab-trigger>
+            <md-fab-actions>
+                <div ng-repeat="item in vm.dropdownMenus.items" style="opacity: 0;" ng-class="{parent: item.child.length, active: item.hover, disabledMenu : item.disabled, disable: item.disabled }" class="{{item.itemClass}}"
+            ng-mouseenter="item.hover = true" ng-mouseleave="item.hover = false" ng-click="vm.open(item); !item.disabled && vm.hideMenu()" on-finish-render>
+                    <md-button aria-label="{{item.name}}" class="md-fab md-raised md-mini md-primary">
+                    <md-tooltip md-direction="left">{{item.name}}</md-tooltip>
+                    <md-icon md-font-set="material-icons" aria-label="{{item.name}}" ng-style="{'font-size': item.icon_size + 'px'}">{{item.icon_name}}</md-icon>
+                  </md-button>
+
+                </div>
+            </md-fab-actions>
+        </md-fab-speed-dial>
+    </div>
+</div>

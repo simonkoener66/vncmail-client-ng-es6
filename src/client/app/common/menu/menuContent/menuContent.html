@@ -1,0 +1,32 @@
+<ul ng-class="vm.applySize()" ng-if="vm.menuContentPosition" ng-style="vm.menuContentPosition" class="menu-item-parent">
+    <li ng-repeat="item in vm.items" ng-class="{parent: item.child.length, active: item.hover, disabledMenu : item.disabled, disable: item.disabled }" class="{{item.itemClass}}"
+        ng-mouseenter="item.hover = true" ng-mouseleave="item.hover = false" ng-click="!item.disabled && vm.hideMenu()"
+        on-finish-render>
+        <md-icon md-font-set="material-icons" ng-style="{'font-size': item.icon_size + 'px'}">{{item.icon_name}}</md-icon>
+        <span ng-if="!item.disabled && item.type == 'link'" ui-sref="{{item.state}}" ng-bind="item.name"></span>
+        <md-divider ng-if="!item.disabled && item.type == 'divider'"></md-divider>
+        <span ng-if="!item.disabled && item.type == 'function'" ng-click="item.itemFunction(item, data)" ng-bind="item.name" ng-class="{disabledMenu: item.disabled, disable: item.disabled}"></span>
+        <span ng-if="!item.disabled && item.type == 'template'" ng-bind-html="vm.sanitizeHtml(item.name)"></span>
+        <span ng-if="!item.disabled && item.type != 'template' && item.type != 'link' && item.type != 'function' && item.type != 'modal'" ng-bind="item.name"></span>
+        <vnc-modal ng-if="!item.disabled && item.type == 'modal'" template="{{item.template}}" use_ctrl="{{item.use_ctrl}}" resolve="{{data}}"
+               size="{{item.size}}" backdrop="{{item.backdrop}}">
+            {{item.name}}
+        </vnc-modal>
+        <span ng-if="item.disabled">{{item.name}}</span>
+        <ul class="menu-item-child">
+            <li ng-repeat="child in item.child" ng-class="{active: child.hover, disable: item.disabled}" ng-click="!item.disabled && vm.hideMenu()" class="{{child.itemClass}}"
+                ng-mouseenter="child.hover = true" ng-mouseleave="child.hover = false">
+                <span class="icon"><i ng-if="child.icon" class="{{child.icon}}"></i></span>
+                <span ng-if="child.type == 'link'" ui-sref="{{child.state}}" ng-bind="child.name"></span>
+                <md-divider ng-if="child.type == 'divider'"></md-divider>
+                <span ng-if="child.type == 'function'" ng-click="child.itemFunction()" ng-bind="child.name"></span>
+                <span ng-if="child.type == 'template'" ng-bind-html="vm.sanitizeHtml(child.name)"></span>
+                <span ng-if="child.type != 'template' && child.type != 'link' && child.type != 'function' && child.type != 'modal'" ng-bind="child.name"></span>
+                <vnc-modal ng-if="child.type == 'modal'" template="{{child.template}}" use_ctrl="{{child.use_ctrl}}"
+                       size="{{child.size}}" backdrop="{{child.backdrop}}">
+                    {{child.name}}
+                </vnc-modal>
+            </li>
+        </ul>
+    </li>
+</ul>

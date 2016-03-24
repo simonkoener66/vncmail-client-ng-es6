@@ -1,0 +1,27 @@
+<section id="login" class="container" ng-if="!vm.auth.authenticated" login-input-blur>
+	<hgroup>
+		<div class="logo-login-page">
+			<i class="material-icons">cloud</i>
+			<div class="header-text">
+				<h1>VNCmail</h1>
+			</div>
+		</div>
+	</hgroup>
+	<form method="POST" role="form" name="loginForm" layout="column" ng-submit="vm.login()" id="toastBounds">
+      	<md-input-container class="md-block">
+            <label translate="COMMON.USERNAME"></label>
+            <input ng-model="vm.user.username" required>
+      	</md-input-container>
+ 	 	<md-input-container class="md-block" flex-gt-sm>
+            <label translate="COMMON.PASSWORD"></label>
+            <input type="password" id="password" ng-model="vm.user.password" required>
+      	</md-input-container>
+      	<div layout="row" layout-align="center center">
+		    <md-button class="md-raised md-primary" ng-disabled="loginForm.$invalid" type="submit">{{ 'COMMON.LOGIN' | translate }}</md-button>
+      	</div>
+	</form>
+	<footer class="supportAlign supportCss">
+	  	<a href="#" class="support " translate="COMMON.SUPPORT"></a>
+	  	<label class="copyright" copyright>{{ 'COMMON.COPYRIGHT' | translate }} &copy; 2015 - {{currentYear}}</label>
+  	</footer>
+</section>

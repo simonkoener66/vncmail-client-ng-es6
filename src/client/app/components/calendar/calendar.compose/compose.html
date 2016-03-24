@@ -1,0 +1,201 @@
+<div class="row calendar-compose">
+    <div class="col-md-12 col-xs-12">
+        <div class="block">
+            <md-toolbar class="demo-toolbar md-primary">
+                <div class="row md-toolbar-tools">
+                    <h2 class="col-md-9 col-xs-9"><span ng-bind="vm.title"></span></h2>
+                    <div class="col-md-3 col-xs-3">
+                        <i class="fa fa-times pull-right" ng-click="vm.cancel()"></i>
+                    </div>
+                </div>
+            </md-toolbar>
+            <div class="block-content">
+                <div class="row block-item">
+                    <div class="col-md-12 col-xs-12">
+                        <md-input-container class="col-md-12 col-xs-12">
+                            <input type="text" placeholder="Subject" ng-model="vm.appointment.subject"/>
+                        </md-input-container>
+                        <div class="col-md-12 col-xs-12 attendees"
+                             ng-if="!vm.resolveModal.isQuickMode">
+                            <vnc-auto-complete-mail mail-array="vm.appointment.attendees" placeholder="Attendees">
+                            </vnc-auto-complete-mail>
+                            <span class="distance-elements dock-on-parent"
+                                  ng-click="vm.isOptionalVisible = !vm.isOptionalVisible;">
+                                {{vm.isOptionalVisible? 'Hide Optional': 'Show Optional'}}
+                            </span>
+                        </div>
+                        <div class="col-md-12 col-xs-12 options"
+                             ng-if="!vm.resolveModal.isQuickMode"
+                             ng-show="vm.isOptionalVisible">
+                            <vnc-auto-complete-mail mail-array="vm.optional" placeholder="Optional" blur="vm.autoSaveDraft()">
+                            </vnc-auto-complete-mail>
+                        </div>
+                        <md-input-container class="col-md-12 col-xs-12 locations">
+                            <input type="text" placeholder="Location" ng-model="vm.location"/>
+                            <span class="distance-elements dock-on-parent"
+                                  ng-if="!vm.resolveModal.isQuickMode"
+                                  ng-click="vm.isEquipmentVisible = !vm.isEquipmentVisible;">
+                                {{vm.isEquipmentVisible ? 'Hide Equipment': 'Show Equipment'}}
+                            </span>
+                        </md-input-container>
+                        <div class="col-md-12 col-xs-12 options"
+                             ng-if="!vm.resolveModal.isQuickMode"
+                             ng-show="vm.isEquipmentVisible">
+                            <vnc-auto-complete-mail mail-array="vm.equipment" placeholder="Equipment" blur="vm.autoSaveDraft()">
+                            </vnc-auto-complete-mail>
+                        </div>
+                    </div>
+                </div>
+                <div class="row block-item">
+                    <div class="col-md-6">
+                        <div class="col-md-3 col-xs-3 m-text">
+                            <span class="m-text" translate="CALENDAR.START"></span>
+                        </div>
+                        <div class="col-md-9 col-xs-9">
+                            <md-datepicker ng-model="vm.appointment.startDate" md-placeholder="Enter date" class="col-md-12 col-xs-12"></md-datepicker>
+                            <md-input-container class="col-md-12 col-xs-12 locations">
+                                <input type="time" ng-model="vm.appointment.startTime" show-meridian="false" ng-change="vm.startTimeChanged()" ng-show="!vm.appointment.isAllDay"/>
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-6" ng-if="!vm.resolveModal.isQuickMode">
+                            <label class="m-text" for="isAllDayCheckbox" translate="CALENDAR.ALL_DAY"> </label>
+
+                            <input type="checkbox" name="isAllDayCheckbox" id="isAllDayCheckbox"
+                                   ng-model="vm.appointment.isAllDay" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-3 col-xs-3 m-text">
+                            <span class="m-text" translate="CALENDAR.END"></span>
+                        </div>
+                        <div class="col-md-9 col-xs-9">
+                            <md-datepicker ng-model="vm.appointment.endDate" md-placeholder="Enter date" class="col-md-12 col-xs-12"></md-datepicker>
+                            <md-input-container class="col-md-12 col-xs-12 locations">
+                                <input type="time" ng-model="vm.appointment.endTime" show-meridian="false" ng-change="vm.startTimeChanged()" ng-show="!vm.appointment.isAllDay"/>
+                            </md-input-container>
+                        </div>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+                <div class="row block-item">
+                    <div class="col-md-6">
+                        <div class="col-md-3 col-xs-3 m-text">
+                            <span class="m-text" translate="CALENDAR.REPEAT"></span>
+                        </div>
+                        <div class="col-md-9 col-xs-9">
+                            <md-select ng-model="vm.appointment.repeat">
+                                <md-option ng-repeat="repeat in vm.repeatOptions"
+                                           value="{{repeat.value}}">
+                                    {{repeat.text}}
+                                </md-option>
+                            </md-select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-3 col-xs-3 m-text">
+                            <span class="m-text" translate="CALENDAR.REMINDER"></span>
+                        </div>
+                        <div class="col-md-9 col-xs-9">
+                            <md-select ng-model="vm.appointment.reminder">
+                                <md-option ng-repeat="reminder in vm.reminderOptions"
+                                           value="{{reminder.value}}">
+                                    {{reminder.text}}
+                                </md-option>
+                            </md-select>
+                        </div>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+                <div class="row block-item">
+                    <div class="col-md-8">
+                        <div class="col-md-3 col-xs-3 m-text">
+                            <span class="m-text"  translate="CALENDAR.DISPLAY"></span>
+                        </div>
+                        <div class="col-md-4 col-xs-4">
+                            <md-select ng-model="vm.appointment.display">
+                                <md-option ng-repeat="display in vm.displayOptions"
+                                           value="{{display.value}}">
+                                    {{display.text}}
+                                </md-option>
+                            </md-select>
+                        </div>
+                        <div class="col-md-5 col-xs-5">
+                            <md-select ng-model="vm.appointment.calendarTreeViewSelectedId"
+                                       ng-change="vm.onSelectCalendarChanges()"
+                                       ng-style="vm.appointment.calendarTreeViewSelectedStyles">
+                                <md-option ng-repeat="calendar in vm.calendarTreeViewOptions"
+                                           value="{{calendar.id}}"
+                                           ng-style="calendar.icon.color">
+                                    {{calendar.name}}
+                                </md-option>
+                            </md-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row block-item" ng-if="!vm.resolveModal.isQuickMode">
+                    <div class="col-md-12">
+                        <div class="col-md-12 col-xs-12 m-text">
+                            <span class="m-text" translate="CALENDAR.MESSAGE"></span>
+                        </div>
+                        <vnc-rich-textbox textarea-required="true" textarea-options="{}" ng-model="vm.appointment.content" class="col-md-12 col-xs-12">
+                        </vnc-rich-textbox>
+                    </div>
+                </div>
+                <div class="row block-item" ng-if="!vm.resolveModal.isQuickMode">
+                    <div class="col-md-6">
+                        <vnc-file-repeat ng-model="vm.attachmentsFromDraftOrSentEmail" class="col-md-12"></vnc-file-repeat>
+                        <vnc-file-repeat ng-model="vm.newAttachments" class="col-md-12"></vnc-file-repeat>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+                <div class="row block-item">
+                    <div class="col-md-6 col-xs-6" ng-if="vm.resolveModal.isQuickMode">
+                        <md-button class="md-raised md-primary"
+                                   ng-click="vm.moreDetail()">{{ 'CALENDAR.MORE_DETAILS' | translate }}</md-button>
+                    </div>
+                    <div class="col-md-6 col-xs-6" ng-if="!vm.resolveModal.isQuickMode">
+                        <div class="mail-icons col-md-12 col-xs-12">
+                            <!-- TODO: Font Icon -->
+                            <i class="glyphicon glyphicon-text-color margin-8"></i>
+                            <!-- File Upload Icon -->
+                            <vnc-file-upload ng-model="vm.newAttachments" multiple="true"></vnc-file-upload>
+                            <!-- TODO: More Actions Icon -->
+                            <i class="glyphicon glyphicon-option-vertical"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xs-6">
+                        <div class="pull-right">
+                            <md-button class="md-raised md-primary"
+                                       ng-click="vm.saveAppointment()">{{ 'COMMON.SAVE' | translate }}</md-button>
+                            <md-button class="md-raised md-primary"
+                                       ng-click="vm.sendInvitation()"
+                                       ng-if="vm.appointment.attendees.length > 0">{{ 'COMMON.SEND' | translate }}</md-button>
+                            <md-button class="md-warn md-raised md-hue-2"
+                                       ng-click="vm.cancel()">{{ 'COMMON.CLOSE' | translate }}</md-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Attachment list -->
+        <vnc-file-repeat ng-model="vm.attachmentsFromDraftOrSentEmail"></vnc-file-repeat>
+        <vnc-file-repeat ng-model="vm.newAttachments"></vnc-file-repeat>
+    </div>
+
+</div>
+
+<script type="text/ng-template" id="savingDraftModal.html">
+    <div class="modal-header">
+        <h4 class="modal-title" translate="COMMON.WARNING"></h4>
+    </div>
+    <div class="modal-body">
+        <i class="fa fa-exclamation-triangle" style="font-size: 20px; color: gold;"></i>
+        {{ 'CALENDAR.SAVE_MESSAGE_AS_DRAFF' | translate }}
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-info" type="button" ng-click="yes()" translate="COMMON.YES"></button>
+        <button class="btn btn-warning" type="button" ng-click="no()" translate="COMMON.NO"></button>
+        <button class="btn btn-default" type="button" ng-click="cancel()" translate="COMMON.CANCEL"></button>
+    </div>
+</script>

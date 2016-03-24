@@ -1,0 +1,2 @@
+<div ng-if="!vm.image" class="avatar" ng-class="vm.applySize()" ng-bind="vm.shortName" style="background-color: {{ vm.bgAvatar }}"></div>
+<img ng-if="vm.image" class="avatar-img" ng-class="vm.applySize()" ng-src="{{ vm.image }}" />

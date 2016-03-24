@@ -1,0 +1,50 @@
+<div flex layout="column" class="calendar-month-view">
+    <div layout='row' class='subheader month-view-header'>
+        <div ng-if="vm.isShowWeekNumber"
+             layout-padding
+             class="week-number-header">
+            W
+        </div>
+        <div layout-padding
+             class="subheader-day" flex ng-repeat="day in vm.weekDays track by $index" ng-bind="day">
+            <md-tooltip>{{day}}</md-tooltip>
+        </div>
+    </div>
+
+    <div flex layout='row' layout-fill
+         class="week-row-in-month"
+         ng-repeat="rowOffset in vm.monthOffsets track by rowOffset.weekIndex"
+         ng-mouseenter="rowHovered = true"
+         ng-mouseleave="rowHovered = false">
+        <div ng-if="vm.isShowWeekNumber"
+             layout-padding
+             class="week-row-number">
+            {{rowOffset.weekOfYear}}
+        </div>
+        <div
+            flex layout
+            layout-padding
+            class="day-cells"
+            ng-repeat="day in vm.view | calendarLimitTo:7:rowOffset.weekIndex track by $index"
+            ng-init="dayIndex = vm.view.indexOf(day)"
+            ng-click="vm.dayClicked(day, false, $event)"
+            ng-class='{"disabled" : isDisabled(day), "active":isActive(day)}'
+            context-menu
+            context-menu-type="calendarItem"
+            context-menu-calendar-view-type="month"
+            context-menu-calendar-date="{{day.date}}">
+            <!--<md-tooltip>{{day.date.format('llll')}}</md-tooltip>-->
+            <ng-include src="'calendarMonthCell.html'" include-replace></ng-include>
+        </div>
+
+        <!--<mwl-calendar-slide-box-->
+        <!--is-open="vm.openRowIndex === $index && vm.view[vm.openDayIndex].events.length > 0"-->
+        <!--events="vm.view[vm.openDayIndex].events"-->
+        <!--on-event-click="vm.onEventClick"-->
+        <!--edit-event-html="vm.editEventHtml"-->
+        <!--on-edit-event-click="vm.onEditEventClick"-->
+        <!--delete-event-html="vm.deleteEventHtml"-->
+        <!--on-delete-event-click="vm.onDeleteEventClick">-->
+        <!--</mwl-calendar-slide-box>-->
+    </div>
+</div>

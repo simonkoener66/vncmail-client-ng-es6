@@ -1,0 +1,145 @@
+<md-dialog aria-label="Compose mail" class="compose-modal" flex="60" ng-cloak>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h4 data-ng-bind="vm.title"></h4>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="vm.cancel($event)">
+                <md-icon md-font-set="materials-icons" class="material-icons md-18" aria-label="Close dialog"> clear </md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <form name="mailCompose" novalidate>
+    <md-dialog-content>
+        <div layout="column" layout-padding class="md-dialog-content">
+                <div class="create-new-folder">
+                <!-- FROM -->
+                <div layout-gt-xs="row" ng-if="vm.pop3">
+                    <md-input-container class="md-block">
+                        <label>From</label>
+                        <md-select ng-model="vm.fromEmail">
+                            <md-option value="{{ vm.auth.userEmail }}">
+                                Primary Account(<{{ vm.auth.userEmail }}>)
+                            </md-option>
+                            <md-option ng-repeat="data in vm.pop3" value="{{ data.emailAddress }}">
+                               {{ data.name }} ({{ data.fromDisplay }} <{{ data.emailAddress }}>)
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <!-- TO -->
+                <div layout-gt-xs="row">
+                        <vnc-auto-complete-mail flex mail-array="vm.toEmails" placeholder="To" blur="vm.autoSaveDraft()"></vnc-auto-complete-mail>
+                </div>
+
+                <!-- CC -->
+                <div layout-gt-xs="row">
+                        <vnc-auto-complete-mail flex mail-array="vm.ccEmails" placeholder="Cc" blur="vm.autoSaveDraft()"></vnc-auto-complete-mail>
+                </div>
+
+                <!-- BCC -->
+                <div layout-gt-xs="row">
+                        <vnc-auto-complete-mail flex mail-array="vm.bccEmails" placeholder="Bcc" blur="vm.autoSaveDraft()"></vnc-auto-complete-mail>
+                </div>
+
+                <div layout-gt-xs="row">
+                    <md-input-container class="md-block" flex-gt-xs style="margin: 18px 0;">
+                        <label>Subject</label>
+                        <input ng-model="vm.subject" ng-blur="vm.autoSaveDraft()" ng-disabled="vm.reqPending">
+                    </md-input-container>
+                    <!--<div flex="5" hide-xs hide-sm>-->
+                        <!--&lt;!&ndash; Spacer //&ndash;&gt;-->
+                    <!--</div>-->
+                    <!--<md-input-container class="md-block" flex="25" flex-gt-xs style="margin: 18px 0;">-->
+                        <!--<label>Priority</label>-->
+                        <!--<md-select ng-model="vm.selectedPriority" ng-disabled="vm.reqPending">-->
+                            <!--<md-option ng-repeat="priority in vm.priorities" value={{priority}}>-->
+                                <!--<i class="material-icons small">{{priority.icon}}</i> {{ priority.value }}-->
+                            <!--</md-option>-->
+                        <!--</md-select>-->
+                    <!--</md-input-container>-->
+                </div>
+                <!-- Email body -->
+                <div layout-gt-xs="row">
+                    <vnc-editor flex ng-model="vm.content" placeholder="Message..." ng-disabled="vm.reqPending"></vnc-editor>
+                </div>
+                <div layout-gt-xs="row">
+                    <!-- Attachment list -->
+                    <vnc-file-repeat ng-model="vm.attachmentsFromDraftOrSentEmail" layout="column" style="width: 50%"></vnc-file-repeat>
+                    <vnc-file-repeat ng-model="vm.newAttachments" layout="column" flex="50" style="width: 50%"></vnc-file-repeat>
+                    <div class="selected-files" ng-if="error_in_file">
+                        <p class="selected-file-name small" >Attachment failed since the item would exceed the size limit of  {{error_in_file.$errorParam}}</p>
+                        <br />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" layout-padding id="toastBounds">
+        <!-- TODO: Font Icon
+        <md-icon md-font-set="materials-icons" class="material-icons md-18"> spellcheck </md-icon>  -->
+        <!-- File Upload Icon -->
+        <vnc-file-upload ng-model="vm.newAttachments" multiple="true" err-file="error_in_file" draft="vm.autoSaveDraft()"></vnc-file-upload>
+        <!-- TODO: More Actions Icon
+        <md-icon md-font-set="materials-icons" class="material-icons md-18"> more_vert </md-icon>-->
+
+        <span flex></span>
+        <!-- Save Draft Button -->
+        <md-button class="md-primary md-raised md-hue-8" ng-click="vm.savedEmailAsDraft('userSave');vm.dialogHide = 'Close'">SAVE DRAFT</md-button>
+        <!-- Send Button -->
+        <md-button class="md-primary md-raised md-hue-8" ng-click="vm.checkSend()">SEND</md-button>
+
+    </md-dialog-actions>
+    </form>
+</md-dialog>
+
+<script type="text/ng-template" id="emptyCC.html">
+    <md-toast style="height: 100%;padding: 0;">
+        <div class="md-toast-content" style="background-color: red;height: 100%;">
+            <span flex>There must be at least one address in the To:, Cc:, or Bcc: fields</span>
+            <md-button class="md-primary" ng-click="vm.ok()">OK</md-button>
+        </div>
+    </md-toast>
+</script>
+
+<script type="text/ng-template" id="emptySubject.html">
+    <md-toast style="height: 100%;padding: 0;">
+        <div class="md-toast-content" style="background-color: red;height: 100%;">
+            <span flex>No subject. Send anyway?</span>
+            <md-button class="md-icon-button" aria-label="More" ng-click="vm.ok()">
+                <md-icon md-font-set="material-icon" class="material-icons md-18" style="color: #fff;"> done </md-icon>
+            </md-button>
+            <md-button class="md-icon-button" aria-label="More" ng-click="vm.cancel()">
+                <md-icon md-font-set="material-icon" class="material-icons md-18" style="color: #fff;"> clear </md-icon>
+            </md-button>
+        </div>
+    </md-toast>
+</script>
+
+<script type="text/ng-template" id="savingDraftModal.html">
+    <md-dialog aria-label="Warning" flex="40" ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h4>Warning</h4>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div layout="column" layout-padding class="md-dialog-content">
+                <div layout-gt-xs="row">
+                    <p ng-show="!CurrentDraftId">
+                        <md-icon md-font-set="materials-icons" style="color: gold;" class="material-icons md-18"> warning </md-icon>
+                        Save current message as draft?
+                    </p>
+                    <p ng-show="CurrentDraftId">
+                        <md-icon md-font-set="materials-icons" style="color: gold;" class="material-icons md-18"> warning </md-icon>
+                        The message has been autosaved. Do you want to keep it?
+                    </p>
+                </div>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <md-button class="md-primary md-raised md-hue-2" ng-click="vm.yes()" hotkey="{'y': vm.yes}">YES</md-button>
+            <md-button class="md-primary md-raised md-hue-2" ng-click="vm.no()" hotkey="{'n': vm.no}">No</md-button>
+        </md-dialog-actions>
+    </md-dialog>
+</script>

@@ -1,0 +1,42 @@
+<div class="recover-deleted-items">
+    <!-- Header -->
+    <div class="modal-header">
+        <h3 class="modal-title" translate="CALENDAR.RECOVER_DELETED_ITEMS"></h3>
+    </div>
+
+    <!-- Body -->
+    <div class="modal-body">
+        <div class="col-sm-12 modal-text no-padding-left">
+            <label ng-class="{'display-label': vm.searchText}" translate="CALENDAR.FILTER"></label>
+            <input type="text" placeholder="Filter" ng-model="vm.searchText">
+        </div>
+
+        <button class="btn btn-default" type="button" ng-click="vm.executeRecoverTo()" translate="CALENDAR.RECOVER_TO"></button>
+
+        <!-- Grid of deleted items with multiple selection -->
+        <div class="table-container">
+            <table st-table="vm.deletedItems" class="table table-striped table-condensed">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th st-sort="subject" translate="CALENDAR.SUBJECT"></th>
+                    <th st-sort="date" translate="CALENDAR.DATE"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="deletedItem in vm.deletedItems | filter:vm.searchText">
+                    <td><input type="checkbox" ng-model="deletedItem.isSelected"/></td>
+                    <td>{{deletedItem.name}}</td>
+                    <td>{{deletedItem.date | date: 'MM/dd/yy'}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Footer buttons -->
+    <div class="modal-footer green-btns">
+        <!-- Close button -->
+        <button class="btn-close" type="button" ng-click="vm.close()" translate="COMMON.CLOSE"></button>
+    </div>
+</div>

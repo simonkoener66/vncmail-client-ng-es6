@@ -1,0 +1,295 @@
+<div id="contactDetailPage">
+    <div layout="column" class="contactDetailPage" vnc-resize-header height-space="52" ng-show="vm.isSelectedContactId">
+        <div layout>
+            <div layout="column" flex="15" class="avatar-margin">
+                <md-button class="md-fab back-to-contact show" ng-click="vm.backToContact()">
+                    <md-icon class="material-icons">arrow_back</md-icon>
+                </md-button>
+                <vnc-avatar person-name="{{vm.avatarInitials}}" person-size="lg" person-image="vm.image"></vnc-avatar>
+            </div>
+            <div layout="column" flex="50"  class="nameDetailsPadding">
+                <h4 class="contactNamePosition" ng-class="{'linethrough':vm.location=='Trash Contacts'}">
+                    <label ng-class="{'linethrough':vm.location=='Trash Contacts'}" ng-hide="!(vm.contactDetail.namePrefix)">{{vm.contactDetail.namePrefix}}</label>
+                    <label ng-class="{'linethrough':vm.location=='Trash Contacts'}" ng-hide="!(vm.contactDetail.firstName)" class="subjectWrap">{{vm.contactDetail.firstName}}</label>
+                    <label ng-class="{'linethrough':vm.location=='Trash Contacts'}" ng-hide="!(vm.contactDetail.middleName)" class="subjectWrap">{{vm.contactDetail.middleName}}</label>
+                    <label ng-class="{'linethrough':vm.location=='Trash Contacts'}" ng-hide="!(vm.contactDetail.maidenName)">({{vm.contactDetail.maidenName}})</label>
+                    <label ng-class="{'linethrough':vm.location=='Trash Contacts'}" ng-hide="!(vm.contactDetail.lastName)" class="subjectWrap">{{vm.contactDetail.lastName}}</label>
+                    <label ng-class="{'linethrough':vm.location=='Trash Contacts'}" ng-hide="!(vm.contactDetail.nameSuffix)">, {{vm.contactDetail.nameSuffix}}</label>
+                </h4>
+                <p>
+                    <label ng-hide="!(vm.contactDetail.nickname)">{{vm.contactDetail.nickname}}</label>
+                </p>
+                <p class ="contactNamePosition job-contactNo-InfoColor">
+                    <label ng-hide="!(vm.contactDetail.jobTitle)">{{vm.contactDetail.jobTitle}}</label>
+                    <label ng-hide="!(vm.contactDetail.jobTitle && vm.contactDetail.department)"> - </label>
+                    <label ng-hide="!(vm.contactDetail.department)">{{vm.contactDetail.department}}</label>
+                    <label ng-hide="!(vm.contactDetail.jobTitle && vm.contactDetail.department)">,</label>
+                    <label ng-hide="!(vm.contactDetail.company)">{{vm.contactDetail.company}}</label>
+                </p>
+
+                <!-- Tags list -->
+                <p class="tag-info" ng-hide="!vm.contactDetail.allTags">
+                    <vnc-tag ng-repeat="tag in vm.contactDetail.allTags track by $index" tag-name="{{tag.$.name}}" tag-color="{{tag.$.color}}"
+                         tag-rgb="{{tag.$.rgb}}" tag-id="{{tag.$.id}}">
+                    </vnc-tag>
+                </p>
+            </div>
+            <div layout="column" flex="5"  class="nameDetailsPadding">
+            </div>
+            <div layout="column" flex="20"  class="job-contactNo-InfoColor noOfContactPadding">
+               <span ng-show="vm.contactCount.NoOfContacts">{{vm.contactCount.NoOfContacts}}
+                   <span ng-show="vm.contactCount.NoOfContacts == 1">contact</span>
+                   <span ng-show="vm.contactCount.NoOfContacts > 1 && vm.contactCount.NoOfContacts <= 100 && vm.contactCount.LoadMore==false">contacts</span >
+                   <span ng-show="vm.contactCount.NoOfContacts >= 100">of {{vm.contactCount.TotalNoOfContacts}} contacts </span>
+                </span>
+            </div>
+            <div layout="column" flex="5" class="contact-detail-icons">
+                <md-menu>
+                        <md-button aria-label="Open phone interactions menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+                          <md-icon md-font-set="material-icons">more_vert</md-icon>
+                        </md-button>
+                        <md-menu-content>
+                          <md-menu-item>
+                              <md-button>
+                              <vnc-modal template="{{vm.contactComposeTemplate}}"
+                                                   use_ctrl="ContactComposeController" size="lg" backdrop="false" resolve="{operation:'edit'}">
+                                  <md-icon md-font-set="material-icons">edit</md-icon>
+                                  Edit</vnc-modal>
+                              </md-button>
+                          </md-menu-item>
+                          <md-menu-item>
+                              <md-button>
+                                <vnc-modal template="{{vm.contactComposeDeleteTemplate}}"
+                                                   use_ctrl="ContactDeleteController" size="sm" backdrop="false">
+                                  <md-icon md-font-set="material-icons">cancel</md-icon>
+                                  Delete
+                                  </vnc-modal>
+                              </md-button>
+                          </md-menu-item>
+                          <md-menu-item>
+                              <md-button>
+                                  <md-icon md-font-set="material-icons">delete</md-icon>
+                                  Trash
+                              </md-button>
+                          </md-menu-item>
+                          <md-menu-item>
+                              <md-button>
+                                <md-icon md-font-set="material-icons">star_rate</md-icon>
+                                Favorite
+                          </md-button>
+                          </md-menu-item>
+                          <md-menu-item>
+                              <md-button>
+                                  <md-icon md-font-set="material-icons">create_new_folder</md-icon>
+                                  New Folder
+                              </md-button>
+                          </md-menu-item>
+                          <md-menu-item>
+                              <md-button>
+                                  <md-icon md-font-set="material-icons">label</md-icon>
+                                  Tag
+                              </md-button>
+                          </md-menu-item>
+                        </md-menu-content>
+                </md-menu>
+            </div>
+        </div>
+        <!-- Detail -->
+        <div class="detail-info contactNamePosition" ng-dblclick="vm.editContact()"
+        ng-show="vm.contactDetail.email || vm.contactDetail.mobilePhone || vm.contactDetail.imAddress1 ||
+        vm.contactDetail.homeStreet || vm.contactDetail.workStreet || vm.contactDetail.otherStreet ||
+        vm.contactDetail.homeCity || vm.contactDetail.workCity || vm.contactDetail.otherCity ||
+        vm.contactDetail.homeState || vm.contactDetail.workState || vm.contactDetail.otherState ||
+        vm.contactDetail.homePostalCode || vm.contactDetail.workPostalCode || vm.contactDetail.otherPostalCode ||
+        vm.contactDetail.homeCountry || vm.contactDetail.workCountry || vm.contactDetail.otherCountry ||
+        vm.contactDetail.homeURL || vm.contactDetail.workURL || vm.contactDetail.otherURL || vm.contactDetail.birthday ||
+        vm.contactDetail.anniversary || vm.contactDetail.custom || vm.contactDetail.custom1 || vm.contactDetail.notes">
+            <div layout="column" class="detail-content" >
+                <!-- Email Detail -->
+                <div layout="column" class="detail-row-margin" ng-hide="!(vm.contactDetail.email)">
+                    <div layout class="detailKeyColor">
+    				    <label class="detailKeyFontWeight"><b>{{ 'CONTACTS.EMAIL' | translate }}</b></label>
+                    </div>
+                    <div layout ng-repeat="attrs in vm.contactDetail | getcontactdetails:'email'">
+                        <div layout="column" flex="100" class="detailValueColor email-text-style contactDetailWordWrap address-padding"><a  ng-dblclick="vm.composeMail()" contact-detail="vm.contactDetail" href="javascript:void(0)">{{attrs}}</a></div>
+                        <div layout="column" flex="10">
+                            <span class="detailType"></span>
+                        </div>
+        	       </div>
+               </div>  <!--    End of Email Detail -->
+               <!-- Phone Details -->
+               <div layout="column" class="detail-row-margin" ng-hide="!(vm.contactDetail.mobilePhone)">
+                   <div layout class="detailKeyColor">
+                       <label class="detailKeyFontWeight"><b>{{ 'CONTACTS.PHONE_NUMBER' | translate }}</b></label>
+                   </div>
+                  <div layout ng-repeat="attrs in vm.contactDetail | getcontactdetails:'mobilePhone'">
+                      <div layout="column" flex="100" class="detailValueColor contactDetailWordWrap address-padding">{{attrs}}</div>
+                      <div layout="column" flex="10">
+                          <span class="detailType" translate="CONTACTS.MOBILE"></span>
+                      </div>
+                  </div>
+                  <div layout ng-repeat="attrs in vm.contactDetail | getcontactdetails:'workPhone'">
+                      <div layout="column" flex="100" class="detailValueColor contactDetailWordWrap address-padding">{{attrs}}</div>
+                      <div layout="column" flex="10">
+                          <span class="detailType" translate="CONTACTS.WORK"></span>
+                      </div>
+                  </div>
+                  <div layout ng-repeat="attrs in vm.contactDetail | getcontactdetails:'workFax'">
+                      <div layout="column" flex="100" class="detailValueColor contactDetailWordWrap address-padding">{{attrs}}</div>
+                      <div layout="column" flex="10">
+                          <span class="detailType" translate="CONTACTS.WORKFAX"></span>
+                      </div>
+                  </div>
+                  <div layout ng-repeat="attrs in vm.contactDetail | getcontactdetails:'companyPhone'">
+                      <div layout="column" flex="100" class="detailValueColor contactDetailWordWrap address-padding">{{attrs}}</div>
+                      <div layout="column" flex="10">
+                          <span class="detailType" translate="CONTACTS.COMPANY"></span>
+                      </div>
+                  </div>
+                  <div layout ng-repeat="attrs in vm.contactDetail | getcontactdetails:'homePhone'">
+                      <div layout="column" flex="100" class="detailValueColor contactDetailWordWrap address-padding">{{attrs}}</div>
+                      <div layout="column" flex="10">
+                          <span class="detailType" translate="CONTACTS.HOME"></span>
+                      </div>
+                  </div>
+                  <div layout ng-repeat="attrs in vm.contactDetail | getcontactdetails:'homeFax'">
+                      <div layout="column" flex="100" class="detailValueColor contactDetailWordWrap address-padding">{{attrs}}</div>
+                      <div layout="column" flex="10">
+                          <span class="detailType" translate="CONTACTS.HOMEFAX"></span>
+                      </div>
+                  </div>
+                  <div layout ng-repeat="attrs in vm.contactDetail | getcontactdetails:'pager'">
+                      <div layout="column" flex="100" class="detailValueColor contactDetailWordWrap contactDetailWordWrap contactDetailWordWrap address-padding">{{attrs}}</div>
+                      <div layout="column" flex="10">
+                          <span class="detailType" translate="CONTACTS.PAGER"></span>
+                      </div>
+                  </div>
+                  <div layout ng-repeat="attrs in vm.contactDetail | getcontactdetails:'callbackPhone'">
+                      <div layout="column" flex="100" class="detailValueColor contactDetailWordWrap contactDetailWordWrap address-padding">{{attrs}}</div>
+                      <div layout="column" flex="10">
+                          <span class="detailType" translate="CONTACTS.CALLBACK"></span>
+                      </div>
+                  </div>
+                  <div layout ng-repeat="attrs in vm.contactDetail | getcontactdetails:'assisstantPhone'">
+                      <div layout="column" flex="100" class="detailValueColor contactDetailWordWrap address-padding">{{attrs}}</div>
+                      <div layout="column" flex="10">
+                          <span class="detailType" translate="CONTACTS.ASSISTANT"></span>
+                      </div>
+                  </div>
+                  <div layout ng-repeat="attrs in vm.contactDetail | getcontactdetails:'carPhone'">
+                      <div layout="column" flex="100" class="detailValueColor contactDetailWordWrap address-padding">{{attrs}}</div>
+                      <div layout="column" flex="10">
+                          <span class="detailType" translate="CONTACTS.CAR"></span>
+                      </div>
+                  </div>
+                  <div layout ng-repeat="attrs in vm.contactDetail | getcontactdetails:'otherPhone'">
+                      <div layout="column" flex="100" class="detailValueColor contactDetailWordWrap address-padding">{{attrs}}</div>
+                      <div layout="column" flex="10">
+                          <span class="detailType" translate="CONTACTS.OTHER"></span>
+                      </div>
+                  </div>
+                  <div layout ng-repeat="attrs in vm.contactDetail | getcontactdetails:'otherFax'">
+                      <div layout="column" flex="100" class="detailValueColor contactDetailWordWrap address-padding">{{attrs}}</div>
+                      <div layout="column" flex="10">
+                          <span class="detailType" translate="CONTACTS.OTHERFAX"></span>
+                      </div>
+                  </div>
+                </div>  <!--   End of Phone Details -->
+
+             <!-- IM Details -->
+              <div layout="column" class="detail-row-margin" ng-hide="!(vm.contactDetail.imAddress)">
+                <div layout class="detailKeyColor">
+                    <label class="detailKeyFontWeight"><b translate="CONTACTS.IM">IM</b></label>
+                </div>
+                    <div layout ng-repeat="attrs in vm.contactDetail | getcontactdetails:'imAddress'">
+                        <div layout="column" flex="100" class="detailValueColor contactDetailWordWrap address-padding">{{attrs}}</div>
+                        <div layout="column" flex="10">
+                            <span class="detailType" translate="CONTACTS.IM_ADDRESS"></span>
+                        </div>
+                    </div>
+              </div>     <!-- End Of IM Details -->
+              <!-- Address Detail -->
+              <div layout="column" class="detail-row-margin" ng-hide="!(vm.contactDetail.homeStreet || vm.contactDetail.workStreet || vm.contactDetail.otherStreet || vm.contactDetail.homeCity || vm.contactDetail.workCity || vm.contactDetail.otherCity || vm.contactDetail.homeState || vm.contactDetail.workState || vm.contactDetail.otherState || vm.contactDetail.homePostalCode || vm.contactDetail.workPostalCode || vm.contactDetail.otherPostalCode || vm.contactDetail.homeCountry || vm.contactDetail.workCountry || vm.contactDetail.otherCountry)">
+                  <div layout class="detailKeyColor">
+                      <label class="detailKeyFontWeight"><b translate="CONTACTS.ADDRESS"></b></label>
+                  </div>
+                    <div layout ng-repeat="attrs in vm.selectedContactAddress">
+                      <div layout="column" flex="100" class="detailValueColor address-padding">
+                          <div layout flex="100" class="address-padding contactDetailWordWrap" ng-hide="!(vm.contactDetail.homeStreet || vm.contactDetail.workStreet || vm.contactDetail.otherStreet)">{{attrs.street}}</div>
+                          <div layout flex="100" class="address-padding contactDetailWordWrap" ng-hide="!(vm.contactDetail.homeCity || vm.contactDetail.workCity || vm.contactDetail.otherCity || vm.contactDetail.homeState || vm.contactDetail.workState || vm.contactDetail.otherState || vm.contactDetail.homePostalCode || vm.contactDetail.workPostalCode || vm.contactDetail.otherPostalCode)">{{attrs.city}}
+                          <label class="contactDetailWordWrap" ng-hide="!((vm.contactDetail.homeCity || vm.contactDetail.workCity || vm.contactDetail.otherCity) && (vm.contactDetail.homeState || vm.contactDetail.workState || vm.contactDetail.otherState))">,</label>{{attrs.state}} {{attrs.postalcode}}
+                          </div>
+                          <div layout flex="100" class="address-padding contactDetailWordWrap" ng-hide="!(vm.contactDetail.homeCountry || vm.contactDetail.workCountry || vm.contactDetail.otherCountry)">{{attrs.country}}</div>
+                     </div>
+                     <div layout="column" flex="10">
+                          <span class="detailType">{{attrs.type}}</span>
+                     </div>
+                    </div>
+              </div>    <!-- End Of Address Details -->
+
+              <!-- URL Detail -->
+              <div layout="column" class="detail-row-margin" ng-hide="!(vm.contactDetail.homeURL || vm.contactDetail.workURL || vm.contactDetail.otherURL)">
+                <div layout class="detailKeyColor">
+                    <label class="detailKeyFontWeight"><b translate="CONTACTS.URL"></b></label>
+                </div>
+                <div layout ng-repeat="attrs in vm.contactDetail | getcontactdetails:'homeURL'">
+                    <div layout flex="100" class="address-padding contactDetailWordWrap detailValueColor email-text-style "><a uib-tooltip="{{ 'CONTACTS.HOME' | translate }}: {{attrs}}" tooltip-placement="top" tooltip-append-to-body="true" href="{{attrs}}" target="_blank">{{attrs}}</a></div>
+                    <div layout="column" flex="10">
+                           <span class="detailType" translate="CONTACTS.HOME"></span>
+                     </div>
+                </div>
+                <div layout ng-repeat="attrs in vm.contactDetail | getcontactdetails:'workURL'">
+                    <div layout flex="100" class="address-padding contactDetailWordWrap detailValueColor email-text-style"><a uib-tooltip="{{ 'CONTACTS.WORK' | translate }}: {{attrs}}" tooltip-placement="top" tooltip-append-to-body="true" href="{{attrs}}" target="_blank">{{attrs}}</a></div>
+                    <div layout="column" flex="10">
+                          <span class="detailType" translate="CONTACTS.WORK"></span>
+                    </div>
+                </div>
+                <div layout ng-repeat="attrs in vm.contactDetail | getcontactdetails:'otherURL'">
+                    <div layout flex="100" class="address-padding contactDetailWordWrap detailValueColor email-text-style"><a uib-tooltip="{{ 'CONTACTS.OTHER' | translate }}: {{attrs}}" tooltip-placement="top" tooltip-append-to-body="true" href="{{attrs}}" target="_blank">{{attrs}}</a></div>
+                    <div layout="column" flex="10">
+                           <span class="detailType" translate="CONTACTS.OTHER"></span>
+                    </div>
+                </div>
+             </div>    <!-- End Of URL Details -->
+
+            <!-- Other Detail -->
+            <div layout="column" class="detail-row-margin" ng-hide="!(vm.contactDetail.birthday || vm.contactDetail.anniversary || vm.contactDetail.custom || vm.contactDetail.custom1)">
+                <div layout class="detailKeyColor">
+                    <label class="detailKeyFontWeight"><b translate="CONTACTS.OTHER"></b></label>
+                </div>
+                <div layout ng-repeat="attrs in vm.contactDetail | getcontactdetails:'birthday'">
+                    <div layout flex="100" class="address-padding contactDetailWordWrapcontactDetailWordWrap  detailValueColor email-text-style"><a href="javascript:void(0)"  date-popup date="{{ attrs }}">{{ attrs | date:'MMMM dd, yyyy' }}</a></div>
+                    <div layout="column" flex="10">
+                        <span class="detailType" translate="CONTACTS.BIRTHDAY"></span>
+                    </div>
+                </div>
+                <div layout ng-repeat="attrs in vm.contactDetail | getcontactdetails:'anniversary'">
+                    <div layout flex="100" class="address-padding contactDetailWordWrap detailValueColor email-text-style"><a href="javascript:void(0)"  date-popup date="{{ attrs }}">{{ attrs | date:'MMMM dd, yyyy' }}</a></div>
+                    <div layout="column" flex="10">
+                        <span class="detailType" translate="CONTACTS.ANNIVERSARY"></span>
+                    </div>
+                </div>
+                <div layout ng-repeat="attrs in vm.contactDetail | getcontactdetails:'custom'">
+                    <div layout flex="100" class="address-padding contactDetailWordWrap detailValueColor email-text-style">{{ attrs }}</div>
+                    <div layout="column" flex="10">
+                        <span class="detailType" translate="CONTACTS.CUSTOM"></span>
+                    </div>
+                </div>
+            </div>     <!-- End Of Others Details -->
+
+            <!-- Notes Detail -->
+            <div layout="column" class="detail-row-margin"  ng-hide="(!vm.contactDetail.notes)">
+                <div layout class="detailKeyColor">
+                    <label class="detailKeyFontWeight"><b translate="CONTACTS.NOTES"></b></label>
+                </div>
+                <div layout flex="100" class="notes address-padding contactDetailWordWrap detailValueColor">
+                    {{vm.contactDetail.notes}}
+                </div>
+             </div>       <!-- End Of Notes -->
+           </div>  <!--  End of row with class detail-content -->
+        </div>   <!--  End of row with class detail-info -->
+    </div>   <!--  End of div with class contact-detail-pane -->
+
+    <div layout="column" class="contactDetailPage" vnc-resize-header height-space="132" ng-show="!vm.isSelectedContactId">
+    </div>  <!--  End of div with class contact-detail-pane having no details to show -->
+</div>

@@ -1,0 +1,18 @@
+<div vnc-resize-header height-space="150">
+    <vnc-md-calendar
+        view="vm.calendarView"
+        current-day="vm.calendarDay"
+        events="vm.events"
+        view-title="vm.calendarTitle"
+        on-event-click="vm.eventClicked(calendarEvent)"
+        on-edit-event-click="vm.eventEdited(calendarEvent)"
+        on-delete-event-click="vm.eventDeleted(calendarEvent)"
+        on-time-slot-click="vm.calendarTimeSlotOnClicking(calendarTimeSlot)"
+        day-view-start="00:00" day-view-end="23:30"
+        day-view-split="30"
+        cell-is-open="true"
+        first-day-of-week="mon"
+        is-show-week-number="true"
+        calendar-folder-list="vm.calendarFolderList">
+    </vnc-md-calendar>
+</div>

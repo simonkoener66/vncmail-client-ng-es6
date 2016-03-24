@@ -1,0 +1,69 @@
+<md-dialog aria-label="Create New Calendar">
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Create New Calendar</h2>
+                <span flex></span>
+                <md-button class="md-icon-button close"
+                           title="Close dialog"
+                           ng-click="cancel()">
+                    <md-icon md-font-set="material-icons"
+                             aria-label="Close dialog">close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content layout-padding>
+            <div layout-gt-sm="row">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Name</label>
+                    <input ng-model="vm.calendarName">
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Color</label>
+                    <md-select ng-model="vm.selectedColorId">
+                        <md-option class="color-option"
+                                   ng-repeat="color in vm.availableColors"
+                                   ng-click="vm.setCalendarColor(color)"
+                                   value="{{color.id}}">
+<!--
+                            <md-icon class="{{color.class}}"
+                                     md-font-set="material-icons">event</md-icon>
+-->
+                            {{color.name}}
+                        </md-option>
+                        <md-divider></md-divider>
+
+                        <!--<md-option ng-click="vm.setCalendarColor(color)">
+                            More colors
+                        </md-option>
+-->
+                    </md-select>
+                </md-input-container>
+            </div>
+            <div layout-gt-sm="row">
+                <md-checkbox ng-model="vm.isFreeBusyExcluded">
+                    Exclude this calendar when reporting free/busy times
+                </md-checkbox>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+<!--<md-button href="http://en.wikipedia.org/wiki/Mango" target="_blank" md-autofocus>
+                More on Wikipedia
+            </md-button>
+-->
+            <span flex></span>
+            <md-button class="md-raised md-primary"
+                       ng-disabled="!vm.calendarName"
+                       ng-click="vm.ok()">
+                OK
+            </md-button>
+            <md-button class="md-raised"
+                       md-autofocus
+                       ng-click="vm.cancel()">
+                Cancel
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

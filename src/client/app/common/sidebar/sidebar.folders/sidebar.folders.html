@@ -1,0 +1,62 @@
+<div class="sidebar-folders" layout="column" layout-padding>
+    <div ui-tree ng-if="vm.folders.length">
+
+        <ol ui-tree-nodes ng-model="vm.folders" class="parent sidebar-nav-folder">
+            <li ng-repeat="item in vm.folders" ui-tree-node data-nodrag ng-class="{'current': item.$.id == vm.state.current.id || item.$.id == vm.state.params.id}">
+              <div id="ui-tree-handle" ui-tree-handle class="{{vm.getColor(item.$.color) }}" ng-click="vm.folderAction({item: item})">
+
+                  <md-icon md-font-set="material-icon" class="material-icons md-18" ng-show="item.folder.length && item.collapse" ng-click="$event.stopPropagation();item.collapse = !item.collapse"> add </md-icon>
+                  <md-icon md-font-set="material-icon" class="material-icons md-18" ng-click="$event.stopPropagation();item.collapse = !item.collapse" ng-show="item.folder.length && !item.collapse"> remove </md-icon>
+
+                  <md-icon md-svg-src="{{item.$.icon}}" class="pointer s18" ng-class="{'icon': !item.folder.length}" ng-show="item.$.icon" aria-label="item icon"></md-icon>
+                  <md-icon md-svg-src="../images/folder-main.svg" class="pointer s18" ng-class="{'icon': !item.folder.length}" ng-show="!item.$.icon && item.$.view == 'message'" aria-label="message icon"></md-icon>
+                  <md-icon md-svg-src="../images/account-icon.svg" class="pointer s18" ng-class="{'icon': !item.folder.length}" ng-show="!item.$.icon && item.$.view == 'contact'" aria-label="contact icon"></md-icon>
+                  <md-icon md-svg-src="../images/folder-main.svg" class="pointer s18" ng-class="{'icon': !item.folder.length}" ng-show="!item.$.icon && item.$.view != 'message' && item.$.view != 'contact'" aria-label="default icon"></md-icon>
+
+                   <span ng-class="{unread: vm.currentState == 'mail'}">
+                      <span class="title" ng-bind="item.$.name" ng-class="{'highlight': vm.currentState == 'mail' && (item.$.u > 0 && item.$.id != 6 || item.$.n > 0 && item.$.id == 6)}"></span>
+                      <span ng-if="vm.currentState == 'mail' && item.$.u > 0 && item.$.id != 6">({{item.$.u}})</span>
+                      <span ng-if="vm.currentState == 'mail' && item.$.n > 0 && item.$.id == 6">({{item.$.n}})</span>
+                   </span>
+                   <span class="pull-right">
+                    <vnc-menu items="vm.share.items" size="vm.share.size" data="item">
+                        <md-icon md-font-set="material-icons" ng-click="vm.selectFolder($index, item)" class="arrow_drop_down">
+                          arrow_drop_down
+                        </md-icon>
+                    </vnc-menu>
+                   </span>
+
+                </div>
+                <div ng-include="'folderTemplate.html'" ng-if="item.folder"></div>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<script type="text/ng-template" id="folderTemplate.html">
+    <ol class="child" ui-tree-nodes ng-model="item.folder" ng-class="{hidden: item.collapse}">
+        <li ng-repeat="item in item.folder" ui-tree-node data-nodrag="false" class="{{vm.getColor(item.$.color)}}">
+            <div ui-tree-handle  ng-click="vm.folderAction({item: item})">
+            <md-icon md-svg-src="../images/folder-main-plus.svg" class="pointer s18" ng-click="$event.stopPropagation();item.collapse = !item.collapse"
+                     ng-show="item.folder.length && item.collapse" aria-label="main plus icon"></md-icon>
+            <md-icon md-svg-src="../images/folder-main-minus.svg" class="pointer s18" ng-click="$event.stopPropagation();item.collapse = !item.collapse"
+               ng-show="item.folder.length && !item.collapse" aria-label="main plus icon"></md-icon>
+            <md-icon md-svg-src="../images/folder-sub.svg" class="pointer s18" ng-show="!item.folder.length" aria-label="main plus icon"></md-icon>
+
+            <span ng-class="{unread: vm.currentState == 'mail'}">
+                <span class="title" ng-class="{'highlight': vm.currentState == 'mail' && (item.$.u > 0 && item.$.id != 6 || item.$.n > 0 && item.$.id == 6)}">
+                    {{item.$.name | limitTo : 4}}
+                     <span ng-if="item.$.name.length > 4">..</span>
+                     <span ng-if="vm.currentState == 'mail' && item.$.u > 0">({{item.$.u}})</span>
+                </span>
+            </span>
+            <span class="pull-right">
+              <vnc-menu items="vm.share.items" size="vm.share.size" data="item">
+                  <md-icon md-font-set="material-icons" ng-click="vm.selectFolder($index, item)" class="arrow_drop_down">arrow_drop_down</md-icon>
+              </vnc-menu>
+            </span>
+            </div>
+            <div ng-include="'folderTemplate.html'" ng-if="item.folder"></div>
+        </li>
+    </ol>
+</script>

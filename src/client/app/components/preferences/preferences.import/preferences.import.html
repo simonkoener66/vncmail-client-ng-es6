@@ -1,0 +1,52 @@
+<div class="preferences-import">
+    <div layout="column" layout-margin>
+        <div class="block" flex>
+            <md-toolbar class="demo-toolbar md-primary">
+                <div class="md-toolbar-tools">
+                    <h2><span translate="PREFERENCES.IMPORT"></span></h2>
+                </div>
+            </md-toolbar>
+            <div class="block-content" layout="column">
+                <div class="block-item" layout="row">
+                    <div flex="25" layout="" layout-align="start center" flex-xs >
+                        <span  translate="PREFERENCES.FILE"></span>
+                    </div>
+                    <md-input-container flex="75" flex-xs>
+                        <input type="file">
+                    </md-input-container>
+                </div>
+                <md-divider flex></md-divider>
+                <div class="row block-item" ng-show="vm.validType">
+                    <div layout="" layout-align="start center" flex="25" flex-xs>
+                        <span  translate="PREFERENCES.TYPE"></span>
+                    </div>
+                    <div flex="75" flex-xs>
+                        <md-select ng-model="theme">
+                            <md-option>{{ 'PREFERENCES.AUTO_DETECT' | translate }}</md-option>
+                            <md-option>{{ 'PREFERENCES.OUTLOOK_CONTACTS_2003' | translate }}</md-option>
+                            <md-option>{{ 'PREFERENCES.THUNDERBIRD_CONTACTS' | translate }}</md-option>
+                            <md-option>{{ 'PREFERENCES.OUTLOOK_CONTACTS' | translate }}</md-option>
+                            <md-option>{{ 'PREFERENCES.ACCOUNT_CONTACTS' | translate }}</md-option>
+                            <md-option>{{ 'PREFERENCES.WINDOW_LIVE' | translate }}</md-option>
+                            <md-option>{{ 'PREFERENCES.YAHOO' | translate }}</md-option>
+                        </md-select>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+                <div class="block-item" layout="row">
+                    <div layout="" layout-align="start center" flex="25" flex-xs>
+                        <span  translate="PREFERENCES.DESTINATION"></span>
+                    </div>
+                    <div flex="75" flex-xs>
+                        <md-select ng-model="theme">
+                            <md-option>{{ 'PREFERENCES.CONTACTS' | translate }}</md-option>
+                        </md-select>
+                    </div>
+                </div>
+                <div class="block-item" flex="10">
+                    <md-button class="md-raised md-primary pull-right" layout-align="end center"  layout="row">{{ 'PREFERENCES.IMPORT' | translate }}</md-button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

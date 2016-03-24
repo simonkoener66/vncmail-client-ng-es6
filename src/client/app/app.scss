@@ -1,0 +1,362 @@
+@import 'common/common';
+
+* {
+    font-family: $main-font-family;
+    outline: none;
+}
+
+html, body {
+    height: 100%;
+    min-height: 100%;
+    max-height: 100%;
+    overflow-y: hidden;
+    width: 100%;
+}
+
+@font-face {
+ font-family: 'Material Icons';
+ font-style: normal;
+ font-weight: 400;
+ src: url(https://example.com/MaterialIcons-Regular.eot); /* For IE6-8 */
+ src: local('Material Icons'),
+      local('MaterialIcons-Regular'),
+      url('../fonts/MaterialIcons-Regular.woff2') format('woff2'),
+      url('../fonts/MaterialIcons-Regular.woff') format('woff'),
+      url('../fonts/MaterialIcons-Regular.ttf') format('truetype');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
+i.fa,
+.pointer,
+.dropdown .dropdown-menu li
+{
+    cursor: pointer;
+}
+md-fab-actions {
+    .md-fab-action-item {
+        a.md-fab.current {
+            background-color: $color-green-hightlight;
+            }
+    }
+}
+
+.current{
+    a{
+        color: $sidebar-active-items;
+        @include set-svg($sidebar-active-items);
+    }
+}
+
+.btn-create{
+    background-color: #f1f1f1;
+    border: 0;
+    border-radius: 5px;
+    color: #b6b6b6;
+    text-transform: uppercase;
+    height: 40px;
+    width: 95px;
+}
+
+.btn-cancel{
+    background-color: transparent;
+    border: 0;
+    border-radius: 5px;
+    color: #b6b6b6;
+    text-transform: uppercase;
+    height: 40px;
+    width: 95px;
+}
+
+/*************************************
+*
+*
+* badge style
+* TODO: When there are more pure SCSS
+* Components seperate them into their
+* files.
+*
+**************************************/
+
+.btn-badge {
+    position : relative;
+    white-space: nowrap;
+    margin-right: ($badge-size + $badge-padding);
+
+    &:not([data-badge]) {
+        margin-right: auto;
+    }
+
+    &[data-badge]:after {
+        content: attr(data-badge);
+
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-content: center;
+        align-items: center;
+
+        position: absolute;
+        top: -($badge-size/4);
+        right: -($badge-padding);
+
+        font-weight:100 !important;
+
+        .btn & {
+            top: -10px;
+            right: -5px;
+        }
+
+        font-family: $main-font-family;
+        font-weight: 600;
+        font-size: $badge-font-size;
+        width: $badge-size;
+        height: $badge-size;
+        border-radius : 50%;
+
+        background: $badge-background;
+        color: $badge-color;
+    }
+
+    &.btn-badge--no-background {
+        &[data-badge]:after {
+            color: $badge-color-inverse;
+            background: $badge-background-inverse;
+
+            box-shadow: 0 0 1px gray;
+        }
+    }
+    &.btn-badge--overlap:after {
+        right: -10px;
+    }
+}
+
+.app{
+   &.main-wrapper{
+       height: 100%;
+       min-height: 100%;
+       .main-content {
+           cursor: default;
+           height: 100%;
+           width: 100%;
+           background-color: $white;
+           .toggle{
+               @include transition(all 0.5s ease);
+           }
+           .overlay{
+               width: calc(100% - 220px);
+               height: 100%;
+               background-color: rgba(16, 16, 16, 0.45);
+               left: 220px;
+               z-index: 1000;
+               top: 0;
+               position: absolute;
+               cursor: default;
+           }
+           .cloud-bg{
+               background: #eeeeee;
+               position: relative;
+               .cloud{
+                   display: inline-block;
+                   position: absolute;
+                   top: 50%;
+                   right: 25%;
+                   margin: -.5em -1.5em;
+                   > span {
+                       background-color: #ffffff;
+                       width: 120px;
+                       height: 60px;
+                       border-radius: 5em;
+                       &:before, {
+                           content:'';
+                           position: absolute;
+                           background-color: #ffffff;
+                           width: 70px;
+                           height: 70px;
+                           border-radius: 100%;
+                           top: -33px;
+                           left: 25px;
+                       }
+                       &:after {
+                           content: '';
+                           position: absolute;
+                           background-color: #ffffff;
+                           border-radius: 9em;
+                           width: 70px;
+                           height: 70px;
+                           left: auto;
+                           right: 0;
+                           top: -10px;
+                       }
+                   }
+                   .name{
+                       position: relative;
+                       bottom: -24px;
+                       left: 20px;
+                       font-size: 25px;
+                       font-weight: 100;
+                       color: #DED7D7;
+                       p{
+                           margin: 0;
+                           font-size:small;
+                           position: relative;
+                           left: 40px;
+                           bottom: 7px;
+                       }
+                       .bold{
+                           font-weight:500 ;
+                       }
+                   }
+               }
+
+               .top-cloud{
+                   display: inline-block;
+                   background-color:  #ffffff;
+                   width: 100px;
+                   position: absolute;
+                   top: 40px;
+                   right: 30%;
+                   height: 100px;
+                   border-radius: 50%;
+
+                   &:before, &:after {
+                       content: '';
+                       position: absolute;
+                       background-color:  #ffffff;
+                       border-radius: 100%;
+                   }
+                   &:before{
+                       width: 100px;
+                       height: 100px;
+                       top: -38px;
+                       left: -70px;
+                   }
+                   &:after {
+                       width: 65px;
+                       height: 65px;
+                       left: auto;
+                       right: -38px;
+                       top: -20px;
+                   }
+               }
+               .top-cloud-circle{
+                   display: inline-block;
+                   background-color: #ffffff;
+                   width: 100px;
+                   position: absolute;
+                   top: 2px;
+                   right: calc(30% - 125px);
+                   height: 100px;
+                   border-radius: 50%;
+               }
+           }
+           .lock-size {
+               position: absolute;
+               right: 25px;
+               bottom: 25px;
+               //z-index: 1000;
+               md-fab-speed-dial {
+                   z-index: 100;
+               }
+           }
+       }
+   }
+   .custom-scroll{
+        cursor: col-resize;
+        resize: horizontal;
+        overflow: auto;
+        overflow-y: hidden;
+   }
+}
+/*
+ *
+ * Toast Styles
+ *
+ */
+ md-toast.md-info-toast-theme {
+     .md-toast-content {
+         color: $accent-blue;
+         font-size: 1.8rem;
+         font-wegith: bold;
+     }
+}
+md-toast.md-success-toast-theme {
+    .md-toast-content {
+        color: $accent-green;
+        font-size: 1.8rem;
+        font-wegith: bold;
+    }
+}
+md-toast.md-error-toast-theme {
+    .md-toast-content {
+        color: $accent-red;
+        font-size: 1.8rem;
+        font-wegith: bold;
+    }
+}
+md-toast.md-warning-toast-theme {
+    .md-toast-content {
+        color: $accent-orange;
+        font-size: 1.8rem;
+        font-wegith: bold;
+    }
+}
+md-fab-actions[aria-hidden=true] {
+    display: none;
+}
+.flex-15 + .flex-85.ml15 {
+    margin-left: 15%;
+}
+// MATERIAL ICONS
+.material-icons.md-12 { font-size: 12px; height: 12px; width: 12px;}
+.material-icons.md-16 { font-size: 16px; height: 16px; width: 16px;}
+.material-icons.md-18 { font-size: 18px; height: 18px; width: 18px;}
+.material-icons.md-24 { font-size: 24px; height: 24px; width: 24px; }
+.material-icons.md-36 { font-size: 36px; height: 36px; width: 36px; }
+.material-icons.md-48 { font-size: 48px; height: 18px; width: 36px; }
+
+.scroll {
+    overflow: scroll;
+}
+.text-right {
+  text-align: right;
+}
+
+@media (max-width: 600px) {
+  .md-button.md-fab {
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+  }
+}
+
+//for firefox and other browser which(display flex buttons) hiding
+.md-button{
+    display: inline-block !important;
+}

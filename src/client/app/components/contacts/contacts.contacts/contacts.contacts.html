@@ -1,0 +1,281 @@
+<div class="contacts-contacts" vnc-resize-header height-space="52" ng-if="vm.auth.authenticated">
+    <section class="mainbar">
+        <section class="matter">
+            <div class="widget wviolet">
+                <div ht-widget-header title="{{vm.title}}"></div>
+                <div class="widget-content user">
+                </div>
+                <div layout="row" layout-xs="column" layout-sm="column">
+                    <div class="summary-pane" flex="40" flex-xs="100" flex-sm="100" flex="nogrow">
+                        <!-- action button of contacts -->
+                        <div class="btn-bar">
+                            <div  layout="row" layout-align="space-between center" flex="100" flex-xs="100">
+                                <div class="mark-all">
+                                    <span>
+                                        <md-tooltip md-direction="bottom">Select All</md-tooltip>
+                                        <md-checkbox aria-label="Checkbox" ng-model="vm.selectAll" ng-change="vm.markAll()"></md-checkbox>
+                                    </span>
+                                </div>
+                                <md-button class="md-icon-button" aria-label="More" ng-disabled="!vm.selectedContacts.length" ng-class="{'disabled-class': !vm.selectedContacts.length}">
+                                    <vnc-modal ng-if="vm.selectedContacts.length" template="{{vm.contactMoveTemplate}}" use_ctrl="ContactMoveController"
+                                               size="SM" backdrop="false">
+                                        <md-icon class="material-icons">
+                                            <md-tooltip md-direction="bottom">Move Contact</md-tooltip>
+                                            drafts</md-icon>
+                                    </vnc-modal>
+                                    <md-icon ng-if="!vm.selectedContacts.length" class="material-icons">
+                                        <md-tooltip md-direction="bottom">Move Contact</md-tooltip>
+                                        drafts</md-icon>
+                                </md-button>
+                                <md-button class="md-icon-button" aria-label="More" ng-click="vm.moveMultipleConversations()" ng-disabled="!vm.selectedContacts.length" ng-class="{'disabled-class': !vm.selectedContacts.length}">
+                                    <vnc-modal ng-if="vm.selectedContacts.length" template="{{vm.contactComposeDeleteTemplate}}" use_ctrl="ContactDeleteController"
+                                               size="SM" backdrop="false">
+                                        <md-icon class="material-icons">
+                                            <md-tooltip md-direction="bottom">Move to Trash</md-tooltip>
+                                            delete</md-icon>
+                                    </vnc-modal>
+                                    <md-icon ng-if="!vm.selectedContacts.length" class="material-icons">
+                                        <md-tooltip md-direction="bottom">Move to Trash</md-tooltip>
+                                        delete</md-icon>
+                                </md-button>
+                                <md-button class="md-icon-button" aria-label="More">
+                                    <vnc-modal template="{{vm.createFolderTemplate}}" use_ctrl="CreateFolderController" size="lg" backdrop="static">
+                                        <md-icon class="material-icons">
+                                            <md-tooltip md-direction="bottom">Create new Folder</md-tooltip>
+                                            folder</md-icon>
+                                    </vnc-modal>
+                                </md-button>
+                                <md-button class="md-icon-button" aria-label="More" ng-disabled="!vm.selectedContacts.length" ng-class="{'disabled-class': !vm.selectedContacts.length}">
+                                    <md-menu>
+                                        <md-icon class="material-icons" ng-click="vm.selectedContacts.length && $mdOpenMenu()">
+                                            <md-tooltip md-direction="bottom">Tag Contact</md-tooltip>
+                                            local_offer</md-icon>
+                                        <md-menu-content width="4">
+                                            <md-menu-item ng-repeat="tag in vm.tagService.getTags()">
+                                                <md-button ng-click="vm.makeMultiFunction('tag', tag)">
+                                                    <md-icon md-font-set="material-icons" ng-style="{'color': '{{tag.$.rgb}}'}">local_offer</md-icon>
+                                                    {{tag.$.name}}
+                                                </md-button>
+                                            </md-menu-item>
+                                            <md-menu-divider></md-menu-divider>
+                                            <md-menu-item>
+                                                <md-button>
+                                                    <vnc-modal template="{{vm.createNewTagTemplate}}" use_ctrl="CreateNewTagController" size="lg" backdrop="static">
+                                                        <md-icon md-font-set="material-icons">local_offer</md-icon>
+                                                        New Tag
+                                                    </vnc-modal>
+                                                </md-button>
+                                            </md-menu-item>
+                                            <md-menu-item>
+                                                <md-button ng-click="vm.makeMultiFunction('remove-tag', tag)">
+                                                    <md-icon md-font-set="material-icons">local_offer</md-icon>
+                                                    Remove All Tags
+                                                </md-button>
+                                            </md-menu-item>
+                                        </md-menu-content>
+                                    </md-menu>
+                                </md-button>
+                            </div>
+                        </div>
+                        <div layout="row" class="rowBackground sort-heading" layout-align="start center" flex>
+                            <div flex="40">
+                                <span translate="CONTACTS.ALL_CONTACTS" ng-click="vm.filterValueAll='ALL'; vm.contactPagination('all','')"></span>
+                            </div>
+                            <span flex="60" class="align-right">
+                                <md-button aria-label="Filter" class="md-icon-button" ng-click="vm.selectFilter=true; showAdvanced($event)">
+                                    <md-icon md-font-set="material-icons">keyboard_arrow_down</md-icon>
+                                </md-button>
+                                {{vm.filterValue}}
+                            </span>
+                        </div>
+                        <perfect-scrollbar layout="column"
+                                           wheel-propagation="true"
+                                           wheel-speed="50"
+                                           min-scrollbar-length="5"
+                                           suppress-scroll-x= "true"
+                                           refresh-on-change="vm.handleContactService.contacts"
+                                           class="contact-list-row window-list-height drag-tag-contact scroll-bar rowBackground"
+                                           vnc-resize-header
+                                           height-space="51"
+                                           when-scrolled="vm.loadMoreContact();"
+                                           id="contact-list">
+                            <div layout="row" id="{{contact.id}}"
+                                 ng-show="vm.handleContactService.contacts.length != 0"
+                                 ng-repeat="contact in vm.handleContactService.contacts track by $index"
+                                 ng-click="vm.selectContact(contact.id)"
+                                 ng-dblclick="vm.editContact()"
+                                 ui-sref="contacts.{{vm.detailUrl}}.detail({'contactId':contact.id})"
+                                 draggable="true" effect-allowed="copy" draggable-type="custom-object"
+                                 draggable-data="{index: $index,contact:contact}" class="drag-tag-contact contact-item"
+                                 uib-tooltip-html="contact.contactDetail" tooltip-placement="top" tooltip-append-to-body="true" ng-class="{selectedContact: contact.selected}">
+                                <div flex="5" layout-align="space-between center" class="c-check">
+                                    <md-checkbox aria-label="Checkbox{{$index}}" ng-model="contact.checked" ng-click="$event.stopPropagation();" ng-change="vm.markMultiple(contact.id, contact.checked)"></md-checkbox>
+                                </div>
+                                <div flex="15" flex-md="25">
+                                    <vnc-avatar person-name="{{contact.avatarName}}" person-size="md" person-image="contact.image" layout="column" layout-align="center center"></vnc-avatar>
+                                </div>
+                                <div flex="85" class="summary-pane-detail">
+                                    <div layout="row" class="list-item"  ng-class="{selectedContactColor: contact.selected}">
+                                        <div flex="65">
+                                            <div>
+                                                <div ui-sref="contacts.{{vm.detailUrl}}.detail({'contactId':contact.id})">
+                                                    <h5 ng-bind="contact.displayName"></h5>
+                                                </div>
+                                            </div>
+                                            <div>
+                                              <h3>
+                                                <a class="mail-details-actions" ng-bind="contact.displayEmail" ng-dblclick="vm.mailTo(message.sender)" contact-detail="vm.contactDetail" href="javascript:void(0)"></a>
+                                              </h3>
+                                              <h3 ng-bind="contact.displayPhone"> </h3>
+                                            </div>
+                                        </div>
+                                        <div flex class="sidebar-tag">
+                                            <vnc-tag ng-repeat="tag in contact.tags track by $index" tag-name="{{tag.$.name}}"
+                                                     ag-color="{{tag.$.color}}" tag-rgb="{{tag.$.rgb}}" tag-id="{{tag.$.id}}">
+                                            </vnc-tag>
+                                        </div>
+                                    </div>
+
+                               </div>
+                                <md-menu-bar style="display: inline;padding: 0; margin-top: 9px;">
+                                    <md-menu>
+                                        <button ng-click="vm.selectSingleContact(contact.id);$mdOpenMenu($event)">
+                                            <md-icon md-font-set="material-icons" class="md-18">more_vert</md-icon>
+                                        </button>
+                                        <md-menu-content width="3">
+                                            <!-- <md-menu-item>
+                                                <md-button>
+                                                    <md-icon md-font-set="material-icons">search</md-icon>
+                                                    Find Emails
+                                                </md-button>
+                                            </md-menu-item> -->
+                                        <md-menu-item>
+                                            <md-button>
+                                                <vnc-modal template="{{vm.mailComposeTemplate}}" use_ctrl="MailComposeController" size="sm" backdrop="false"
+                                                           resolve='{"emailData": {{contact}}, "actionType": "GET_CONTACT"}'>
+                                                    <md-icon md-font-set="material-icons">email</md-icon>
+                                                    New Email</vnc-modal>
+                                            </md-button>
+                                        </md-menu-item>
+                                        <md-menu-item>
+                                            <md-button>
+                                                <vnc-modal template="{{vm.contactComposeTemplate}}"
+                                                           use_ctrl="ContactComposeController" size="lg" backdrop="false" resolve="{operation:'edit'}">
+                                                    <md-icon md-font-set="material-icons">edit</md-icon>
+                                                    Edit Contact</vnc-modal>
+                                            </md-button>
+                                        </md-menu-item>
+                                        <!-- <md-menu-item>
+                                            <md-button>
+                                                 <vnc-modal template="{{vm.mailComposeTemplate}}" use_ctrl="MailComposeController" size="sm" backdrop="false">
+                                                <md-icon md-font-set="material-icons">quick_contacts_mail</md-icon>
+                                                Forward Contact</vnc-modal>
+                                            </md-button>
+                                        </md-menu-item> -->
+                                        <!-- <md-menu-item>
+                                            <md-button>
+                                                <md-icon md-font-set="material-icons">group</md-icon>
+                                                Contact Group
+                                            </md-button>
+                                        </md-menu-item> -->
+                                        <md-menu-item>
+                                            <md-menu>
+                                                <md-button ng-click="$mdOpenMenu()">
+                                                    <md-icon md-font-set="material-icons" style="margin: auto 16px auto 0;">local_offer</md-icon>
+                                                    <span class="text-normalize">Tag Contact</span>
+                                                </md-button>
+                                                <md-menu-content width="3">
+                                                    <md-menu-item ng-repeat="tag in vm.tagService.getTags() | getRemainingTags: contact.tags">
+                                                        <md-button ng-click="vm.tagService.tagContact(contact, tag)">
+                                                            <md-icon md-font-set="material-icons" ng-style="{'color': '{{tag.$.rgb}}'}">local_offer</md-icon>
+                                                            {{tag.$.name}}
+                                                        </md-button>
+                                                    </md-menu-item>
+                                                    <md-menu-divider ng-if="contact.tags.length != vm.tagService.getTags().length"></md-menu-divider>
+                                                    <md-menu-item>
+                                                        <md-button ng-click="vm.tagContact(contact)">
+                                                            <md-icon md-font-set="material-icons">local_offer</md-icon>
+                                                            New Tag
+                                                        </md-button>
+                                                    </md-menu-item>
+                                                    <md-menu-item ng-if="contact.tags.length">
+                                                        <md-menu>
+                                                            <md-button ng-click="$mdOpenMenu()" style="margin-bottom: -3px">
+                                                                <md-icon md-font-set="material-icons" style="margin: auto 16px auto 0;">local_offer</md-icon>
+                                                                <span class="text-normalize">Remove Tag</span>
+                                                            </md-button>
+                                                            <md-menu-content width="3">
+                                                                <md-menu-item ng-repeat="tag in contact.tags">
+                                                                    <md-button ng-click="vm.tagService.removeTagFromContact(contact, tag.$.name, $index)">
+                                                                        <md-icon md-font-set="material-icons" ng-style="{'color': '{{tag.$.rgb}}'}">local_offer</md-icon>
+                                                                        {{tag.$.name}}
+                                                                    </md-button>
+                                                                </md-menu-item>
+                                                                <md-menu-divider></md-menu-divider>
+                                                                <md-menu-item>
+                                                                    <md-button ng-click="vm.tagService.removeAllTagFromContact(contact, $index)">
+                                                                        <md-icon md-font-set="material-icons">local_offer</md-icon>
+                                                                        All Tags
+                                                                    </md-button>
+                                                                </md-menu-item>
+                                                            </md-menu-content>
+                                                        </md-menu>
+                                                    </md-menu-item>
+                                                    <md-menu-item ng-if="contact.tags.length == 0">
+                                                        <md-button ng-disabled="true">
+                                                            <md-icon md-font-set="material-icons">local_offer</md-icon>
+                                                            Remove Tag
+                                                        </md-button>
+                                                    </md-menu-item>
+                                                </md-menu-content>
+                                            </md-menu>
+                                        </md-menu-item>
+
+
+                                        </md-menu-item>
+                                        <md-menu-item>
+                                            <md-button>
+                                              <vnc-modal template="{{vm.contactComposeDeleteTemplate}}" use_ctrl="ContactDeleteController" size="sm" backdrop="false"
+                                                         resolve='{"contactId": "{{contact.id}}","index": {{$index}} }'>
+                                                <md-icon md-font-set="material-icons">cancel</md-icon>
+                                                Delete
+                                                </vnc-modal>
+                                            </md-button>
+                                        </md-menu-item>
+                                        <md-menu-item>
+                                            <md-button>
+                                                <vnc-modal template="{{vm.contactMoveTemplate}}" use_ctrl="ContactMoveController"
+                                                           size="SM" backdrop="false">
+                                                <md-icon md-font-set="material-icons">create_new_folder</md-icon>
+                                                Move
+                                            </vnc-modal>
+                                            </md-button>
+                                        </md-menu-item>
+                                        <!--<md-menu-item>-->
+                                            <!--<md-button ng-click="vm.printContact(contact.id)">-->
+                                                <!--<md-icon md-font-set="material-icons">print</md-icon>-->
+                                                <!--Print-->
+                                            <!--</md-button>-->
+                                        <!--</md-menu-item>-->
+                                  </md-menu-content>
+                                </md-menu>
+                        </div>
+                        <md-divider ng-if="!$last"></md-divider>
+                            <div class="row list-item" ng-show="vm.loading">
+                                <div class="noResult"> {{ 'COMMON.LOADING' | translate }}</div>
+                            </div>
+
+                            <div class="row list-item" ng-show="!vm.loading && vm.handleContactService.contacts.length == 0">
+                                <div class="noResult"> {{ 'COMMON.NO_RESULT_FOUND' | translate }}</div>
+                            </div>
+                        </perfect-scrollbar>
+                    </div>
+                    <div ng-show="!vm.loading" ui-view="" flex="60" flex-sm="100" flex-xs="100"></div>
+                </div>
+                <div class="widget-foot">
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </section>
+    </section>
+</div>

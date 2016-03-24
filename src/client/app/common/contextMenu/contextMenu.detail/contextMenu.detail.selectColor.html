@@ -1,0 +1,35 @@
+<md-dialog aria-label="Warning" flex="40">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h4>Change Color</h4>
+        </div>
+    </md-toolbar>
+    <md-dialog-content md-dynamic-height>
+        <div layout="column" layout-padding class="md-dialog-content">
+            <div layout-gt-xs="row">
+                <md-input-container class="md-block" flex flex-gt-xs>
+                    <label>Select New Color</label>
+                    <md-select ng-model="vm.selectColor" ng-disabled="vm.reqPending || vm.moreColor">
+                        <md-option ng-repeat="color in vm.availableColors" value="{{color}}">
+                            <md-icon md-font-set="material-icons" ng-style="{'color': '{{color}}'}">local_offer</md-icon>
+                            {{color}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+            <div layout-gt-xs="row">
+                <md-checkbox ng-model="vm.moreColor" aria-label="Select more colors" ng-disabled="vm.reqPending">
+                    Select more colors
+                </md-checkbox>
+            </div>
+            <div layout-gt-xs="row">
+                <color-picker ng-model="vm.selectColor" ng-if="vm.moreColor">
+                </color-picker>
+            </div>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" id="toastBounds">
+        <md-button ng-click="vm.cancel()" ng-disabled="vm.reqPending">Cancel</md-button>
+        <md-button class="md-primary md-raised md-hue-2" ng-click="vm.ok()" ng-disabled="vm.reqPending || !vm.selectColor">OK</md-button>
+    </md-dialog-actions>
+</md-dialog>

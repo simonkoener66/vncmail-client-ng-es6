@@ -1,0 +1,16 @@
+
+<div class="contact-info col-md-4">
+    <div class="media">
+        <a class="pull-left" href="#">
+            <vnc-avatar class="media-object" person-image="vm.image" person-name="{{vm.avatarInitials}}" person-size="lg"></vnc-avatar>
+        </a>
+        <div class="media-body">
+            <h6 class="contact-full-name">{{vm.contactDetail.namePrefix}} {{vm.contactDetail.firstName}} {{vm.contactDetail.lastName}}</h6><br>
+            <span class="contactDetail-title" ng-bind="vm.contactDetail.nickname"></span><br>
+            <span class="contactDetail-title" ng-bind="vm.contactDetail.jobTitle"></span>
+             <p><a href="" ng-bind="vm.contactDetail.email"></a></p>
+             <div class="col-md-6"><md-icon md-font-set="material-icons" class="material-icons" uib-tooltip="New Email" ng-click="vm.compose(vm.contactDetail)" tooltip-placement="right">email</md-icon></div>
+        <div class="col-md-6"><md-icon md-font-set="material-icons" class="material-icons" uib-tooltip="New Appointment" tooltip-placement="top">perm_contact_calendar</md-icon></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+/*************************************
+ *
+ *
+ * Modal Main File
+ *
+ *
+ **************************************/
+@import '../../../common/common';
+
+p.mar-top-10{
+    label{
+        font-weight: normal;
+    }
+}
+.preferences-trusted-addresses {
+	.td-value {
+		background-color: #cecece;
+	}
+	.md-button-margin {
+		margin-top: 29px;
+		margin-bottom: 29px;
+	}
+    .md-list-item-inner {
+        padding: 0 15px;
+    }
+}

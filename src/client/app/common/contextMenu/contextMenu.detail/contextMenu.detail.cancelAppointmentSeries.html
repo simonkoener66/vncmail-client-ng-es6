@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <h4 class="modal-title">Confirm Delete</h4>
+</div>
+<div class="modal-body">
+    <i class="fa fa-exclamation-triangle delete-appt-icon"></i>
+    <p>Are you sure you want to delete all occurrences of this appointment?</p>
+    <md-radio-group ng-model="vm.deleteApptSeriesMode.selected" class="md-primary">
+        <md-radio-button ng-value="1" class="md-primary">Delete all occurrences.</md-radio-button>
+        <md-radio-button ng-value="2">
+            Delete this instance and all future occurrences.
+            <span>
+                <i>
+                    This will also delete all exceptions (before and after this instance) in the series.
+                </i>
+            </span>
+        </md-radio-button>
+    </md-radio-group>
+</div>
+
+<!-- Footer buttons -->
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="vm.deleteAppointmentSeries()">Yes</button>
+    <button class="btn btn-default" type="button" ng-click="vm.cancel()">No</button>
+</div>

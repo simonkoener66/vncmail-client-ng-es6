@@ -1,0 +1,51 @@
+<div class="create-new-tag">
+    <div class="modal-header">
+        <h3 class="modal-title">Move Conversation</h3>
+    </div>
+    <div>
+        <div class="row">
+            <div class="col-md-12">
+                Select the destination folder.
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                Type in the box to filter the list
+            </div>
+        </div>
+        <input type="text" class="form-control mar-5" ng-model="query"/>
+    </div>
+ <div class="folder-bordered">
+    <div class="sidebar-folders">
+    <div ui-tree ng-if="vm.folders.length">
+        <ol ui-tree-nodes ng-model="vm.folders" class="parent">
+            <li ng-repeat="item in vm.folders | filter: search" ui-tree-node data-nodrag ng-init="item.collapse = true">
+                <div id="ui-tree-handle" ui-tree-handle class="{{vm.getColor(item.$.color) }} folder-selectable" ng-class="{'folder-selected': item.selected}" ng-click="vm.selectFolder(item)">
+                <span ng-include="'../images/folder-main.svg'" class="pointer" ng-click="item.collapse = !item.collapse"
+                      ng-show="!item.folder.length"></span>
+                <span ng-include="'../images/folder-main-plus.svg'"  class="pointer" ng-click="item.collapse = !item.collapse"
+                      ng-show="item.folder.length && item.collapse"></span>
+                <span ng-include="'../images/folder-main-minus.svg'"  class="pointer" ng-click="item.collapse = !item.collapse"
+                      ng-show="item.folder.length && !item.collapse"></span>
+                    <span class="title" ng-bind="item.$.name"></span>
+                </div>
+                <ol class="child" ui-tree-nodes ng-model="item.folder" ng-class="{hidden: item.collapse}">
+                    <li ng-repeat="subItem in item.folder" ui-tree-node data-nodrag="false">
+                        <div ui-tree-handle class="{{vm.getColor(subItem.$.color)}} folder-selectable" ng-class="{'folder-selected': subItem.selected}" ng-click="vm.selectFolder(subItem)">
+                            <span ng-include="'../images/folder-sub.svg'" class="pointer"></span>
+                            <span class="title" ng-bind="subItem.$.name | limitTo : 25"></span>
+                            <span ng-if="subItem.$.name.length > 25">..</span>
+                        </div>
+                    </li>
+                </ol>
+            </li>
+        </ol>
+    </div>
+</div>
+ </div>
+    <div class="modal-footer narrow-margin green-btns">
+        <button class="btn-cancel pull-left" type="button" ng-click="vm.createNewFolder()">New</button>
+        <button class="btn-create" type="button" ng-click="vm.move()" ng-disabled="!vm.previousSelected">ok</button>
+        <button class="btn-cancel" type="button" ng-click="vm.cancel()">Cancel</button>
+    </div>
+</div>

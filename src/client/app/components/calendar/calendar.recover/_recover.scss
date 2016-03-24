@@ -1,0 +1,132 @@
+@import '../../../common/common';
+
+#tableHeader {
+    width: 100%;
+}
+
+.table-container {
+    height: 500px;
+    width: 100%;
+    overflow-y: scroll;
+    white-space: nowrap;
+    font-size: small;
+    align-items: stretch;
+}
+
+.table-condensed > tbody > tr > td {
+    padding: 2px;
+}
+
+.recover-deleted-items{
+    background-color: #fafafa;
+    padding: 0px 24px 24px 24px;
+    .modal-header{
+        background-color: #022A43 !important;
+        padding: 15px 15px;
+        margin: 0px -24px 0px -24px;
+        color: #fff;
+        border: 0;
+        font-size: 18px;
+        h3 {
+            font-size: 18px;
+            margin: 0;
+            width: 95%;
+            float: left;
+            line-height: inherit;
+        }
+        i {
+            float: right;
+            line-height: inherit;
+        }
+    }
+    .modal-body {
+        padding-top: 24px !important;
+
+        button {
+            margin-bottom: 15px;
+            margin-top: 15px;
+        }
+
+        .modal-text {
+            .select-div {
+                width: 100%;
+                color: #bebebe;
+                font-size: 0;
+                padding: 0;
+
+                div.host {
+                    background: none;
+                    border: none;
+                    border-bottom: 2px solid #ededed;
+
+                    &::selection,
+                    &:active,
+                    &:hover {
+                        border-bottom-color: black;
+                    }
+
+                    input[type="text"] {
+                        border: none;
+                    }
+                }
+            }
+
+            input[type="text"] {
+                background: none;
+                border: none;
+                border-bottom: 2px solid #ededed;
+                width: 100%;
+                color: #bebebe;
+                font-size: 18px;
+                //padding: 0 0 5px;
+                &:focus {
+                    outline: none;
+                    color: #444;
+                    border-color: #022a43;
+                }
+                .select-sender {
+                    background: #F0F0F0;
+                    border-radius: 20px;
+                }
+            }
+            label {
+                margin-top: 4px;
+                display: block;
+                color: #173b53;
+                font-size: 14px;
+                padding: 0 0 2px;
+                margin: 0;
+                font-weight: normal;
+                opacity: 0;
+
+            }
+            .display-label {
+                padding: 0 0 2px;
+                margin-top: 4px;
+                opacity: 1;
+            }
+            .mail-body {
+                width: 100%;
+                min-height: 186px;
+                height: auto;
+                background-color: inherit;
+                @include borders(none, none, 1px solid black, none)
+            }
+        }
+    }
+
+    .modal-footer {
+        border:none;
+        margin:15px 0 0;
+        padding:0;
+        &.green-btns {
+            .btn-close {
+                color: #6da31a;
+                &:disabled {
+                    color:#b4b4b4;
+                }
+            }
+        }
+    }
+
+}

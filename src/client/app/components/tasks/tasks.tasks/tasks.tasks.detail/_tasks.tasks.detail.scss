@@ -1,0 +1,102 @@
+@import '../../../../common/common';
+.task-detail-pane{
+    overflow: hidden;
+    overflow-y: auto;
+    background-color: #EEEEEE;
+}
+    .detail-header{
+        h3{
+            margin: 0px;
+            font-weight: 400;
+            color: #4a4a4a;
+        }
+        p{
+            color: #acacac;
+            margin:0px;
+        }
+    }
+    .detail-info{
+        position: relative;
+        padding: 20px 0;
+        border: 1px solid #d4d4d4;
+        background: #fafafa;
+        margin: 0px -5px;
+        .task-info{
+            padding-left: 25px;
+            h4{
+                margin: 0;
+            }
+            p{
+                margin: 0;
+                font-weight: 100;
+            }
+            span{
+                color: #c8c8c8;
+                font-size: 12px;
+                i{
+                    cursor: pointer;
+                }
+            }
+        }
+        .detail-content{
+            margin-left: 0px;
+            margin-right: 0px;
+            border-top: 1px solid #d4d4d4;
+            padding-top: 20px;
+            padding-left: 40px;
+            padding-right: 5px;
+            padding-bottom: 50px;
+        }
+        .subject-padding{
+            padding-left: 20px;
+            padding-right: 30px;
+            padding-bottom: 15px;
+        }
+        .detail-row-margin{
+            margin-left: 10px;
+            margin-right: 0px;
+            margin-bottom: 10px;
+        }
+        .detailPadding{
+            padding-left: 0px;
+            padding-right: 30px;
+        }
+        .detailType{
+            color: #c8c8c8;
+        }
+    }
+
+
+.detail-margin{
+    margin-left: 5px;
+    margin-top: 4%;
+    background-color: #EEEEEE !important;
+    h3{
+        margin: 0px;
+    }
+    p{
+        margin:0px;
+    }
+}
+
+.comma::after {
+    content: ', ';
+}
+
+.task-detail-right
+{
+	text-align: right;
+}
+
+.task-wordWrap
+{
+	word-wrap: break-word;
+}
+
+.taskDetailGap {
+    max-width: 1% !important;
+}
+
+.taskDetailCompletedPadding{
+    padding-bottom: 15px;
+}
