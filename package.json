@@ -146,8 +146,9 @@
     "Webpack",
     "Bootstrap",
     "Email",
-    "VNCuxf"
+    "VNCuxf",
+    "ES6"
   ],
-  "author": "VNC Development Team",
+  "author": "Simon Koener",
   "license": "ISC"
 }
